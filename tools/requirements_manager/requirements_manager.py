@@ -36,6 +36,7 @@ class RequirementsManager:
                 data = json.load(file_h)
                 self._validate_data(data)
                 self._init_requirements(data["requirements"])
+                self._init_settings(data["settings"])
         except FileNotFoundError:
             pass
 
@@ -81,5 +82,5 @@ class RequirementsManager:
         if valid is None:
             return self._req_data
 
-        out_data = [x for x in self._req_data if x["valid"] is valid]
+        out_data = [x for x in self._req_data if x["status"] is valid]
         return out_data
