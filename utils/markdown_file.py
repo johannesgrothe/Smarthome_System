@@ -92,6 +92,16 @@ class MarkdownText(MarkdownElement):
         return [self._text]
 
 
+class MarkdownDivider(MarkdownElement):
+    """A horizontal line"""
+
+    def __init__(self):
+        super().__init__()
+
+    def render_contend(self) -> list[str]:
+        return ["-----"]
+
+
 class MarkdownCode(MarkdownElement):
     """Code-block for the markdown file"""
     _code: str

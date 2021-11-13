@@ -59,37 +59,42 @@ class ApiDocExporter:
             schema = schema[:-5]
         return JsonSchemaFormatter.shorten_schema(self._schema_data[schema])
 
+    @staticmethod
+    def _format_list(data: list[str], default: str) -> str:
+        if not data:
+            return default
+        else:
+            return ", ".join(data)
+
     def export_api_doc(self, out_file: str):
         file = MarkdownFile()
         file.add(MarkdownHeader(self._api_definition["title"], 0))
         file.add(MarkdownText(self._api_definition["description"]))
-        for category in self._api_definition["categories"]:
-            cat_data = self._api_definition["categories"][category]
-            file.add(MarkdownHeader(cat_data["title"], 1))
-            file.add(MarkdownText(cat_data["description"]))
-            for mapping in cat_data["mappings"]:
-                map_data = cat_data["mappings"][mapping]
-                file.add(MarkdownHeader(map_data["title"], 2))
-                file.add(MarkdownText(map_data["description"]))
+        for mapping in self._api_definition["mappings"]:
+            map_data = self._api_definition["mappings"][mapping]
+            file.add(MarkdownHeader(map_data["title"], 2))
+            file.add(MarkdownText(map_data["description"]))
 
-                status_table = MarkdownTable(["Option", "Value"])
-                status_table.add_line(["Broadcast Allowed", ('Yes' if map_data['broadcast_allowed'] else 'No')])
-                status_table.add_line(["Direction", ('Outbound' if map_data['is_outbound'] else 'Inbound')])
+            status_table = MarkdownTable(["Option", "Value"])
+            status_table.add_line(["Broadcast Allowed", ('Yes' if map_data['broadcast_allowed'] else 'No')])
+            status_table.add_line(["Sender", self._format_list(map_data['sender'], "Anybody")])
+            status_table.add_line(["Receiver", self._format_list(map_data['receiver'], "Anybody")])
 
-                file.add(status_table)
+            file.add(status_table)
 
-                file.add(MarkdownHeader("Request", 3))
-                req_data = map_data["request"]
-                file.add(MarkdownText(req_data["comment"]))
-                req_schema = self._read_schema(req_data["schema"])
-                file.add(MarkdownCode(req_schema, language="json"))
+            file.add(MarkdownHeader("Request", 3))
+            req_data = map_data["request"]
+            file.add(MarkdownText(req_data["comment"]))
+            req_schema = self._read_schema(req_data["schema"])
+            file.add(MarkdownCode(req_schema, language="json"))
 
-                file.add(MarkdownHeader("Response", 3))
-                res_data = map_data["response"]
-                file.add(MarkdownText(res_data["comment"]))
-                if res_data["schema"] is not None:
-                    res_schema = self._read_schema(res_data["schema"])
-                    file.add(MarkdownCode(res_schema, language="json"))
+            file.add(MarkdownHeader("Response", 3))
+            res_data = map_data["response"]
+            file.add(MarkdownText(res_data["comment"]))
+            if res_data["schema"] is not None:
+                res_schema = self._read_schema(res_data["schema"])
+                file.add(MarkdownCode(res_schema, language="json"))
+            file.add(MarkdownDivider())
 
         file.save(out_file)
 

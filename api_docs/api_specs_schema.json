@@ -10,82 +10,73 @@
       "type": "string",
       "minLength": 10
     },
-    "categories": {
+    "mappings": {
       "type": "object",
       "additionalProperties": {
-        "type": "object",
         "required": [
           "title",
           "description",
-          "mappings"
+          "broadcast_allowed",
+          "sender",
+          "receiver",
+          "request",
+          "response"
         ],
         "properties": {
           "title": {
             "type": "string",
-            "description": "Title of the api message category"
+            "minLength": 5
           },
           "description": {
             "type": "string",
-            "description": "Description of the api message category"
+            "minLength": 15
           },
-          "mappings": {
+          "sender": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "minLength": 5
+            }
+          },
+          "receiver": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "minLength": 5
+            }
+          },
+          "broadcast_allowed": {
+            "type": "boolean"
+          },
+          "request": {
             "type": "object",
-            "additionalProperties": {
-              "required": [
-                "title",
-                "description",
-                "broadcast_allowed",
-                "is_outbound",
-                "request",
-                "response"
-              ],
-              "properties": {
-                "title": {
-                  "type": "string",
-                  "minLength": 5
-                },
-                "description": {
-                  "type": "string",
-                  "minLength": 15
-                },
-                "is_outbound": {
-                  "type": "boolean"
-                },
-                "broadcast_allowed": {
-                  "type": "boolean"
-                },
-                "request": {
-                  "type": "object",
-                  "required": [
-                    "schema",
-                    "comment"
-                  ],
-                  "properties": {
-                    "schema": {
-                      "type": "string",
-                      "pattern": ".+\\.json$"
-                    },
-                    "comment": {
-                      "type": "string"
-                    }
-                  }
-                },
-                "response": {
-                  "type": "object",
-                  "required": [
-                    "schema",
-                    "comment"
-                  ],
-                  "properties": {
-                    "schema": {
-                      "type": "string",
-                      "pattern": ".+\\.json$"
-                    },
-                    "comment": {
-                      "type": "string"
-                    }
-                  }
-                }
+            "required": [
+              "schema",
+              "comment"
+            ],
+            "properties": {
+              "schema": {
+                "type": "string",
+                "pattern": ".+\\.json$"
+              },
+              "comment": {
+                "type": "string"
+              }
+            }
+          },
+          "response": {
+            "type": "object",
+            "required": [
+              "schema",
+              "comment"
+            ],
+            "properties": {
+              "schema": {
+                "type": ["string", "null"],
+                "pattern": ".+\\.json$"
+              },
+              "comment": {
+                "type": "string"
               }
             }
           }

@@ -2,59 +2,65 @@
   "$schema": "api_specs_schema.json",
   "title": "Smarthome API Specification",
   "description": "Documentation for the smarthome systems API endpoints",
-  "categories": {
-    "client": {
-      "title": "Client Requests",
-      "description": "Requests sent to the client",
-      "mappings": {
-        "write_system_config": {
-          "title": "Write System Config",
-          "description": "Write a system config to the client",
-          "broadcast_allowed": false,
-          "is_outbound": false,
-          "request": {
-            "comment": "Config received by the Client",
-            "schema": "api_client_write_system_config.json"
-          },
-          "response": {
-            "comment": "Response acknowledging the successful writing of the Config",
-            "schema": "default_message.json"
-          }
-        },
-        "write_event_config": {
-          "title": "Write Event Config",
-          "description": "Write an event config to the client",
-          "broadcast_allowed": false,
-          "is_outbound": false,
-          "request": {
-            "comment": "Config received by the Client",
-            "schema": "api_client_write_event_config.json"
-          },
-          "response": {
-            "comment": "Response acknowledging the successful writing of the Config",
-            "schema": "default_message.json"
-          }
-        },
-        "write_gadget_config": {
-          "title": "Write Gadget Config",
-          "description": "Write a gadget config to the client",
-          "broadcast_allowed": false,
-          "is_outbound": false,
-          "request": {
-            "comment": "Config received by the Client",
-            "schema": "api_client_write_gadget_config.json"
-          },
-          "response": {
-            "comment": "Response acknowledging the successful writing of the Config",
-            "schema": "default_message.json"
-          }
-        }
+  "mappings": {
+    "write_system_config": {
+      "title": "Write System Config",
+      "description": "Write a system config to the client",
+      "broadcast_allowed": false,
+      "sender": ["Bridge", "Toolkit"],
+      "receiver": ["Client"],
+      "request": {
+        "comment": "Config received by the Client",
+        "schema": "api_client_write_system_config.json"
+      },
+      "response": {
+        "comment": "Response acknowledging the successful writing of the Config",
+        "schema": "default_message.json"
       }
     },
-    "bridge": {
-      "title": "Bridge Requests",
-      "description": "Requests sent to the bridge",
-      "mappings": {
+    "write_event_config": {
+      "title": "Write Event Config",
+      "description": "Write an event config to the client",
+      "broadcast_allowed": false,
+      "sender": ["Bridge", "Toolkit"],
+      "receiver": ["Client"],
+      "request": {
+        "comment": "Config received by the Client",
+        "schema": "api_client_write_event_config.json"
+      },
+      "response": {
+        "comment": "Response acknowledging the successful writing of the Config",
+        "schema": "default_message.json"
+      }
+    },
+    "write_gadget_config": {
+      "title": "Write Gadget Config",
+      "description": "Write a gadget config to the client",
+      "broadcast_allowed": false,
+      "sender": ["Bridge", "Toolkit"],
+      "receiver": ["Client"],
+      "request": {
+        "comment": "Config received by the Client",
+        "schema": "api_client_write_gadget_config.json"
+      },
+      "response": {
+        "comment": "Response acknowledging the successful writing of the Config",
+        "schema": "default_message.json"
+      }
+    },
+    "client_heartbeat": {
+      "title": "Client Heartbeat",
+      "description": "Heartbeat sent periodically by the client",
+      "broadcast_allowed": true,
+      "sender": ["Client"],
+      "receiver": [],
+      "request": {
+        "comment": "Config received by the Client",
+        "schema": "bridge_heartbeat_request.json"
+      },
+      "response": {
+        "comment": "No response is expected",
+        "schema": null
       }
     }
   }
