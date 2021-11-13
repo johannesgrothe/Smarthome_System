@@ -10,6 +10,7 @@ sys.path.append("..")
 
 # from markdown_file import MarkdownFile
 from utils.markdown_file import *
+from utils.json_schema_formatter import JsonSchemaFormatter
 
 # Path to the file containing the api definitions
 _path_api_specs = "api_docs/api_specs.json"
@@ -50,8 +51,34 @@ class ApiDocExporter:
         validate(data, schema)
         self._api_definition = data
 
+    def _read_schema(self, schema: str) -> str:
+        with open(os.path.join(self._schema_folder, schema), "r") as file_p:
+            schema = json.load(file_p)
+        return JsonSchemaFormatter.shorten_schema(schema)
+
     def export_api_doc(self, out_file: str):
         file = MarkdownFile()
+        file.add(MarkdownHeader(self._api_definition["title"], 0))
+        file.add(MarkdownText(self._api_definition["description"]))
+        for category in self._api_definition["categories"]:
+            cat_data = self._api_definition["categories"][category]
+            file.add(MarkdownHeader(cat_data["title"], 1))
+            file.add(MarkdownText(cat_data["description"]))
+            for mapping in cat_data["mappings"]:
+                map_data = cat_data["mappings"][mapping]
+                file.add(MarkdownHeader(map_data["title"], 2))
+                file.add(MarkdownText(map_data["description"]))
+
+                broadcast_line = f"Broadcast Allowed: {'YES' if map_data['description'] else 'NO'}"
+                file.add(MarkdownText(broadcast_line))
+
+                file.add(MarkdownHeader("Request", 3))
+                req_schema = self._read_schema(map_data["req_schema"])
+                file.add(MarkdownCode(req_schema, language="json"))
+
+                file.add(MarkdownHeader("Response", 3))
+                res_schema = self._read_schema(map_data["res_schema"])
+                file.add(MarkdownCode(res_schema, language="json"))
 
         file.save(out_file)
 

@@ -1,5 +1,6 @@
 """Module for the markdown file writer"""
 from abc import abstractmethod, ABCMeta
+from typing import Optional
 
 
 class MarkdownElementError(Exception):
@@ -92,6 +93,32 @@ class MarkdownText(MarkdownElement):
         return [self._text]
 
 
+class MarkdownCode(MarkdownElement):
+    """Code-block for the markdown file"""
+    _code: str
+    _code_block: bool
+    _language: Optional[str]
+
+    def __init__(self, code_lines: str, block: bool = True, language: Optional[str] = None):
+        super().__init__()
+        self._code = code_lines
+        self._code_block = block
+        self._language = language
+
+    def render_contend(self) -> list[str]:
+        borders = "`"
+        if self._code_block:
+            borders = "```"
+        out_str = borders
+        if self._language:
+            out_str += self._language
+        out_str += "\n"
+        out_str += self._code
+        out_str += "\n"
+        out_str += borders
+        return [out_str]
+
+
 class MarkdownList(MarkdownElement):
     """Contains a markdown list"""
     _lines: list[str]
@@ -140,4 +167,5 @@ class MarkdownFile:
         for elem in self._elements:
             lines = lines + elem.render_contend()
         with open(filename, "w") as file_p:
-            file_p.writelines(lines)
+            out_lines = [x + "\n\n" for x in lines]
+            file_p.writelines(out_lines)
