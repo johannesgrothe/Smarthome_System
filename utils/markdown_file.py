@@ -62,10 +62,9 @@ class MarkdownTable(MarkdownElement):
         max_len = self._get_max_elem_length()
 
         lines.append(self._format_line(self._header, max_len))
-        lines.append(self._format_line(["-" * max_len for x in self._header], max_len))
+        lines.append(self._format_line(["-" * max_len for _ in self._header], max_len))
         for line in self._lines:
             lines.append(self._format_line(line, max_len))
-
         return lines
 
 
@@ -137,7 +136,8 @@ class MarkdownList(MarkdownElement):
         self._lines.append(text)
 
     def render_contend(self) -> list[str]:
-        return [f"- {x}" for x in self._lines]
+        out_data = [f"- {x}" for x in self._lines]
+        return out_data
 
 
 class MarkdownFile:
@@ -165,7 +165,9 @@ class MarkdownFile:
         """
         lines = []
         for elem in self._elements:
-            lines = lines + elem.render_contend()
+            elem_lines = elem.render_contend()
+            elem_lines[len(elem_lines) - 1] = elem_lines[len(elem_lines) - 1] + "\n"
+            lines += elem_lines
         with open(filename, "w") as file_p:
-            out_lines = [x + "\n\n" for x in lines]
+            out_lines = [x + "\n" for x in lines]
             file_p.writelines(out_lines)

@@ -35,8 +35,9 @@
                 "title",
                 "description",
                 "broadcast_allowed",
-                "req_schema",
-                "res_schema"
+                "is_outbound",
+                "request",
+                "response"
               ],
               "properties": {
                 "title": {
@@ -47,16 +48,43 @@
                   "type": "string",
                   "minLength": 15
                 },
+                "is_outbound": {
+                  "type": "boolean"
+                },
                 "broadcast_allowed": {
                   "type": "boolean"
                 },
-                "req_schema": {
-                  "type": "string",
-                  "pattern": ".+\\.json$"
+                "request": {
+                  "type": "object",
+                  "required": [
+                    "schema",
+                    "comment"
+                  ],
+                  "properties": {
+                    "schema": {
+                      "type": "string",
+                      "pattern": ".+\\.json$"
+                    },
+                    "comment": {
+                      "type": "string"
+                    }
+                  }
                 },
-                "res_schema": {
-                  "type": "string",
-                  "pattern": ".+\\.json$"
+                "response": {
+                  "type": "object",
+                  "required": [
+                    "schema",
+                    "comment"
+                  ],
+                  "properties": {
+                    "schema": {
+                      "type": "string",
+                      "pattern": ".+\\.json$"
+                    },
+                    "comment": {
+                      "type": "string"
+                    }
+                  }
                 }
               }
             }
