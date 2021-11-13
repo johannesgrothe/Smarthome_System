@@ -1,0 +1,31 @@
+{
+  "$schema": "api_specs_schema.json",
+  "categories": {
+    "client": {
+      "title": "Client Requests",
+      "description": "Requests sent to the client",
+      "mappings": {
+        "write_system_config": {
+          "title": "Write System Config",
+          "description": "Write a system config to the client",
+          "broadcast_allowed": false,
+          "req_schema": "client_system_config.json",
+          "res_schema": "default_message.json"
+        },
+        "write_event_config": {
+          "title": "Write System Config",
+          "description": "Write a system config to the client",
+          "broadcast_allowed": false,
+          "req_schema": "client_event_config.json",
+          "res_schema": "default_message.json"
+        }
+      }
+    },
+    "bridge": {
+      "title": "Bridge Requests",
+      "description": "Requests sent to the bridge",
+      "mappings": {
+      }
+    }
+  }
+}

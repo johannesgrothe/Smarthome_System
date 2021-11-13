@@ -1,0 +1,60 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "type": "object",
+  "properties": {
+    "categories": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "object",
+        "required": [
+          "title",
+          "description",
+          "mappings"
+        ],
+        "properties": {
+          "title": {
+            "type": "string",
+            "description": "Title of the api message category"
+          },
+          "description": {
+            "type": "string",
+            "description": "Description of the api message category"
+          },
+          "mappings": {
+            "type": "object",
+            "additionalProperties": {
+              "required": [
+                "title",
+                "description",
+                "broadcast_allowed",
+                "req_schema",
+                "res_schema"
+              ],
+              "properties": {
+                "title": {
+                  "type": "string",
+                  "minLength": 5
+                },
+                "description": {
+                  "type": "string",
+                  "minLength": 15
+                },
+                "broadcast_allowed": {
+                  "type": "boolean"
+                },
+                "req_schema": {
+                  "type": "string",
+                  "pattern": ".+\\.json$"
+                },
+                "res_schema": {
+                  "type": "string",
+                  "pattern": ".+\\.json$"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
