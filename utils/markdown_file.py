@@ -1,5 +1,5 @@
 """Module for the markdown file writer"""
-from abc import abstractmethod, ABCMeta
+from abc import abstractmethod, ABCMeta, ABC
 from typing import Optional
 
 
@@ -15,7 +15,7 @@ class MarkdownElement(metaclass=ABCMeta):
         pass
 
     @abstractmethod
-    def render_contend(self) -> list[str]:
+    def render_content(self) -> list[str]:
         """
         Renders the element into writable markdown file lines
 
@@ -57,7 +57,7 @@ class MarkdownTable(MarkdownElement):
                                        f"does not match length of header ({len(self._header)})")
         self._lines.append(line)
 
-    def render_contend(self) -> list[str]:
+    def render_content(self) -> list[str]:
         lines = []
         max_len = self._get_max_elem_length()
 
@@ -77,7 +77,7 @@ class MarkdownHeader(MarkdownElement):
         self._text = text
         self._level = level
 
-    def render_contend(self) -> list[str]:
+    def render_content(self) -> list[str]:
         return [f"{'#' * (self._level + 1)} {self._text}"]
 
 
@@ -88,7 +88,7 @@ class MarkdownText(MarkdownElement):
         super().__init__()
         self._text = text
 
-    def render_contend(self) -> list[str]:
+    def render_content(self) -> list[str]:
         return [self._text]
 
 
@@ -98,8 +98,44 @@ class MarkdownDivider(MarkdownElement):
     def __init__(self):
         super().__init__()
 
-    def render_contend(self) -> list[str]:
+    def render_content(self) -> list[str]:
         return ["-----"]
+
+
+class MarkdownLink(MarkdownElement, ABC):
+    """Link to an internal or external resource"""
+    _text: str
+    _target: str
+    _prefix_text: str
+
+    def __init__(self, text: str, target: str, prefix_text: Optional[str] = None):
+        super().__init__()
+        self._text = text
+        self._target = target
+        if not prefix_text:
+            self._prefix_text = ""
+        else:
+            self._prefix_text = prefix_text
+
+
+class MarkdownInternalLink(MarkdownLink):
+    """A link to a internal target"""
+
+    def __init__(self, text: str, target: str, prefix_text: Optional[str] = None):
+        super().__init__(text, target, prefix_text)
+
+    def render_content(self) -> list[str]:
+        return [f"{self._prefix_text}[{self._text}](#{self._target})"]
+
+
+class MarkdownHyperLink(MarkdownLink):
+    """A link to an external resource"""
+
+    def __init__(self, text: str, target: str, prefix_text: Optional[str] = None):
+        super().__init__(text, target, prefix_text)
+
+    def render_content(self) -> list[str]:
+        return [f"{self._prefix_text}[{self._text}]({self._target})"]
 
 
 class MarkdownCode(MarkdownElement):
@@ -114,12 +150,12 @@ class MarkdownCode(MarkdownElement):
         self._code_block = block
         self._language = language
 
-    def render_contend(self) -> list[str]:
+    def render_content(self) -> list[str]:
         borders = "`"
         if self._code_block:
             borders = "```"
         out_str = borders
-        if self._language:
+        if self._language and self._code_block:
             out_str += self._language
         out_str += "\n"
         out_str += self._code
@@ -145,7 +181,7 @@ class MarkdownList(MarkdownElement):
         """
         self._lines.append(text)
 
-    def render_contend(self) -> list[str]:
+    def render_content(self) -> list[str]:
         out_data = [f"- {x}" for x in self._lines]
         return out_data
 
@@ -175,7 +211,7 @@ class MarkdownFile:
         """
         lines = []
         for elem in self._elements:
-            elem_lines = elem.render_contend()
+            elem_lines = elem.render_content()
             elem_lines[len(elem_lines) - 1] = elem_lines[len(elem_lines) - 1] + "\n"
             lines += elem_lines
         with open(filename, "w") as file_p:

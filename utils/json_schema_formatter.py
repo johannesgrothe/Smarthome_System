@@ -57,14 +57,14 @@ class JsonSchemaFormatter:
         elif s_type == "object":
             buf_data = {}
 
-            if "properties" in in_schema:
+            if "properties" in in_schema and in_schema["properties"]:
                 for prop in in_schema["properties"]:
                     buf_data[prop] = cls._encode(in_schema["properties"][prop])
 
-            if "additionalProperties" in in_schema:
+            if "additionalProperties" in in_schema and in_schema["additionalProperties"]:
                 buf_data["<any>"] = cls._encode(in_schema["additionalProperties"])
 
-            if "patternProperties" in in_schema:
+            if "patternProperties" in in_schema and in_schema["patternProperties"]:
                 for prop in in_schema["patternProperties"]:
                     buf_data[f"<{prop}>"] = cls._encode(in_schema["patternProperties"][prop])
             return buf_data

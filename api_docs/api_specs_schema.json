@@ -1,6 +1,11 @@
 {
   "$schema": "http://json-schema.org/draft-04/schema#",
   "type": "object",
+  "required": [
+    "title",
+    "description",
+    "mappings"
+  ],
   "properties": {
     "title": {
       "type": "string",
@@ -19,6 +24,8 @@
           "broadcast_allowed",
           "sender",
           "receiver",
+          "http_method",
+          "uri",
           "request",
           "response"
         ],
@@ -47,6 +54,21 @@
           },
           "broadcast_allowed": {
             "type": "boolean"
+          },
+          "http_method": {
+            "enum": ["GET","POST", null]
+          },
+          "uri": {
+            "properties": {
+              "value": {
+                "type": "string",
+                "pattern": "^([a-z0-9_]+/)*?[a-z0-9_]+$"
+              },
+              "var_name": {
+                "type": "string",
+                "minLength": 5
+              }
+            }
           },
           "request": {
             "type": "object",
