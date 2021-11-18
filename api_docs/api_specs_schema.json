@@ -1,0 +1,109 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "type": "object",
+  "required": [
+    "title",
+    "description",
+    "mappings"
+  ],
+  "properties": {
+    "title": {
+      "type": "string",
+      "minLength": 10
+    },
+    "description": {
+      "type": "string",
+      "minLength": 10
+    },
+    "mappings": {
+      "type": "object",
+      "additionalProperties": {
+        "required": [
+          "title",
+          "description",
+          "broadcast_allowed",
+          "sender",
+          "receiver",
+          "http_method",
+          "uri",
+          "request",
+          "response"
+        ],
+        "properties": {
+          "title": {
+            "type": "string",
+            "minLength": 5
+          },
+          "description": {
+            "type": "string",
+            "minLength": 15
+          },
+          "sender": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "minLength": 5
+            }
+          },
+          "receiver": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "minLength": 5
+            }
+          },
+          "broadcast_allowed": {
+            "type": "boolean"
+          },
+          "http_method": {
+            "enum": ["GET","POST", null]
+          },
+          "uri": {
+            "properties": {
+              "value": {
+                "type": "string",
+                "pattern": "^([a-z0-9_]+/)*?[a-z0-9_]+$"
+              },
+              "var_name": {
+                "type": "string",
+                "minLength": 5
+              }
+            }
+          },
+          "request": {
+            "type": "object",
+            "required": [
+              "schema",
+              "comment"
+            ],
+            "properties": {
+              "schema": {
+                "type": "string",
+                "pattern": ".+\\.json$"
+              },
+              "comment": {
+                "type": "string"
+              }
+            }
+          },
+          "response": {
+            "type": "object",
+            "required": [
+              "schema",
+              "comment"
+            ],
+            "properties": {
+              "schema": {
+                "type": ["string", "null"],
+                "pattern": ".+\\.json$"
+              },
+              "comment": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

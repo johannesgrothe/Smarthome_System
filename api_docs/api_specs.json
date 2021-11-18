@@ -1,0 +1,247 @@
+{
+  "$schema": "api_specs_schema.json",
+  "title": "Smarthome API Specification",
+  "description": "Documentation for the smarthome systems API endpoints",
+  "mappings": {
+    "write_system_config": {
+      "title": "Write System Config",
+      "description": "Write a system config to the client",
+      "broadcast_allowed": false,
+      "http_method": null,
+      "sender": ["Bridge", "Toolkit"],
+      "receiver": ["Client"],
+      "uri": {
+        "value": "config/system/write",
+        "var_name": "PATH_CLIENT_SYSTEM_CONFIG_WRITE"
+      },
+      "request": {
+        "comment": "Config received by the Client",
+        "schema": "api_client_write_system_config.json"
+      },
+      "response": {
+        "comment": "Response acknowledging the successful writing of the Config",
+        "schema": "default_message.json"
+      }
+    },
+    "write_event_config": {
+      "title": "Write Event Config",
+      "description": "Write an event config to the client",
+      "broadcast_allowed": false,
+      "http_method": null,
+      "sender": ["Bridge", "Toolkit"],
+      "receiver": ["Client"],
+      "uri": {
+        "value": "config/event/write",
+        "var_name": "PATH_CLIENT_EVENT_CONFIG_WRITE"
+      },
+      "request": {
+        "comment": "Config received by the Client",
+        "schema": "api_client_write_event_config.json"
+      },
+      "response": {
+        "comment": "Response acknowledging the successful writing of the Config",
+        "schema": "default_message.json"
+      }
+    },
+    "write_gadget_config": {
+      "title": "Write Gadget Config",
+      "description": "Write a gadget config to the client",
+      "broadcast_allowed": false,
+      "http_method": null,
+      "sender": ["Bridge", "Toolkit"],
+      "receiver": ["Client"],
+      "uri": {
+        "value": "config/gadget/write",
+        "var_name": "PATH_CLIENT_GADGET_CONFIG_WRITE"
+      },
+      "request": {
+        "comment": "Config received by the Client",
+        "schema": "api_client_write_gadget_config.json"
+      },
+      "response": {
+        "comment": "Response acknowledging the successful writing of the Config",
+        "schema": "default_message.json"
+      }
+    },
+    "write_config": {
+      "title": "Write Complete Config to Client",
+      "description": "Write a complete config to a client connected to the bridge",
+      "broadcast_allowed": false,
+      "http_method": "POST",
+      "sender": ["Web Application", "Toolkit"],
+      "receiver": ["Bridge"],
+      "uri": {
+        "value": "config/write",
+        "var_name": "PATH_CLIENT_CONFIG_WRITE"
+      },
+      "request": {
+        "comment": "Config to write to the client",
+        "schema": "api_client_write_config.json"
+      },
+      "response": {
+        "comment": "Response acknowledging the successful writing of the Config",
+        "schema": "default_message.json"
+      }
+    },
+    "delete_config": {
+      "title": "Delete Config",
+      "description": "Deletes all configuration files from a client",
+      "broadcast_allowed": false,
+      "http_method": "POST",
+      "sender": ["Web Application", "Toolkit"],
+      "receiver": ["Bridge", "Client"],
+      "uri": {
+        "value": "config/delete",
+        "var_name": "PATH_CLIENT_CONFIG_DELETE"
+      },
+      "request": {
+        "comment": "Client ID is only needed when sent to bridge to identify client to delete config from",
+        "schema": "api_client_delete_config.json"
+      },
+      "response": {
+        "comment": "Response acknowledging the successful deleting of the config",
+        "schema": "default_message.json"
+      }
+    },
+    "client_heartbeat": {
+      "title": "Client Heartbeat",
+      "description": "Heartbeat sent periodically by the client",
+      "broadcast_allowed": true,
+      "http_method": null,
+      "sender": ["Client"],
+      "receiver": [],
+      "uri": {
+        "value": "heartbeat",
+        "var_name": "PATH_HEARTBEAT"
+      },
+      "request": {
+        "comment": "Config received by the Client",
+        "schema": "bridge_heartbeat_request.json"
+      },
+      "response": {
+        "comment": "No response is expected",
+        "schema": null
+      }
+    },
+    "info_bridge": {
+      "title": "Read Bridge Info",
+      "description": "Reads information about the bridge from the bridge",
+      "broadcast_allowed": true,
+      "http_method": "GET",
+      "sender": ["Web Application, Toolkit"],
+      "receiver": ["Bridge"],
+      "uri": {
+        "value": "info/bridge",
+        "var_name": "PATH_INFO_BRIDGE"
+      },
+      "request": {
+        "comment": "No request payload needed",
+        "schema": "api_empty_request.json"
+      },
+      "response": {
+        "comment": "Every bit of relevant meta information about the bridge",
+        "schema": "api_get_info_response.json"
+      }
+    },
+    "info_clients": {
+      "title": "Read Clients Info",
+      "description": "Reads information about the registered clients from the bridge",
+      "broadcast_allowed": true,
+      "http_method": "GET",
+      "sender": ["Web Application, Toolkit"],
+      "receiver": ["Bridge"],
+      "uri": {
+        "value": "info/clients",
+        "var_name": "PATH_INFO_CLIENTS"
+      },
+      "request": {
+        "comment": "No request payload needed",
+        "schema": "api_empty_request.json"
+      },
+      "response": {
+        "comment": "Json containing information about all clients currently known to the bridge",
+        "schema": "api_get_all_clients_response.json"
+      }
+    },
+    "info_gadgets": {
+      "title": "Read Gadgets Info",
+      "description": "Reads information about the registered gadgets from the bridge",
+      "broadcast_allowed": true,
+      "http_method": "GET",
+      "sender": ["Web Application, Toolkit"],
+      "receiver": ["Bridge"],
+      "uri": {
+        "value": "info/gadgets",
+        "var_name": "PATH_INFO_GADGETS"
+      },
+      "request": {
+        "comment": "No request payload needed",
+        "schema": "api_empty_request.json"
+      },
+      "response": {
+        "comment": "Json containing information about all gadgets currently known to the bridge",
+        "schema": "api_get_all_gadgets_response.json"
+      }
+    },
+    "sync_gadget": {
+      "title": "Sync Gadget",
+      "description": " TODO NOT NEEDED ANYMORE\n Syncs a gadget with the bridge",
+      "broadcast_allowed": true,
+      "http_method": null,
+      "sender": ["Client"],
+      "receiver": ["Bridge"],
+      "uri": {
+        "value": "sync/gadget",
+        "var_name": "PATH_SYNC_GADGET"
+      },
+      "request": {
+        "comment": "Sync information for the bridge",
+        "schema": "api_gadget_sync_request.json"
+      },
+      "response": {
+        "comment": "No response is expected",
+        "schema": null
+      }
+    },
+    "update_gadget": {
+      "title": "Update Gadget",
+      "description": "Updates the mutable characteristics of a gadget",
+      "broadcast_allowed": true,
+      "http_method": "POST",
+      "sender": ["Client", "Web Application"],
+      "receiver": ["Bridge"],
+      "uri": {
+        "value": "update/gadget",
+        "var_name": "PATH_UPDATE_GADGET"
+      },
+      "request": {
+        "comment": "Information to update the gadget with",
+        "schema": "api_gadget_update_request.json"
+      },
+      "response": {
+        "comment": "No response is expected",
+        "schema": null
+      }
+    },
+    "sync_client": {
+      "title": "Sync Client",
+      "description": "Syncs a client with the bridge",
+      "broadcast_allowed": true,
+      "http_method": null,
+      "sender": ["Client"],
+      "receiver": ["Bridge"],
+      "uri": {
+        "value": "sync/client",
+        "var_name": "PATH_SYNC_CLIENT"
+      },
+      "request": {
+        "comment": "Sync information for the client",
+        "schema": "api_client_sync_request.json"
+      },
+      "response": {
+        "comment": "No response is expected",
+        "schema": null
+      }
+    }
+  }
+}
