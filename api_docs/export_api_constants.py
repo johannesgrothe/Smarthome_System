@@ -5,10 +5,11 @@ import logging
 
 sys.path.append("..")
 
+# from markdown_file import MarkdownFile
 from api_loader import ApiLoader
 
 # Path to the file containing the api definitions
-_path_api_specs = os.path.join(os.getcwd(), "api_specs.json")
+_path_api_specs = os.path.join("api_docs", "api_specs.json")
 
 # Path to the json schemas referenced in the api specs file
 _path_json_schemas = "json_schemas"
@@ -54,6 +55,8 @@ class ApiConstantsExporter:
     def export_api_constants_cpp(self, out_file: str):
         lines = []
 
+        lines.append(f"#pragma once")
+
         lines.append(f"// {_export_file_docstring}")
         lines.append("")
 
@@ -74,8 +77,8 @@ class ApiConstantsExporter:
 
 def main():
     exporter = ApiConstantsExporter(_path_api_specs)
-    exporter.export_api_constants_python("../api_params.py")
-    exporter.export_api_constants_cpp("../api_params.h")
+    exporter.export_api_constants_python("api_params.py")
+    exporter.export_api_constants_cpp("api_params.h")
 
 
 if __name__ == "__main__":
