@@ -242,6 +242,26 @@
         "comment": "No response is expected",
         "schema": null
       }
+    },
+    "reboot_client": {
+      "title": "Reboot Client",
+      "description": "Reboots a client",
+      "broadcast_allowed": false,
+      "http_method": "POST",
+      "sender": ["Bridge", "Web Application", "Toolkit"],
+      "receiver": ["Bridge", "Client"],
+      "uri": {
+        "value": "reboot/client",
+        "var_name": "PATH_CLIENT_REBOOT"
+      },
+      "request": {
+        "comment": "Client ID is only needed when sent to bridge to identify client to reboot from",
+        "schema": "api_client_delete_config.json"
+      },
+      "response": {
+        "comment": "Response acknowledging the successful initialization of the reboot",
+        "schema": "default_message.json"
+      }
     }
   }
 }

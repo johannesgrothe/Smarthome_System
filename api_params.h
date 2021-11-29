@@ -40,3 +40,6 @@
 // Sync Client
 #define PATH_SYNC_CLIENT "sync/client"
 
+// Reboot Client
+#define PATH_CLIENT_REBOOT "reboot/client"
+

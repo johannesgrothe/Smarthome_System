@@ -40,3 +40,6 @@ PATH_UPDATE_GADGET = "update/gadget"
 # Sync Client
 PATH_SYNC_CLIENT = "sync/client"
 
+# Reboot Client
+PATH_CLIENT_REBOOT = "reboot/client"
+
