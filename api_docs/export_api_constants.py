@@ -1,11 +1,7 @@
 """Module for the api constants exporter"""
-import sys
 import logging
 from api_docs.script_params import *
 
-sys.path.append("..")
-
-# from markdown_file import MarkdownFile
 try:
     from api_loader import ApiLoader
 except ModuleNotFoundError:
