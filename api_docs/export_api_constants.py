@@ -1,11 +1,7 @@
 """Module for the api constants exporter"""
 import logging
-from api_docs.script_params import *
-
-try:
-    from api_loader import ApiLoader
-except ModuleNotFoundError:
-    from api_docs.api_loader import ApiLoader
+from api_loader import ApiLoader
+from script_params import *
 
 _export_file_docstring = "Collection of constants for all api uris"
 

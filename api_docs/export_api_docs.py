@@ -1,12 +1,15 @@
 """Module for the api doc exporter"""
-
 import logging
+import sys
 from script_params import *
+from api_loader import ApiLoader
+
+# Needed for execution when included as submodule
+sys.path.append("../")
 
 from utils.markdown_file import *
 from utils.json_schema_formatter import JsonSchemaFormatter
 from utils.schema_loader import SchemaLoader
-from api_loader import ApiLoader
 
 # Base path for the links to the actual json schema files
 _schema_link_base_path = "https://github.com/johannesgrothe/Smarthome_System/blob/master/json_schemas/"
