@@ -5,6 +5,9 @@ name = "pypi"
 
 [packages]
 jsonschema = {version="*"}
+pytest = {version="*"}
+coverage = {version="*"}
+pytest-cov = {version="*"}
 
 [dev-packages]
 

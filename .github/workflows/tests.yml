@@ -1,0 +1,36 @@
+name: PyTest
+
+on: [push]
+
+jobs:
+
+  tests:
+
+    name: Run Tests
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Upgrade pip
+        run: pip install --upgrade pip
+
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: "3.9"
+
+      - name: Install pipenv
+        uses: dschep/install-pipenv-action@v1
+
+      - name: Install dependencies
+        run:
+          pipenv install
+
+      - name: Run Pipenv Check
+        run: pipenv check
+
+      - name: Run Tests
+        run: pipenv run python -m pytest --cov ./ --cov-branch
