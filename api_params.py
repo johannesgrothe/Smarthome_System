@@ -40,3 +40,15 @@ PATH_UPDATE_GADGET = "update/gadget"
 # Sync Client
 PATH_SYNC_CLIENT = "sync/client"
 
+# Reboot Client
+PATH_CLIENT_REBOOT = "reboot/client"
+
+# Client Sync Request
+PATH_SYNC_REQUEST = "sync"
+
+# Sync Event
+PATH_SYNC_EVENT = "sync/event"
+
+# Test Echo
+PATH_TEST_ECHO = "echo"
+

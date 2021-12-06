@@ -8,8 +8,13 @@
       "description": "Write a system config to the client",
       "broadcast_allowed": false,
       "http_method": null,
-      "sender": ["Bridge", "Toolkit"],
-      "receiver": ["Client"],
+      "sender": [
+        "Bridge",
+        "Toolkit"
+      ],
+      "receiver": [
+        "Client"
+      ],
       "uri": {
         "value": "config/system/write",
         "var_name": "PATH_CLIENT_SYSTEM_CONFIG_WRITE"
@@ -28,8 +33,13 @@
       "description": "Write an event config to the client",
       "broadcast_allowed": false,
       "http_method": null,
-      "sender": ["Bridge", "Toolkit"],
-      "receiver": ["Client"],
+      "sender": [
+        "Bridge",
+        "Toolkit"
+      ],
+      "receiver": [
+        "Client"
+      ],
       "uri": {
         "value": "config/event/write",
         "var_name": "PATH_CLIENT_EVENT_CONFIG_WRITE"
@@ -48,8 +58,13 @@
       "description": "Write a gadget config to the client",
       "broadcast_allowed": false,
       "http_method": null,
-      "sender": ["Bridge", "Toolkit"],
-      "receiver": ["Client"],
+      "sender": [
+        "Bridge",
+        "Toolkit"
+      ],
+      "receiver": [
+        "Client"
+      ],
       "uri": {
         "value": "config/gadget/write",
         "var_name": "PATH_CLIENT_GADGET_CONFIG_WRITE"
@@ -68,8 +83,13 @@
       "description": "Write a complete config to a client connected to the bridge",
       "broadcast_allowed": false,
       "http_method": "POST",
-      "sender": ["Web Application", "Toolkit"],
-      "receiver": ["Bridge"],
+      "sender": [
+        "Web Application",
+        "Toolkit"
+      ],
+      "receiver": [
+        "Bridge"
+      ],
       "uri": {
         "value": "config/write",
         "var_name": "PATH_CLIENT_CONFIG_WRITE"
@@ -88,8 +108,14 @@
       "description": "Deletes all configuration files from a client",
       "broadcast_allowed": false,
       "http_method": "POST",
-      "sender": ["Web Application", "Toolkit"],
-      "receiver": ["Bridge", "Client"],
+      "sender": [
+        "Web Application",
+        "Toolkit"
+      ],
+      "receiver": [
+        "Bridge",
+        "Client"
+      ],
       "uri": {
         "value": "config/delete",
         "var_name": "PATH_CLIENT_CONFIG_DELETE"
@@ -108,7 +134,9 @@
       "description": "Heartbeat sent periodically by the client",
       "broadcast_allowed": true,
       "http_method": null,
-      "sender": ["Client"],
+      "sender": [
+        "Client"
+      ],
       "receiver": [],
       "uri": {
         "value": "heartbeat",
@@ -128,8 +156,12 @@
       "description": "Reads information about the bridge from the bridge",
       "broadcast_allowed": true,
       "http_method": "GET",
-      "sender": ["Web Application, Toolkit"],
-      "receiver": ["Bridge"],
+      "sender": [
+        "Web Application, Toolkit"
+      ],
+      "receiver": [
+        "Bridge"
+      ],
       "uri": {
         "value": "info/bridge",
         "var_name": "PATH_INFO_BRIDGE"
@@ -148,8 +180,12 @@
       "description": "Reads information about the registered clients from the bridge",
       "broadcast_allowed": true,
       "http_method": "GET",
-      "sender": ["Web Application, Toolkit"],
-      "receiver": ["Bridge"],
+      "sender": [
+        "Web Application, Toolkit"
+      ],
+      "receiver": [
+        "Bridge"
+      ],
       "uri": {
         "value": "info/clients",
         "var_name": "PATH_INFO_CLIENTS"
@@ -168,8 +204,12 @@
       "description": "Reads information about the registered gadgets from the bridge",
       "broadcast_allowed": true,
       "http_method": "GET",
-      "sender": ["Web Application, Toolkit"],
-      "receiver": ["Bridge"],
+      "sender": [
+        "Web Application, Toolkit"
+      ],
+      "receiver": [
+        "Bridge"
+      ],
       "uri": {
         "value": "info/gadgets",
         "var_name": "PATH_INFO_GADGETS"
@@ -188,8 +228,12 @@
       "description": " TODO NOT NEEDED ANYMORE\n Syncs a gadget with the bridge",
       "broadcast_allowed": true,
       "http_method": null,
-      "sender": ["Client"],
-      "receiver": ["Bridge"],
+      "sender": [
+        "Client"
+      ],
+      "receiver": [
+        "Bridge"
+      ],
       "uri": {
         "value": "sync/gadget",
         "var_name": "PATH_SYNC_GADGET"
@@ -208,8 +252,13 @@
       "description": "Updates the mutable characteristics of a gadget",
       "broadcast_allowed": true,
       "http_method": "POST",
-      "sender": ["Client", "Web Application"],
-      "receiver": ["Bridge"],
+      "sender": [
+        "Client",
+        "Web Application"
+      ],
+      "receiver": [
+        "Bridge"
+      ],
       "uri": {
         "value": "update/gadget",
         "var_name": "PATH_UPDATE_GADGET"
@@ -228,8 +277,12 @@
       "description": "Syncs a client with the bridge",
       "broadcast_allowed": true,
       "http_method": null,
-      "sender": ["Client"],
-      "receiver": ["Bridge"],
+      "sender": [
+        "Client"
+      ],
+      "receiver": [
+        "Bridge"
+      ],
       "uri": {
         "value": "sync/client",
         "var_name": "PATH_SYNC_CLIENT"
@@ -240,6 +293,103 @@
       },
       "response": {
         "comment": "No response is expected",
+        "schema": null
+      }
+    },
+    "reboot_client": {
+      "title": "Reboot Client",
+      "description": "Reboots a client",
+      "broadcast_allowed": false,
+      "http_method": "POST",
+      "sender": [
+        "Bridge",
+        "Web Application",
+        "Toolkit"
+      ],
+      "receiver": [
+        "Bridge",
+        "Client"
+      ],
+      "uri": {
+        "value": "reboot/client",
+        "var_name": "PATH_CLIENT_REBOOT"
+      },
+      "request": {
+        "comment": "Client ID is only needed when sent to bridge to identify client to reboot from",
+        "schema": "api_client_delete_config.json"
+      },
+      "response": {
+        "comment": "Response acknowledging the successful initialization of the reboot",
+        "schema": "default_message.json"
+      }
+    },
+    "sync_request": {
+      "title": "Client Sync Request",
+      "description": "Asks a client for sync information",
+      "broadcast_allowed": true,
+      "http_method": null,
+      "sender": [
+        "Bridge"
+      ],
+      "receiver": [
+        "Client"
+      ],
+      "uri": {
+        "value": "sync",
+        "var_name": "PATH_SYNC_REQUEST"
+      },
+      "request": {
+        "comment": "No request payload needed",
+        "schema": "api_empty_request.json"
+      },
+      "response": {
+        "comment": "No response is expected, the client sends a separate sync broadcast afterwards",
+        "schema": null
+      }
+    },
+    "sync_event": {
+      "title": "Sync Event",
+      "description": "Syncs an Event created on the Client with the Bridge",
+      "broadcast_allowed": true,
+      "http_method": null,
+      "sender": [
+        "Client"
+      ],
+      "receiver": [
+        "Bridge"
+      ],
+      "uri": {
+        "value": "sync/event",
+        "var_name": "PATH_SYNC_EVENT"
+      },
+      "request": {
+        "comment": "Event information for the Bridge",
+        "schema": "api_event_sync_request.json"
+      },
+      "response": {
+        "comment": "No response is expected",
+        "schema": null
+      }
+    },
+    "test_echo": {
+      "title": "Test Echo",
+      "description": "Test endpoint. Responds with the same payload as the request",
+      "broadcast_allowed": true,
+      "http_method": null,
+      "sender": [],
+      "receiver": [
+        "Bridge, Client"
+      ],
+      "uri": {
+        "value": "echo",
+        "var_name": "PATH_TEST_ECHO"
+      },
+      "request": {
+        "comment": "Any payload. Response will mirror the payload sent.",
+        "schema": "api_empty_request.json"
+      },
+      "response": {
+        "comment": "Response payload will be the same as the sent one",
         "schema": null
       }
     }
