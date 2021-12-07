@@ -6,7 +6,7 @@ jobs:
 
   tests:
 
-    name: Run Tests
+    name: Run Integration Tests
 
     runs-on: ubuntu-latest
 
