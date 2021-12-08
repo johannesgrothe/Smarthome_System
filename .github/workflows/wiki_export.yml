@@ -31,6 +31,11 @@ jobs:
       - name: Export API docs
         run: cd api_docs && pipenv run python export_api_docs.py
 
+      - name: Configure Git User
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+
       - name: Upload Documentation to Wiki
         uses: SwiftDocOrg/github-wiki-publish-action@v1
         with:
