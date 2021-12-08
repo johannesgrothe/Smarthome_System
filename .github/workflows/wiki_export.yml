@@ -1,0 +1,27 @@
+name: Export Wiki
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  export_wiki:
+
+    name: Export Wiki
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Export API docs
+        run: cd api_docs && python3 export_api_docs.py
+
+      - name: Upload Documentation to Wiki
+        uses: SwiftDocOrg/github-wiki-publish-action@v1
+        with:
+          path: "temp"
+        env:
+          GH_PERSONAL_ACCESS_TOKEN: ${{ secrets.GH_PERSONAL_ACCESS_TOKEN }}
