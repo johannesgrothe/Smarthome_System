@@ -108,7 +108,6 @@ def main():
         os.mkdir(PATH_TEMP_DIR)
     else:
         if args.clean_temp:
-            logging.getLogger("Main").info(f"Resetting Temp dir")
             for filename in [x for x
                              in os.listdir(PATH_TEMP_DIR)
                              if os.path.isfile(os.path.join(PATH_TEMP_DIR, x))]:
