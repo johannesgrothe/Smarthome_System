@@ -1,18 +1,14 @@
 """Module for the api constants exporter"""
-import os.path
-import sys
 import logging
 
-sys.path.append("..")
-
-# from markdown_file import MarkdownFile
-from api_loader import ApiLoader
-
-# Path to the file containing the api definitions
-_path_api_specs = os.path.join("api_docs", "api_specs.json")
-
-# Path to the json schemas referenced in the api specs file
-_path_json_schemas = "json_schemas"
+try:
+    # Used when directly called from directory
+    from api_loader import ApiLoader
+    from script_params import *
+except ModuleNotFoundError:
+    # Used when class is executed from test
+    from api_docs.api_loader import ApiLoader
+    from api_docs.script_params import *
 
 _export_file_docstring = "Collection of constants for all api uris"
 
@@ -76,9 +72,9 @@ class ApiConstantsExporter:
 
 
 def main():
-    exporter = ApiConstantsExporter(_path_api_specs)
-    exporter.export_api_constants_python("api_params.py")
-    exporter.export_api_constants_cpp("api_params.h")
+    exporter = ApiConstantsExporter(PATH_API_SPECS)
+    exporter.export_api_constants_python(f"{PATH_FILE_CONSTANTS}.py")
+    exporter.export_api_constants_cpp(f"{PATH_FILE_CONSTANTS}.h")
 
 
 if __name__ == "__main__":

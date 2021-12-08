@@ -1,24 +1,15 @@
 """Module for the api doc exporter"""
-
-import sys
-import os
 import logging
+import sys
+from script_params import *
+from api_loader import ApiLoader
 
-# sys.path.append("../..")
+# Needed for execution when included as submodule
+sys.path.append("../")
 
-print(os.getcwd())
-
-# from markdown_file import MarkdownFile
 from utils.markdown_file import *
 from utils.json_schema_formatter import JsonSchemaFormatter
 from utils.schema_loader import SchemaLoader
-from api_loader import ApiLoader
-
-# Path to the file containing the api definitions
-_path_api_specs = os.path.join("api_docs", "api_specs.json")
-
-# Path to the json schemas referenced in the api specs file
-_path_json_schemas = os.path.join("..", "json_schemas")
 
 # Base path for the links to the actual json schema files
 _schema_link_base_path = "https://github.com/johannesgrothe/Smarthome_System/blob/master/json_schemas/"
@@ -104,10 +95,10 @@ class ApiDocExporter:
 
 
 def main():
-    exporter = ApiDocExporter(_path_api_specs, _path_json_schemas)
-    if not os.path.isdir("../temp"):
-        os.mkdir("../temp")
-    exporter.export_api_doc("../temp/api.md")
+    exporter = ApiDocExporter(PATH_API_SPECS, PATH_JSON_SCHEMAS)
+    if not os.path.isdir(PATH_TEMP_DIR):
+        os.mkdir(PATH_TEMP_DIR)
+    exporter.export_api_doc(os.path.join(PATH_TEMP_DIR, "api.md"))
 
 
 if __name__ == "__main__":

@@ -1,12 +1,12 @@
-name: PyTest
+name: Integration Tests
 
-on: [ push ]
+on: [ pull_request ]
 
 jobs:
 
   tests:
 
-    name: Run Tests
+    name: Run Integration Tests
 
     runs-on: ubuntu-latest
 
@@ -33,4 +33,4 @@ jobs:
         run: pipenv check
 
       - name: Run Tests
-        run: pipenv run python -m pytest -m "not pr_only" --cov ./ --cov-branch
+        run: pipenv run python -m pytest -m "pr_only" --cov ./ --cov-branch
