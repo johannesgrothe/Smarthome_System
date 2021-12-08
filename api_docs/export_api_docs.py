@@ -1,4 +1,5 @@
 """Module for the api doc exporter"""
+import argparse
 import logging
 import sys
 from script_params import *
@@ -94,10 +95,25 @@ class ApiDocExporter:
         file.save(out_file)
 
 
+def parse_args() -> argparse.Namespace:
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--clean_temp", action="store_true", default=False)
+    return parser.parse_args()
+
+
 def main():
+    args = parse_args()
     exporter = ApiDocExporter(PATH_API_SPECS, PATH_JSON_SCHEMAS)
     if not os.path.isdir(PATH_TEMP_DIR):
         os.mkdir(PATH_TEMP_DIR)
+    else:
+        if args.clean_temp:
+            logging.getLogger("Main").info(f"Resetting Temp dir")
+            for filename in [x for x
+                             in os.listdir(PATH_TEMP_DIR)
+                             if os.path.isfile(os.path.join(PATH_TEMP_DIR, x))]:
+                logging.getLogger("Main").info(f"Deleting '{filename}'")
+                os.remove(os.path.join(PATH_TEMP_DIR, filename))
     exporter.export_api_doc(os.path.join(PATH_TEMP_DIR, "api.md"))
 
 
