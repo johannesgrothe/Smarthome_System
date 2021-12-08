@@ -16,6 +16,18 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
 
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: "3.9"
+
+      - name: Install pipenv
+        uses: dschep/install-pipenv-action@v1
+
+      - name: Install dependencies
+        run:
+          pipenv install
+
       - name: Export API docs
         run: cd api_docs && python3 export_api_docs.py
 
