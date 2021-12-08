@@ -29,7 +29,7 @@ jobs:
           pipenv install
 
       - name: Export API docs
-        run: cd api_docs && python3 export_api_docs.py
+        run: cd api_docs && pipenv run python export_api_docs.py
 
       - name: Upload Documentation to Wiki
         uses: SwiftDocOrg/github-wiki-publish-action@v1
