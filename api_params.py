@@ -31,9 +31,6 @@ PATH_INFO_CLIENTS = "info/clients"
 # Read Gadgets Info
 PATH_INFO_GADGETS = "info/gadgets"
 
-# Sync Gadget
-PATH_SYNC_GADGET = "sync/gadget"
-
 # Update Gadget
 PATH_UPDATE_GADGET = "update/gadget"
 
