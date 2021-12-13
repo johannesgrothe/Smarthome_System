@@ -32,9 +32,6 @@
 // Read Gadgets Info
 #define PATH_INFO_GADGETS "info/gadgets"
 
-// Sync Gadget
-#define PATH_SYNC_GADGET "sync/gadget"
-
 // Update Gadget
 #define PATH_UPDATE_GADGET "update/gadget"
 

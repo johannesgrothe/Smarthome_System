@@ -223,30 +223,6 @@
         "schema": "api_get_all_gadgets_response.json"
       }
     },
-    "sync_gadget": {
-      "title": "Sync Gadget",
-      "description": " TODO NOT NEEDED ANYMORE\n Syncs a gadget with the bridge",
-      "broadcast_allowed": true,
-      "http_method": null,
-      "sender": [
-        "Client"
-      ],
-      "receiver": [
-        "Bridge"
-      ],
-      "uri": {
-        "value": "sync/gadget",
-        "var_name": "PATH_SYNC_GADGET"
-      },
-      "request": {
-        "comment": "Sync information for the bridge",
-        "schema": "api_gadget_sync_request.json"
-      },
-      "response": {
-        "comment": "No response is expected",
-        "schema": null
-      }
-    },
     "update_gadget": {
       "title": "Update Gadget",
       "description": "Updates the mutable characteristics of a gadget",
