@@ -1,11 +1,9 @@
-import os
-import sys
-import json
-import jsonschema
 import pytest
 
-from api_docs.export_api_constants import ApiConstantsExporter
-from api_docs.script_params import *
+from exporters.api_constants_exporter import ApiConstantsExporter
+from exporters.gadget_constants_exporter import GadgetConstantsExporter
+from exporters.script_params import *
+from exporters.temp_dir_manager import TempDirManager
 
 
 def remove_first_dir(path: str) -> str:
@@ -14,34 +12,35 @@ def remove_first_dir(path: str) -> str:
 
 @pytest.fixture
 def temp_exists():
-    temp_path = remove_first_dir(PATH_TEMP_DIR)
-    if not os.path.isdir(temp_path):
-        os.mkdir(temp_path)
+    TempDirManager(PATH_TEMP_DIR).assert_temp()
 
 
 @pytest.fixture
 def exported_temp_files(temp_exists):
     print("Creating temporary files")
-    temp_path = remove_first_dir(PATH_TEMP_DIR)
-    path_temp_export = os.path.join(temp_path, remove_first_dir(PATH_FILE_CONSTANTS))
-    temp_files = [f"{path_temp_export}.py", f"{path_temp_export}.h"]
+    path_temp_api_export = os.path.join(PATH_TEMP_DIR, PATH_FILE_API_CONSTANTS)
+    temp_files = [f"{path_temp_api_export}.py", f"{path_temp_api_export}.h"]
 
-    exporter = ApiConstantsExporter(os.path.join("api_docs", PATH_API_SPECS))
-    exporter.export_api_constants_python(f"{path_temp_export}.py")
-    exporter.export_api_constants_cpp(f"{path_temp_export}.h")
+    path_temp_gadgets_export = os.path.join(PATH_TEMP_DIR, PATH_FILE_GADGET_CONSTANTS)
+    temp_files += [f"{path_temp_gadgets_export}.py", f"{path_temp_gadgets_export}.h"]
+
+    exporter = ApiConstantsExporter(PATH_API_SPECS)
+    exporter.export_python(f"{path_temp_api_export}.py")
+    exporter.export_cpp(f"{path_temp_api_export}.h")
+
+    exporter = GadgetConstantsExporter(PATH_GADGET_SPECS)
+    exporter.export_python(f"{path_temp_gadgets_export}.py")
+    exporter.export_cpp(f"{path_temp_gadgets_export}.h")
+
     yield temp_files
     print("Removing temporary files")
-    for file in temp_files:
-        try:
-            os.remove(file)
-        except FileNotFoundError:
-            pass
+    TempDirManager(PATH_TEMP_DIR).clean_temp()
 
 
 @pytest.mark.pr_only
 def test_constant_files(exported_temp_files):
     for file in exported_temp_files:
-        original_filename = remove_first_dir(PATH_FILE_CONSTANTS) + "." + file.split(".")[-1]
+        original_filename = file.split(os.sep)[-1]
         print(f"Checking '{file}' against '{original_filename}'")
 
         with open(file, "r") as file_h:
