@@ -29,7 +29,7 @@ jobs:
           pipenv install
 
       - name: Export API docs
-        run: cd api_docs && pipenv run python export_api_docs.py
+        run: pipenv run python export.py --export_docs
 
       - name: Configure Git User
         run: |

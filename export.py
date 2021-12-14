@@ -5,6 +5,7 @@ from exporters.script_params import *
 from exporters.temp_dir_manager import TempDirManager
 from exporters.api_constants_exporter import ApiConstantsExporter
 from exporters.api_doc_exporter import ApiDocExporter
+from exporters.gadget_constants_exporter import GadgetConstantsExporter
 
 
 def export_api_constants():
@@ -19,9 +20,9 @@ def export_api_docs():
 
 
 def export_gadget_constants():
-    # exporter = ApiConstantsExporter(PATH_API_SPECS)
-    # exporter.export_python(f"{PATH_FILE_API_CONSTANTS}.py")
-    # exporter.export_cpp(f"{PATH_FILE_API_CONSTANTS}.h")
+    exporter = GadgetConstantsExporter(PATH_GADGET_SPECS)
+    exporter.export_python(f"{PATH_FILE_GADGET_CONSTANTS}.py")
+    exporter.export_cpp(f"{PATH_FILE_GADGET_CONSTANTS}.h")
     pass
 
 
