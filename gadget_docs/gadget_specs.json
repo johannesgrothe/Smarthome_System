@@ -1,5 +1,5 @@
 {
   "$schema": "gadget_specs.json",
-  "type": "object",
-  "required": []
+  "title": "Gadget and Characteristic Specifications",
+  "description": "Documentation for the gadgets and characteristics available to the system"
 }

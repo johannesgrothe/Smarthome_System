@@ -1,6 +1,7 @@
 import argparse
 import logging
 
+from exporters.gadget_doc_exporter import GadgetDocExporter
 from exporters.script_params import *
 from exporters.temp_dir_manager import TempDirManager
 from exporters.api_constants_exporter import ApiConstantsExporter
@@ -16,7 +17,7 @@ def export_api_constants():
 
 def export_api_docs():
     exporter = ApiDocExporter(PATH_API_SPECS, PATH_JSON_SCHEMAS)
-    exporter.export_api_doc(os.path.join(PATH_TEMP_DIR, NAME_FILE_API_DOCS))
+    exporter.export_docs(os.path.join(PATH_TEMP_DIR, NAME_FILE_API_DOCS))
 
 
 def export_gadget_constants():
@@ -27,8 +28,8 @@ def export_gadget_constants():
 
 
 def export_gadget_docs():
-    # exporter = ApiDocExporter(PATH_API_SPECS, PATH_JSON_SCHEMAS)
-    # exporter.export_api_doc(os.path.join(PATH_TEMP_DIR, NAME_FILE_API_DOCS))
+    exporter = GadgetDocExporter(PATH_GADGET_SPECS)
+    exporter.export_docs(os.path.join(PATH_TEMP_DIR, NAME_FILE_GADGET_DOCS))
     pass
 
 
