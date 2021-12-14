@@ -1,5 +1,56 @@
 {
-  "$schema": "gadget_specs.json",
+  "$schema": "gadget_specs_schema.json",
   "title": "Gadget and Characteristic Specifications",
-  "description": "Documentation for the gadgets and characteristics available to the system"
+  "description": "Documentation for the gadgets and characteristics available to the system",
+  "gadget_definitions": {
+    "client_gadgets": {
+      "title": "Client Gadgets",
+      "description": "Gadgets running on the ESP Clients",
+      "items": {
+        "any_gadget": {
+          "name": "Any Gadget",
+          "description": "Special Identifier for faulty or abstract gadgets, depending on the context. It can have any combination of characteristics.",
+          "enum_value": 0,
+          "characteristics": [
+          ]
+        },
+        "doorbell_basic": {
+          "name": "Doorbell Basic",
+          "description": "Basic Smart Doorbell only raising an event if pressed",
+          "enum_value": 1,
+          "characteristics": []
+        },
+        "lamp_rgb_neopixel_basic": {
+          "name": "NeoPixel Basic RGB",
+          "description": "AdaFruit NeoPixel controlled RGB Strips/Lamps",
+          "enum_value": 2,
+          "characteristics": [
+            "status"
+          ]
+        }
+      }
+    },
+    "bridge_gadgets": {
+      "title": "Bridge Gadgets",
+      "description": "Gadgets running on the Bridge itself (virtual Gadgets)",
+      "items": {
+      }
+    }
+  },
+  "characteristic_definitions": {
+    "title": "Characteristics",
+    "description": "Characteristics Gadgets can contain",
+    "items": {
+      "err_type": {
+        "name": "Error-Characteristic",
+        "description": "Special Identifier for faulty characteristics. Can not legally be included in any gadget",
+        "enum_value": 0
+      },
+      "status": {
+        "name": "Status",
+        "description": "Basic Status (On/Off) Characteristic",
+        "enum_value": 1
+      }
+    }
+  }
 }
