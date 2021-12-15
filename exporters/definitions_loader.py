@@ -1,26 +1,26 @@
-"""Module for the api loader class"""
+"""Module for the definitions loader class"""
 import os
 import json
 from jsonschema import validate, ValidationError
 import logging
 
 
-class ApiLoader:
+class DefinitionsLoader:
     """Loader class for the api definitions"""
     _definitions_file: str
-    _api_definition: dict
+    _definitions: dict
     _logger: logging.Logger
 
     def __init__(self, definitions: str):
         self._logger = logging.getLogger(self.__class__.__name__)
         self._definitions_file = definitions
         try:
-            self._load_api_definition()
+            self._load_definitions()
         except ValidationError as err:
             self._logger.error(err.args[0])
             raise Exception("Could not load api definition because of failed schema validation")
 
-    def _load_api_definition(self):
+    def _load_definitions(self):
         with open(self._definitions_file, "r") as file_p:
             data = json.load(file_p)
 
@@ -30,12 +30,12 @@ class ApiLoader:
             schema = json.load(file_p)
 
         validate(data, schema)
-        self._api_definition = data
+        self._definitions = data
 
     def get_definitions(self) -> dict:
         """
-        Returns the loaded and validated api definitions
+        Returns the loaded and validated definitions
 
-        :return: The loaded api definitions
+        :return: The loaded definitions
         """
-        return self._api_definition
+        return self._definitions

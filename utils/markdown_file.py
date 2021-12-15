@@ -42,7 +42,7 @@ class MarkdownTable(MarkdownElement):
 
     @classmethod
     def _format_line(cls, data: list[str], max_length) -> str:
-        return " | ".join([cls._format_str(x, max_length) for x in data]).strip()
+        return "|" + "|".join([" " + cls._format_str(x, max_length) for x in data]) + "|"
 
     def _get_max_elem_length(self) -> int:
         line_lengths = [self._max_str_length(x)
@@ -59,10 +59,10 @@ class MarkdownTable(MarkdownElement):
 
     def render_content(self) -> list[str]:
         lines = []
-        max_len = self._get_max_elem_length()
+        max_len = self._get_max_elem_length() + 1
 
         lines.append(self._format_line(self._header, max_len))
-        lines.append(self._format_line(["-" * max_len for _ in self._header], max_len))
+        lines.append(self._format_line(["-" * max_len for _ in self._header], max_len).replace(" -", "--"))
         for line in self._lines:
             lines.append(self._format_line(line, max_len))
         return lines

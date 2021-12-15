@@ -1,0 +1,102 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "type": "object",
+  "required": [
+    "title",
+    "description",
+    "gadget_definitions",
+    "characteristic_definitions"
+  ],
+  "properties": {
+    "title": {
+      "type": "string",
+      "minLength": 10
+    },
+    "description": {
+      "type": "string",
+      "minLength": 10
+    },
+    "gadget_definitions": {
+      "type": "object",
+      "description": "Definitions for all gadgets",
+      "required": [
+        "client_gadgets",
+        "bridge_gadgets"
+      ],
+      "patternProperties": {
+        "^[a-z:]+$": {
+          "type": "object",
+          "required": [
+            "title",
+            "description",
+            "items"
+          ],
+          "properties": {
+            "title": {
+              "type": "string",
+              "minLength": 10
+            },
+            "description": {
+              "type": "string",
+              "minLength": 10
+            },
+            "items": {
+              "type": "object",
+              "description": "Gadgets available to this specific domain",
+              "patternProperties": {
+                "^[a-z:]+$": {
+                  "type": "object",
+                  "required": [
+                    "name",
+                    "description",
+                    "enum_value",
+                    "characteristics"
+                  ],
+                  "properties": {
+                    "name": {
+                      "type": "string",
+                      "minLength": 10
+                    },
+                    "description": {
+                      "type": "string",
+                      "minLength": 10
+                    },
+                    "enum_value": {
+                      "type": "integer",
+                      "minimum": 0
+                    },
+                    "characteristics": {
+
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "characteristic_definitions": {
+      "type": "object",
+      "description": "Definitions for all characteristics",
+      "required": [
+        "title",
+        "description",
+        "items"
+      ],
+      "properties": {
+        "title": {
+          "type": "string",
+          "minLength": 10
+        },
+        "description": {
+          "type": "string",
+          "minLength": 10
+        },
+        "items": {
+
+        }
+      }
+    }
+  }
+}

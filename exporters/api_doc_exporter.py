@@ -1,13 +1,5 @@
 """Module for the api doc exporter"""
-import argparse
-import logging
-import sys
-from script_params import *
-from api_loader import ApiLoader
-
-# Needed for execution when included as submodule
-sys.path.append("../")
-
+from exporters.doc_exporter import DocExporter
 from utils.markdown_file import *
 from utils.json_schema_formatter import JsonSchemaFormatter
 from utils.schema_loader import SchemaLoader
@@ -16,23 +8,16 @@ from utils.schema_loader import SchemaLoader
 _schema_link_base_path = "https://github.com/johannesgrothe/Smarthome_System/blob/master/json_schemas/"
 
 
-class ApiDocExporter:
+class ApiDocExporter(DocExporter):
     """Class that handles the api doc exporting process"""
 
-    _definitions_file: str
     _schema_folder: str
-
-    _api_definition: dict
     _schema_data: dict
-    _logger: logging.Logger
 
     def __init__(self, definitions: str, schemas: str):
-        self._logger = logging.getLogger(self.__class__.__name__)
-        self._definitions_file = definitions
+        super().__init__(definitions)
         self._schema_folder = schemas
         self._schema_data = SchemaLoader(schemas).load_schemas()
-        self._api_definition = ApiLoader(self._definitions_file).get_definitions()
-        self._logger.info("Api definitions loaded successfully")
 
     def _read_schema(self, schema: str) -> str:
         if schema.endswith(".json"):
@@ -46,21 +31,21 @@ class ApiDocExporter:
         else:
             return ", ".join(data)
 
-    def export_api_doc(self, out_file: str):
+    def export_docs(self, out_file: str):
         file = MarkdownFile()
-        file.add(MarkdownHeader(self._api_definition["title"], 0))
-        file.add(MarkdownText(self._api_definition["description"]))
+        file.add(MarkdownHeader(self._definitions["title"], 0))
+        file.add(MarkdownText(self._definitions["description"]))
 
         file.add(MarkdownDivider())
         file.add(MarkdownHeader("Table of Contents", 1))
-        for mapping in self._api_definition["mappings"]:
-            map_data = self._api_definition["mappings"][mapping]
+        for mapping in self._definitions["mappings"]:
+            map_data = self._definitions["mappings"][mapping]
             target: str = map_data["title"].lower().replace(" ", "-")
             file.add(MarkdownInternalLink(map_data["title"], target))
         file.add(MarkdownDivider())
 
-        for mapping in self._api_definition["mappings"]:
-            map_data = self._api_definition["mappings"][mapping]
+        for mapping in self._definitions["mappings"]:
+            map_data = self._definitions["mappings"][mapping]
             file.add(MarkdownHeader(map_data["title"], 2))
             file.add(MarkdownText(map_data["description"]))
 
@@ -93,29 +78,3 @@ class ApiDocExporter:
             file.add(MarkdownDivider())
 
         file.save(out_file)
-
-
-def parse_args() -> argparse.Namespace:
-    parser = argparse.ArgumentParser()
-    parser.add_argument("--clean_temp", action="store_true", default=False)
-    return parser.parse_args()
-
-
-def main():
-    args = parse_args()
-    exporter = ApiDocExporter(PATH_API_SPECS, PATH_JSON_SCHEMAS)
-    if not os.path.isdir(PATH_TEMP_DIR):
-        os.mkdir(PATH_TEMP_DIR)
-    else:
-        if args.clean_temp:
-            for filename in [x for x
-                             in os.listdir(PATH_TEMP_DIR)
-                             if os.path.isfile(os.path.join(PATH_TEMP_DIR, x))]:
-                logging.getLogger("Main").info(f"Deleting '{filename}'")
-                os.remove(os.path.join(PATH_TEMP_DIR, filename))
-    exporter.export_api_doc(os.path.join(PATH_TEMP_DIR, "api.md"))
-
-
-if __name__ == "__main__":
-    logging.basicConfig(level=logging.DEBUG, format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
-    main()
