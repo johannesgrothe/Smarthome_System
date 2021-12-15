@@ -56,21 +56,25 @@ class GadgetDocExporter(DocExporter):
             file.add(MarkdownHeader(gadget_platform["title"], 1))
             file.add(MarkdownText(gadget_platform["description"]))
 
-            file.add(self._gen_enum_table(gadget_platform))
-
-            for g_key, gadget_data in gadget_platform["items"].items():
-                self._add_info(g_key, gadget_data, file)
-
-                file.add(MarkdownHeader("Characteristics", 3))
-                if gadget_data["characteristics"]:
-                    characteristics_list = MarkdownList()
-                    for c_identifier in gadget_data["characteristics"]:
-                        c_data = self._definitions["characteristic_definitions"]["items"][c_identifier]
-                        characteristics_list.add_line(f"{c_data['name']}")
-                    file.add(characteristics_list)
-                else:
-                    file.add(MarkdownText("This gadget does not have any characteristics attached"))
-
+            if not gadget_platform["items"]:
+                file.add(MarkdownText("This platform has no gadgets specified yet."))
                 file.add(MarkdownDivider())
+            else:
+                file.add(self._gen_enum_table(gadget_platform))
+
+                for g_key, gadget_data in gadget_platform["items"].items():
+                    self._add_info(g_key, gadget_data, file)
+
+                    file.add(MarkdownHeader("Characteristics", 3))
+                    if gadget_data["characteristics"]:
+                        characteristics_list = MarkdownList()
+                        for c_identifier in gadget_data["characteristics"]:
+                            c_data = self._definitions["characteristic_definitions"]["items"][c_identifier]
+                            characteristics_list.add_line(f"{c_data['name']}")
+                        file.add(characteristics_list)
+                    else:
+                        file.add(MarkdownText("This gadget does not have any characteristics attached"))
+
+                    file.add(MarkdownDivider())
 
         file.save(out_file)
