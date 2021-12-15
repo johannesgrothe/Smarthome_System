@@ -9,10 +9,14 @@ class SystemIdentifier(enum.IntEnum):
 
     @classmethod
     def from_string(cls, value: str):
-        if value not in cls.get_attributes():
-            raise ValueError(value)
         return cls(getattr(cls, value))
 
     @classmethod
     def from_int(cls, value: int):
         return cls(value)
+
+    def to_string(self) -> str:
+        return self.__dict__["_name_"]
+
+    def to_int(self) -> int:
+        return int(self)

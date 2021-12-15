@@ -6,10 +6,6 @@ from exporters.script_params import *
 from exporters.temp_dir_manager import TempDirManager
 
 
-def remove_first_dir(path: str) -> str:
-    return os.path.join(*(path.split(os.path.sep)[1:]))
-
-
 @pytest.fixture
 def temp_exists():
     TempDirManager(PATH_TEMP_DIR).assert_temp()
@@ -53,3 +49,8 @@ def test_constant_files(exported_temp_files):
 
         for check_line, exported_line in zip(check_lines, exported_lines):
             assert check_line == exported_line
+
+
+def test_python_file_integrity():
+    import api_params
+    import gadget_definitions

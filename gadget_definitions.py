@@ -26,15 +26,15 @@ class CharacteristicIdentifier(SystemIdentifier):
 class GadgetIdentifier(SystemIdentifier):
     """Gadgets running on the ESP Clients"""
 
-    any_gadget = 0                  # Any Gadget
-    lamp_neopixel_rgb_basic = 1     # NeoPixel Basic RGB Lamp
-    lamp_basic = 2                  # Basic Lamp
-    fan_westinghouse_ir = 3         # Westinghouse IR Fan
-    lamp_westinghouse_ir = 4        # Westinghouse IR Fan Lamp
-    doorbell_basic = 5              # Doorbell Basic
-    wallswitch_basic = 6            # Basic Wallswitch
-    sensor_motion_hr501 = 7         # HR501 Motion Sensor
-    sensor_temperature_dht = 8      # DHT Temperature/Humidity Sensor
+    any_gadget = 0  # Any Gadget
+    lamp_neopixel_rgb_basic = 1  # NeoPixel Basic RGB Lamp
+    lamp_basic = 2  # Basic Lamp
+    fan_westinghouse_ir = 3  # Westinghouse IR Fan
+    lamp_westinghouse_ir = 4  # Westinghouse IR Fan Lamp
+    doorbell_basic = 5  # Doorbell Basic
+    wallswitch_basic = 6  # Basic Wallswitch
+    sensor_motion_hr501 = 7  # HR501 Motion Sensor
+    sensor_temperature_dht = 8  # DHT Temperature/Humidity Sensor
 
 
 class BridgeGadgetIdentifier(SystemIdentifier):

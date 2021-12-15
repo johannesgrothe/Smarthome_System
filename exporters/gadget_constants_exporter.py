@@ -57,10 +57,44 @@ class GadgetConstantsExporter(ConstantsExporter):
         with open(out_file, "w") as file_p:
             file_p.writelines([x + "\n" for x in lines])
 
+    @staticmethod
+    def export_enum_class_items(enum_data: dict, lines: list[str]):
+        for index, (key, data) in enumerate(enum_data.items()):
+            if index < len(enum_data) - 1:
+                lines.append(f"        {key} = {data['enum_value']},  // {data['name']}")
+            else:
+                lines.append(f"        {key} = {data['enum_value']}  // {data['name']}")
+        lines.append("    }")
+
     def export_cpp(self, out_file: str):
+        characteristics_data = self._definitions["characteristic_definitions"]
+        client_gadget_data = self._definitions["gadget_definitions"]["client_gadgets"]
+
         lines = self._generate_cpp_header(_export_file_docstring, '/'.join(__file__.split('/')[-1:]))
 
         lines.append("")
+
+        lines.append("// Namespace for all gadget and characteristic definitions")
+        lines.append("namespace gadget_definitions {")
+
+        lines.append("")
+        lines.append("    // Count of the different gadget identifiers")
+        lines.append(f"    constexpr uint8_t GadgetIdentifierCount = {len(client_gadget_data['items'])};")
+        lines.append("")
+        lines.append("    // Count of the different characteristic identifiers")
+        lines.append(f"    constexpr uint8_t CharacteristicIdentifierCount = {len(characteristics_data['items'])};")
+
+        lines.append("")
+        lines.append(f"    // {client_gadget_data['description']}")
+        lines.append("    enum class GadgetIdentifier {")
+        self.export_enum_class_items(client_gadget_data["items"], lines)
+
+        lines.append("")
+        lines.append(f"    // {characteristics_data['description']}")
+        lines.append("    enum class CharacteristicIdentifier {")
+        self.export_enum_class_items(characteristics_data["items"], lines)
+
+        lines.append("}")
 
         with open(out_file, "w") as file_p:
             file_p.writelines([x + "\n" for x in lines])

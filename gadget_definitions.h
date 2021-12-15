@@ -5,3 +5,37 @@
 // Do not modify this file, modify 'gadget_docs/gadget_specs.json' and export.
 // Every change made will be overwritten at next export.
 
+// Namespace for all gadget and characteristic definitions
+namespace gadget_definitions {
+
+    // Count of the different gadget identifiers
+    constexpr uint8_t GadgetIdentifierCount = 9;
+
+    // Count of the different characteristic identifiers
+    constexpr uint8_t CharacteristicIdentifierCount = 8;
+
+    // Gadgets running on the ESP Clients
+    enum class GadgetIdentifier {
+        any_gadget = 0,  // Any Gadget
+        lamp_neopixel_rgb_basic = 1,  // NeoPixel Basic RGB Lamp
+        lamp_basic = 2,  // Basic Lamp
+        fan_westinghouse_ir = 3,  // Westinghouse IR Fan
+        lamp_westinghouse_ir = 4,  // Westinghouse IR Fan Lamp
+        doorbell_basic = 5,  // Doorbell Basic
+        wallswitch_basic = 6,  // Basic Wallswitch
+        sensor_motion_hr501 = 7,  // HR501 Motion Sensor
+        sensor_temperature_dht = 8  // DHT Temperature/Humidity Sensor
+    }
+
+    // Characteristics Gadgets can contain
+    enum class CharacteristicIdentifier {
+        err_type = 0,  // Error-Characteristic
+        status = 1,  // Status
+        fan_speed = 2,  // Fan Speed
+        brightness = 3,  // Brightness
+        hue = 4,  // Hue
+        saturation = 5,  // Saturation
+        temperature = 6,  // Temperature
+        humidity = 7  // Humidity
+    }
+}
