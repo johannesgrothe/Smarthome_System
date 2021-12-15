@@ -15,8 +15,8 @@ class ApiConstantsExporter(ConstantsExporter):
 
         lines.append("")
 
-        for mapping in self._definition["mappings"]:
-            data = self._definition["mappings"][mapping]
+        for mapping in self._definitions["mappings"]:
+            data = self._definitions["mappings"][mapping]
             lines.append(f"# {data['title']}")
             lines.append(f"{data['uri']['var_name']} = \"{data['uri']['value']}\"")
             lines.append("")
@@ -29,8 +29,8 @@ class ApiConstantsExporter(ConstantsExporter):
 
         lines.append("")
 
-        for mapping in self._definition["mappings"]:
-            data = self._definition["mappings"][mapping]
+        for mapping in self._definitions["mappings"]:
+            data = self._definitions["mappings"][mapping]
             lines.append(f"// {data['title']}")
             lines.append(f"#define {data['uri']['var_name']} \"{data['uri']['value']}\"")
             lines.append("")

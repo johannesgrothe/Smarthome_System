@@ -9,7 +9,7 @@ class GadgetDocExporter(DocExporter):
         super().__init__(definitions)
 
     @staticmethod
-    def _gen_enum_table(data) -> MarkdownTable:
+    def _gen_enum_table(data: dict) -> MarkdownTable:
         overview = {}
         for key, data in data["items"].items():
             val = data["enum_value"]
@@ -23,6 +23,16 @@ class GadgetDocExporter(DocExporter):
         for key in key_list:
             status_table.add_line([str(key), overview[key]])
         return status_table
+
+    @staticmethod
+    def _add_info(key: str, data: dict, file: MarkdownFile):
+        file.add(MarkdownHeader(data["name"], 2))
+        file.add(MarkdownText(data["description"]))
+
+        identifier_table = MarkdownTable(["Parameter Name", "Parameter Value"])
+        identifier_table.add_line(["Int Identifier", str(data['enum_value'])])
+        identifier_table.add_line(["String Identifier", key])
+        file.add(identifier_table)
 
     def export_docs(self, out_file: str):
         file = MarkdownFile()
@@ -38,8 +48,7 @@ class GadgetDocExporter(DocExporter):
         file.add(self._gen_enum_table(characteristics_data))
 
         for key, data in characteristics_data["items"].items():
-            file.add(MarkdownHeader(data["name"], 2))
-            file.add(MarkdownText(data["description"]))
+            self._add_info(key, data, file)
 
             file.add(MarkdownDivider())
 
@@ -50,13 +59,7 @@ class GadgetDocExporter(DocExporter):
             file.add(self._gen_enum_table(gadget_platform))
 
             for g_key, gadget_data in gadget_platform["items"].items():
-                file.add(MarkdownHeader(gadget_data["name"], 2))
-                file.add(MarkdownText(gadget_data["description"]))
-
-                identifier_table = MarkdownTable(["Parameter Name", "Parameter Value"])
-                identifier_table.add_line(["Int Identifier", str(gadget_data['enum_value'])])
-                identifier_table.add_line(["String Identifier", g_key])
-                file.add(identifier_table)
+                self._add_info(g_key, gadget_data, file)
 
                 file.add(MarkdownHeader("Characteristics", 3))
                 if gadget_data["characteristics"]:

@@ -13,7 +13,7 @@ PATH_JSON_SCHEMAS = "json_schemas"
 PATH_FILE_API_CONSTANTS = "api_params"
 
 # Path to the exported api constants files (Ending is supplied by the individual exporters)
-PATH_FILE_GADGET_CONSTANTS = "gadget_lib"
+PATH_FILE_GADGET_CONSTANTS = "gadget_definitions"
 
 # Path to the exported api documentation markdown
 NAME_FILE_API_DOCS = "api.md"

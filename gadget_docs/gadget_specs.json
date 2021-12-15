@@ -14,18 +14,68 @@
           "characteristics": [
           ]
         },
-        "doorbell_basic": {
-          "name": "Doorbell Basic",
-          "description": "Basic Smart Doorbell only raising an event if pressed",
-          "enum_value": 1,
-          "characteristics": []
-        },
-        "lamp_rgb_neopixel_basic": {
-          "name": "NeoPixel Basic RGB",
+        "lamp_neopixel_rgb_basic": {
+          "name": "NeoPixel Basic RGB Lamp",
           "description": "AdaFruit NeoPixel controlled RGB Strips/Lamps",
+          "enum_value": 1,
+          "characteristics": [
+            "status",
+            "brightness",
+            "hue",
+            "saturation"
+          ]
+        },
+        "lamp_basic": {
+          "name": "Basic Lamp",
+          "description": "Basic Lamp that just can be turned on or off",
           "enum_value": 2,
           "characteristics": [
             "status"
+          ]
+        },
+        "fan_westinghouse_ir": {
+          "name": "Westinghouse IR Fan",
+          "description": "IR-controlled Westinghouse ceiling fan",
+          "enum_value": 3,
+          "characteristics": [
+            "status",
+            "fan_speed"
+          ]
+        },
+        "lamp_westinghouse_ir": {
+          "name": "Westinghouse IR Fan Lamp",
+          "description": "IR-controlled Lamp connected to a Westinghouse ceiling fan",
+          "enum_value": 4,
+          "characteristics": [
+            "status"
+          ]
+        },
+        "doorbell_basic": {
+          "name": "Doorbell Basic",
+          "description": "Basic Smart Doorbell only raising an event if pressed",
+          "enum_value": 5,
+          "characteristics": []
+        },
+        "wallswitch_basic": {
+          "name": "Basic Wallswitch",
+          "description": "Basic Wallswitch that throws an event if pressed",
+          "enum_value": 6,
+          "characteristics": []
+        },
+        "sensor_motion_hr501": {
+          "name": "HR501 Motion Sensor",
+          "description": "HR501 motion sensor that throws an event if triggered",
+          "enum_value": 7,
+          "characteristics": [
+          ]
+        },
+        "sensor_temperature_dht": {
+          "name": "DHT Temperature/Humidity Sensor",
+          "description": "DHT temperature/humidity sensor that publishes the to values as characteristic",
+          "enum_value": 8,
+          "characteristics": [
+            "temperature",
+            "humidity"
           ]
         }
       }
@@ -50,6 +100,36 @@
         "name": "Status",
         "description": "Basic Status (On/Off) Characteristic",
         "enum_value": 1
+      },
+      "fan_speed": {
+        "name": "Fan Speed",
+        "description": "Fan Speed Characteristic",
+        "enum_value": 2
+      },
+      "brightness": {
+        "name": "Brightness",
+        "description": "Brightness Characteristic",
+        "enum_value": 3
+      },
+      "hue": {
+        "name": "Hue",
+        "description": "Hue Characteristic (Color)",
+        "enum_value": 4
+      },
+      "saturation": {
+        "name": "Saturation",
+        "description": "Saturation Characteristic (Color)",
+        "enum_value": 5
+      },
+      "temperature": {
+        "name": "Temperature",
+        "description": "Temperature Characteristic",
+        "enum_value": 6
+      },
+      "humidity": {
+        "name": "Humidity",
+        "description": "Humidity Characteristic",
+        "enum_value": 7
       }
     }
   }
