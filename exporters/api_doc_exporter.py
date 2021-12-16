@@ -1,6 +1,5 @@
 """Module for the api doc exporter"""
 from exporters.doc_exporter import DocExporter
-from exporters.script_params import *
 from utils.markdown_file import *
 from utils.json_schema_formatter import JsonSchemaFormatter
 from utils.schema_loader import SchemaLoader
@@ -51,17 +50,12 @@ class ApiDocExporter(DocExporter):
             file.add(MarkdownHeader(map_data["title"], 2))
             file.add(MarkdownText(map_data["description"]))
 
-            # cpp_uri = f"{CPP_NAMESPACE_API_DOCS}::{CPP_NAMESPACE_API_URIS}::{map_data['uri']['var_name']}"
-            # py_uri = f"{PY_CLASSNAME_URIS}.{map_data['uri']['var_name']}"
-
             status_table = MarkdownTable(["Option", "Value"])
             status_table.add_line(["Broadcast Allowed", ('Yes' if map_data['broadcast_allowed'] else 'No')])
             status_table.add_line(["Sender", self._format_list(map_data['sender'], "Anybody")])
             status_table.add_line(["Receiver", self._format_list(map_data['receiver'], "Anybody")])
             http_method = "No HTTP Allowed" if not map_data['http_method'] else map_data['http_method']
             status_table.add_line(["HTTP Method", http_method])
-            # status_table.add_line(["C++ URI Identifier", cpp_uri])
-            # status_table.add_line(["Python URI Identifier", py_uri])
 
             file.add(status_table)
 

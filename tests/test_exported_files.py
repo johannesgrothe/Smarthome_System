@@ -8,7 +8,11 @@ from exporters.temp_dir_manager import TempDirManager
 
 @pytest.fixture
 def temp_exists():
+    print("Creating temp dir")
     TempDirManager(PATH_TEMP_DIR).assert_temp()
+    yield None
+    print("Removing temporary files")
+    TempDirManager(PATH_TEMP_DIR).clean_temp()
 
 
 @pytest.fixture
@@ -29,8 +33,6 @@ def exported_temp_files(temp_exists):
     exporter.export_cpp(f"{path_temp_gadgets_export}.h")
 
     yield temp_files
-    print("Removing temporary files")
-    TempDirManager(PATH_TEMP_DIR).clean_temp()
 
 
 @pytest.mark.pr_only
@@ -54,3 +56,9 @@ def test_constant_files(exported_temp_files):
 def test_python_file_integrity():
     import api_definitions
     import gadget_definitions
+
+
+def test_cpp_file_integrity(temp_exists):
+    import os
+    return_code = os.system("g++ -o temp/test tests/cpp_compile_test.cpp -std=c++11")
+    assert return_code == 0

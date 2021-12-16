@@ -19,20 +19,20 @@ namespace api_definitions {
 
     // Api URIs
     namespace uris {
-        constexpr std::string client_system_config_write = "config/system/write";  // Write System Config
-        constexpr std::string client_event_config_write = "config/event/write";  // Write Event Config
-        constexpr std::string client_gadget_config_write = "config/gadget/write";  // Write Gadget Config
-        constexpr std::string client_config_write = "config/write";  // Write Complete Config to Client
-        constexpr std::string client_config_delete = "config/delete";  // Delete Config
-        constexpr std::string heartbeat = "heartbeat";  // Client Heartbeat
-        constexpr std::string info_bridge = "info/bridge";  // Read Bridge Info
-        constexpr std::string info_clients = "info/clients";  // Read Clients Info
-        constexpr std::string info_gadgets = "info/gadgets";  // Read Gadgets Info
-        constexpr std::string update_gadget = "update/gadget";  // Update Gadget
-        constexpr std::string sync_client = "sync/client";  // Sync Client
-        constexpr std::string client_reboot = "reboot/client";  // Reboot Client
-        constexpr std::string sync_request = "sync";  // Client Sync Request
-        constexpr std::string sync_event = "sync/event";  // Sync Event
-        constexpr std::string test_echo = "echo";  // Test Echo
+        constexpr char client_system_config_write [] = "config/system/write";  // Write System Config
+        constexpr char client_event_config_write [] = "config/event/write";  // Write Event Config
+        constexpr char client_gadget_config_write [] = "config/gadget/write";  // Write Gadget Config
+        constexpr char client_config_write [] = "config/write";  // Write Complete Config to Client
+        constexpr char client_config_delete [] = "config/delete";  // Delete Config
+        constexpr char heartbeat [] = "heartbeat";  // Client Heartbeat
+        constexpr char info_bridge [] = "info/bridge";  // Read Bridge Info
+        constexpr char info_clients [] = "info/clients";  // Read Clients Info
+        constexpr char info_gadgets [] = "info/gadgets";  // Read Gadgets Info
+        constexpr char update_gadget [] = "update/gadget";  // Update Gadget
+        constexpr char sync_client [] = "sync/client";  // Sync Client
+        constexpr char client_reboot [] = "reboot/client";  // Reboot Client
+        constexpr char sync_request [] = "sync";  // Client Sync Request
+        constexpr char sync_event [] = "sync/event";  // Sync Event
+        constexpr char test_echo [] = "echo";  // Test Echo
     }
 }

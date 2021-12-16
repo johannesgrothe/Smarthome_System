@@ -66,7 +66,7 @@ class ApiConstantsExporter(ConstantsExporter):
         lines.append("    // Api URIs")
         lines.append("    namespace " + CPP_NAMESPACE_API_URIS + " {")
         for index, (key, data) in enumerate(self._definitions["mappings"].items()):
-            lines.append(f"        constexpr std::string {data['uri']['var_name']} = \"{data['uri']['value']}\";  // {data['title']}")
+            lines.append(f"        constexpr char {data['uri']['var_name']} [] = \"{data['uri']['value']}\";  // {data['title']}")
         lines.append("    }")
         lines.append("}")
 

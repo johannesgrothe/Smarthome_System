@@ -64,7 +64,7 @@ class GadgetConstantsExporter(ConstantsExporter):
                 lines.append(f"        {key} = {data['enum_value']},  // {data['name']}")
             else:
                 lines.append(f"        {key} = {data['enum_value']}  // {data['name']}")
-        lines.append("    }")
+        lines.append("    };")
 
     def export_cpp(self, out_file: str):
         characteristics_data = self._definitions["characteristic_definitions"]
