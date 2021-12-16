@@ -1,4 +1,5 @@
 """Module for the api constants exporter"""
+from exporters.script_params import *
 from exporters.constants_exporter import ConstantsExporter
 from utils.software_version import SoftwareVersion
 
@@ -25,12 +26,12 @@ class ApiConstantsExporter(ConstantsExporter):
 
         lines.append("# API Version")
         version = SoftwareVersion.from_string(self._definitions["version"])
-        lines.append(f"api_version = SoftwareVersion({version.major}, {version.minor}, {version.bugfix})")
+        lines.append(f"{PY_VARNAME_API_VERSION} = SoftwareVersion({version.major}, {version.minor}, {version.bugfix})")
 
         lines.append("")
         lines.append("")
 
-        lines.append("class ApiURIs(StringSystemIdentifier):")
+        lines.append(f"class {PY_CLASSNAME_URIS}(StringSystemIdentifier):")
         lines.append(f"    \"\"\"Container for all API URIs\"\"\"")
         lines.append("")
 
@@ -50,12 +51,12 @@ class ApiConstantsExporter(ConstantsExporter):
         lines.append("")
 
         lines.append("// Namespace for all gadget and characteristic definitions")
-        lines.append("namespace api_definitions {")
+        lines.append("namespace " + CPP_NAMESPACE_API_DOCS + " {")
 
         version = SoftwareVersion.from_string(self._definitions["version"])
         lines.append("")
         lines.append("    // API Version")
-        lines.append("    namespace version {")
+        lines.append("    namespace " + CPP_NAMESPACE_API_VERSION + " {")
         lines.append(f"        constexpr uint8_t major = {version.major};")
         lines.append(f"        constexpr uint8_t minor = {version.minor};")
         lines.append(f"        constexpr uint8_t bugfix = {version.bugfix};")
@@ -63,7 +64,7 @@ class ApiConstantsExporter(ConstantsExporter):
         lines.append("")
 
         lines.append("    // Api URIs")
-        lines.append("    namespace uris {")
+        lines.append("    namespace " + CPP_NAMESPACE_API_URIS + " {")
         for index, (key, data) in enumerate(self._definitions["mappings"].items()):
             lines.append(f"        constexpr std::string {data['uri']['var_name']} = \"{data['uri']['value']}\";  // {data['title']}")
         lines.append("    }")

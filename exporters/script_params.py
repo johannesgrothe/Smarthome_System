@@ -23,3 +23,18 @@ NAME_FILE_GADGET_DOCS = "gadgets.md"
 
 # Path to temporary generated files
 PATH_TEMP_DIR = "temp"
+
+# Namespace api docs
+CPP_NAMESPACE_API_DOCS = "api_definitions"
+
+# Namespace for api URIs
+CPP_NAMESPACE_API_URIS = "uris"
+
+# Namespace for api version
+CPP_NAMESPACE_API_VERSION = "version"
+
+# Classname for api URIs
+PY_CLASSNAME_URIS = "ApiURIs"
+
+# Namespace api docs
+PY_VARNAME_API_VERSION = "api_version"
