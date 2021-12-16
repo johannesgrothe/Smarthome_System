@@ -54,11 +54,16 @@ def test_constant_files(exported_temp_files):
 
 
 def test_python_file_integrity():
+    print("Importing python files to check integrity")
     import api_definitions
     import gadget_definitions
 
 
 def test_cpp_file_integrity(temp_exists):
+    print("Compiling c++ files to check integrity")
     import os
     return_code = os.system("g++ -o temp/test tests/cpp_compile_test.cpp -std=c++11")
+    assert return_code == 0
+    print("Executing c++ files to check included tests")
+    return_code = os.system("./temp/test")
     assert return_code == 0
