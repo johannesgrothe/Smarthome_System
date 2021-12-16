@@ -52,5 +52,5 @@ def test_constant_files(exported_temp_files):
 
 
 def test_python_file_integrity():
-    import api_params
+    import api_definitions
     import gadget_definitions

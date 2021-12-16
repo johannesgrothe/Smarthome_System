@@ -1,15 +1,27 @@
-from lib.system_identifier import SystemIdentifier
+from utils.system_identifier import IntSystemIdentifier, StringSystemIdentifier
 
 
-class TestIdentifier(SystemIdentifier):
+class TestIntIdentifier(IntSystemIdentifier):
     zero = 0
     one = 1
     two = 2
 
 
-def test_system_identifier():
-    assert TestIdentifier.get_attributes() == ["zero", "one", "two"]
-    assert TestIdentifier.from_int(1) == TestIdentifier.one
-    assert TestIdentifier.from_string("one") == TestIdentifier.one
-    assert TestIdentifier.one.to_string() == "one"
-    assert TestIdentifier.one.to_int() == 1
+class TestStringIdentifier(StringSystemIdentifier):
+    zero = "_"
+    one = "_blub"
+    two = "_blub_blub"
+
+
+def test_system_identifier_int():
+    assert TestIntIdentifier.get_attributes() == ["zero", "one", "two"]
+    assert TestIntIdentifier.from_int(1) == TestIntIdentifier.one
+    assert TestIntIdentifier.from_string("one") == TestIntIdentifier.one
+    assert TestIntIdentifier.one.to_string() == "one"
+    assert TestIntIdentifier.one.to_int() == 1
+
+
+def test_system_identifier_string():
+    assert TestStringIdentifier.get_attributes() == ["zero", "one", "two"]
+    assert TestStringIdentifier.from_string("one") == TestStringIdentifier.one
+    assert TestStringIdentifier.one.to_string() == "one"

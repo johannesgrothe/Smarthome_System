@@ -2,6 +2,7 @@
   "$schema": "api_specs_schema.json",
   "title": "Smarthome API Specification",
   "description": "Documentation for the smarthome systems API endpoints",
+  "version": "1.0.0",
   "mappings": {
     "write_system_config": {
       "title": "Write System Config",
@@ -17,7 +18,7 @@
       ],
       "uri": {
         "value": "config/system/write",
-        "var_name": "PATH_CLIENT_SYSTEM_CONFIG_WRITE"
+        "var_name": "client_system_config_write"
       },
       "request": {
         "comment": "Config received by the Client",
@@ -42,7 +43,7 @@
       ],
       "uri": {
         "value": "config/event/write",
-        "var_name": "PATH_CLIENT_EVENT_CONFIG_WRITE"
+        "var_name": "client_event_config_write"
       },
       "request": {
         "comment": "Config received by the Client",
@@ -67,7 +68,7 @@
       ],
       "uri": {
         "value": "config/gadget/write",
-        "var_name": "PATH_CLIENT_GADGET_CONFIG_WRITE"
+        "var_name": "client_gadget_config_write"
       },
       "request": {
         "comment": "Config received by the Client",
@@ -92,7 +93,7 @@
       ],
       "uri": {
         "value": "config/write",
-        "var_name": "PATH_CLIENT_CONFIG_WRITE"
+        "var_name": "client_config_write"
       },
       "request": {
         "comment": "Config to write to the client",
@@ -118,7 +119,7 @@
       ],
       "uri": {
         "value": "config/delete",
-        "var_name": "PATH_CLIENT_CONFIG_DELETE"
+        "var_name": "client_config_delete"
       },
       "request": {
         "comment": "Client ID is only needed when sent to bridge to identify client to delete config from",
@@ -140,7 +141,7 @@
       "receiver": [],
       "uri": {
         "value": "heartbeat",
-        "var_name": "PATH_HEARTBEAT"
+        "var_name": "heartbeat"
       },
       "request": {
         "comment": "Config received by the Client",
@@ -164,7 +165,7 @@
       ],
       "uri": {
         "value": "info/bridge",
-        "var_name": "PATH_INFO_BRIDGE"
+        "var_name": "info_bridge"
       },
       "request": {
         "comment": "No request payload needed",
@@ -188,7 +189,7 @@
       ],
       "uri": {
         "value": "info/clients",
-        "var_name": "PATH_INFO_CLIENTS"
+        "var_name": "info_clients"
       },
       "request": {
         "comment": "No request payload needed",
@@ -212,7 +213,7 @@
       ],
       "uri": {
         "value": "info/gadgets",
-        "var_name": "PATH_INFO_GADGETS"
+        "var_name": "info_gadgets"
       },
       "request": {
         "comment": "No request payload needed",
@@ -237,7 +238,7 @@
       ],
       "uri": {
         "value": "update/gadget",
-        "var_name": "PATH_UPDATE_GADGET"
+        "var_name": "update_gadget"
       },
       "request": {
         "comment": "Information to update the gadget with",
@@ -261,7 +262,7 @@
       ],
       "uri": {
         "value": "sync/client",
-        "var_name": "PATH_SYNC_CLIENT"
+        "var_name": "sync_client"
       },
       "request": {
         "comment": "Sync information for the client",
@@ -288,7 +289,7 @@
       ],
       "uri": {
         "value": "reboot/client",
-        "var_name": "PATH_CLIENT_REBOOT"
+        "var_name": "client_reboot"
       },
       "request": {
         "comment": "Client ID is only needed when sent to bridge to identify client to reboot from",
@@ -312,7 +313,7 @@
       ],
       "uri": {
         "value": "sync",
-        "var_name": "PATH_SYNC_REQUEST"
+        "var_name": "sync_request"
       },
       "request": {
         "comment": "No request payload needed",
@@ -336,7 +337,7 @@
       ],
       "uri": {
         "value": "sync/event",
-        "var_name": "PATH_SYNC_EVENT"
+        "var_name": "sync_event"
       },
       "request": {
         "comment": "Event information for the Bridge",
@@ -358,7 +359,7 @@
       ],
       "uri": {
         "value": "echo",
-        "var_name": "PATH_TEST_ECHO"
+        "var_name": "test_echo"
       },
       "request": {
         "comment": "Any payload. Response will mirror the payload sent.",

@@ -21,13 +21,13 @@ class GadgetConstantsExporter(ConstantsExporter):
 
         lines.append("")
 
-        for x in self._generate_python_imports([("lib.system_identifier", "SystemIdentifier")]):
+        for x in self._generate_python_imports([("utils.system_identifier", "IntSystemIdentifier")]):
             lines.append(x)
 
         lines.append("")
         lines.append("")
 
-        lines.append("class CharacteristicIdentifier(SystemIdentifier):")
+        lines.append("class CharacteristicIdentifier(IntSystemIdentifier):")
         lines.append(f"    \"\"\"{characteristics_data['description']}\"\"\"")
         lines.append("")
 
@@ -37,7 +37,7 @@ class GadgetConstantsExporter(ConstantsExporter):
         lines.append("")
         lines.append("")
 
-        lines.append("class GadgetIdentifier(SystemIdentifier):")
+        lines.append("class GadgetIdentifier(IntSystemIdentifier):")
         lines.append(f"    \"\"\"{client_gadget_data['description']}\"\"\"")
         lines.append("")
 
@@ -47,7 +47,7 @@ class GadgetConstantsExporter(ConstantsExporter):
         lines.append("")
         lines.append("")
 
-        lines.append("class BridgeGadgetIdentifier(SystemIdentifier):")
+        lines.append("class BridgeGadgetIdentifier(IntSystemIdentifier):")
         lines.append(f"    \"\"\"{bridge_gadget_data['description']}\"\"\"")
         lines.append("")
 

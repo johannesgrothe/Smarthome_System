@@ -10,7 +10,7 @@ PATH_GADGET_SPECS = os.path.join("gadget_docs", "gadget_specs.json")
 PATH_JSON_SCHEMAS = "json_schemas"
 
 # Path to the exported api constants files (Ending is supplied by the individual exporters)
-PATH_FILE_API_CONSTANTS = "api_params"
+PATH_FILE_API_CONSTANTS = "api_definitions"
 
 # Path to the exported api constants files (Ending is supplied by the individual exporters)
 PATH_FILE_GADGET_CONSTANTS = "gadget_definitions"
