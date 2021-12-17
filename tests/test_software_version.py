@@ -16,6 +16,7 @@ def test_software_version_operators():
 
     assert SoftwareVersion(1, 0, 8) < SoftwareVersion(1, 0, 9)
     assert SoftwareVersion(1, 0, 8) > SoftwareVersion(1, 0, 7)
+    assert SoftwareVersion(1, 1, 8) > SoftwareVersion(1, 0, 15)
 
 
 def test_software_version_follows():
