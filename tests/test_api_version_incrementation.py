@@ -1,6 +1,7 @@
 import os
 import json
 import shutil
+import pytest
 
 from utils.software_version import SoftwareVersion
 
