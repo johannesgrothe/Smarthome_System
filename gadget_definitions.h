@@ -25,7 +25,7 @@ namespace gadget_definitions {
         wallswitch_basic = 6,  // Basic Wallswitch
         sensor_motion_hr501 = 7,  // HR501 Motion Sensor
         sensor_temperature_dht = 8  // DHT Temperature/Humidity Sensor
-    }
+    };
 
     // Characteristics Gadgets can contain
     enum class CharacteristicIdentifier {
@@ -37,5 +37,5 @@ namespace gadget_definitions {
         saturation = 5,  // Saturation
         temperature = 6,  // Temperature
         humidity = 7  // Humidity
-    }
+    };
 }

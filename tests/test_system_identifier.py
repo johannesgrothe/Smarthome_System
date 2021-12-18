@@ -1,15 +1,27 @@
-from lib.system_identifier import SystemIdentifier
+from utils.system_identifier import IntSystemIdentifier, StringSystemIdentifier
 
 
-class TestIdentifier(SystemIdentifier):
+class BufIntIdentifier(IntSystemIdentifier):
     zero = 0
     one = 1
     two = 2
 
 
-def test_system_identifier():
-    assert TestIdentifier.get_attributes() == ["zero", "one", "two"]
-    assert TestIdentifier.from_int(1) == TestIdentifier.one
-    assert TestIdentifier.from_string("one") == TestIdentifier.one
-    assert TestIdentifier.one.to_string() == "one"
-    assert TestIdentifier.one.to_int() == 1
+class BufStringIdentifier(StringSystemIdentifier):
+    zero = "_"
+    one = "_blub"
+    two = "_blub_blub"
+
+
+def test_system_identifier_int():
+    assert BufIntIdentifier.get_attributes() == ["zero", "one", "two"]
+    assert BufIntIdentifier.from_int(1) == BufIntIdentifier.one
+    assert BufIntIdentifier.from_string("one") == BufIntIdentifier.one
+    assert BufIntIdentifier.one.to_string() == "one"
+    assert BufIntIdentifier.one.to_int() == 1
+
+
+def test_system_identifier_string():
+    assert BufStringIdentifier.get_attributes() == ["zero", "one", "two"]
+    assert BufStringIdentifier.from_string("one") == BufStringIdentifier.one
+    assert BufStringIdentifier.one.to_string() == "one"

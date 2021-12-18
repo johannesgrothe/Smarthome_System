@@ -3,12 +3,6 @@ import pytest
 from exporters.api_constants_exporter import ApiConstantsExporter
 from exporters.gadget_constants_exporter import GadgetConstantsExporter
 from exporters.script_params import *
-from exporters.temp_dir_manager import TempDirManager
-
-
-@pytest.fixture
-def temp_exists():
-    TempDirManager(PATH_TEMP_DIR).assert_temp()
 
 
 @pytest.fixture
@@ -29,8 +23,6 @@ def exported_temp_files(temp_exists):
     exporter.export_cpp(f"{path_temp_gadgets_export}.h")
 
     yield temp_files
-    print("Removing temporary files")
-    TempDirManager(PATH_TEMP_DIR).clean_temp()
 
 
 @pytest.mark.pr_only
@@ -49,8 +41,3 @@ def test_constant_files(exported_temp_files):
 
         for check_line, exported_line in zip(check_lines, exported_lines):
             assert check_line == exported_line
-
-
-def test_python_file_integrity():
-    import api_params
-    import gadget_definitions

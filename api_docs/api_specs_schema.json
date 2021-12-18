@@ -4,6 +4,7 @@
   "required": [
     "title",
     "description",
+    "version",
     "mappings"
   ],
   "properties": {
@@ -14,6 +15,10 @@
     "description": {
       "type": "string",
       "minLength": 10
+    },
+    "version": {
+      "type": "string",
+      "pattern": "^[0-9]+.[0-9]+.[0-9]+$"
     },
     "mappings": {
       "type": "object",
@@ -66,7 +71,8 @@
               },
               "var_name": {
                 "type": "string",
-                "minLength": 5
+                "minLength": 5,
+                "pattern": "^[a-z_]+$"
               }
             }
           },

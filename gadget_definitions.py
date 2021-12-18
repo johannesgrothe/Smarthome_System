@@ -5,12 +5,12 @@
 # Every change made will be overwritten at next export.
 
 try:
-    from lib.system_identifier import SystemIdentifier
+    from utils.system_identifier import IntSystemIdentifier
 except ModuleNotFoundError:
-    from .lib.system_identifier import SystemIdentifier
+    from .utils.system_identifier import IntSystemIdentifier
 
 
-class CharacteristicIdentifier(SystemIdentifier):
+class CharacteristicIdentifier(IntSystemIdentifier):
     """Characteristics Gadgets can contain"""
 
     err_type = 0  # Error-Characteristic
@@ -23,7 +23,7 @@ class CharacteristicIdentifier(SystemIdentifier):
     humidity = 7  # Humidity
 
 
-class GadgetIdentifier(SystemIdentifier):
+class GadgetIdentifier(IntSystemIdentifier):
     """Gadgets running on the ESP Clients"""
 
     any_gadget = 0  # Any Gadget
@@ -37,6 +37,6 @@ class GadgetIdentifier(SystemIdentifier):
     sensor_temperature_dht = 8  # DHT Temperature/Humidity Sensor
 
 
-class BridgeGadgetIdentifier(SystemIdentifier):
+class BridgeGadgetIdentifier(IntSystemIdentifier):
     """Gadgets running on the Bridge itself (virtual Gadgets)"""
 

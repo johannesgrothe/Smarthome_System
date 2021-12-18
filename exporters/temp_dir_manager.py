@@ -1,5 +1,6 @@
 import logging
 import os
+import shutil
 
 
 class TempDirManager:
@@ -20,3 +21,9 @@ class TempDirManager:
                          if os.path.isfile(os.path.join(self._path, x))]:
             self._logger.info(f"Deleting '{filename}'")
             os.remove(os.path.join(self._path, filename))
+
+        for dirname in [x for x
+                        in os.listdir(self._path)
+                        if os.path.isdir(os.path.join(self._path, x))]:
+            self._logger.info(f"Deleting Directory '{dirname}'")
+            shutil.rmtree(os.path.join(self._path, dirname))

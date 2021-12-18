@@ -10,7 +10,7 @@ PATH_GADGET_SPECS = os.path.join("gadget_docs", "gadget_specs.json")
 PATH_JSON_SCHEMAS = "json_schemas"
 
 # Path to the exported api constants files (Ending is supplied by the individual exporters)
-PATH_FILE_API_CONSTANTS = "api_params"
+PATH_FILE_API_CONSTANTS = "api_definitions"
 
 # Path to the exported api constants files (Ending is supplied by the individual exporters)
 PATH_FILE_GADGET_CONSTANTS = "gadget_definitions"
@@ -23,3 +23,18 @@ NAME_FILE_GADGET_DOCS = "gadgets.md"
 
 # Path to temporary generated files
 PATH_TEMP_DIR = "temp"
+
+# Namespace api docs
+CPP_NAMESPACE_API_DOCS = "api_definitions"
+
+# Namespace for api URIs
+CPP_NAMESPACE_API_URIS = "uris"
+
+# Namespace for api version
+CPP_NAMESPACE_API_VERSION = "version"
+
+# Classname for api URIs
+PY_CLASSNAME_URIS = "ApiURIs"
+
+# Namespace api docs
+PY_VARNAME_API_VERSION = "api_version"

@@ -35,6 +35,7 @@ class ApiDocExporter(DocExporter):
         file = MarkdownFile()
         file.add(MarkdownHeader(self._definitions["title"], 0))
         file.add(MarkdownText(self._definitions["description"]))
+        file.add(MarkdownText("Latest Api Version: " + self._definitions["version"]))
 
         file.add(MarkdownDivider())
         file.add(MarkdownHeader("Table of Contents", 1))
