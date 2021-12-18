@@ -1,5 +1,6 @@
 """Module for the api doc exporter"""
 from exporters.doc_exporter import DocExporter
+from exporters.script_params import GITHUB_BASE_FILE_URI, PATH_FILE_API_CONSTANTS, PATH_FILE_GADGET_CONSTANTS
 from utils.markdown_file import *
 from utils.json_schema_formatter import JsonSchemaFormatter
 from utils.schema_loader import SchemaLoader
@@ -38,6 +39,20 @@ class ApiDocExporter(DocExporter):
         file.add(MarkdownText("Latest Api Version: " + self._definitions["version"]))
 
         file.add(MarkdownDivider())
+        language_info = [("C++", "h"), ("Python", "py")]
+        file.add(MarkdownHeader("Exported Code Libraries", 2))
+        file.add(MarkdownHeader("API", 3))
+        buf_table = MarkdownTable(["Language", "Link"])
+        for language, ending in language_info:
+            buf_table.add_line([language, f"{GITHUB_BASE_FILE_URI}{PATH_FILE_API_CONSTANTS}.{ending}"])
+        file.add(buf_table)
+        file.add(MarkdownHeader("Gadgets", 3))
+        buf_table = MarkdownTable(["Language", "Link"])
+        for language, ending in language_info:
+            buf_table.add_line([language, f"{GITHUB_BASE_FILE_URI}{PATH_FILE_GADGET_CONSTANTS}.{ending}"])
+        file.add(buf_table)
+        file.add(MarkdownDivider())
+
         file.add(MarkdownHeader("Table of Contents", 1))
         for mapping in self._definitions["mappings"]:
             map_data = self._definitions["mappings"][mapping]
