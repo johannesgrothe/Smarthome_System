@@ -1,4 +1,5 @@
 from exporters.doc_exporter import DocExporter
+from exporters.script_params import GITHUB_BASE_FILE_URI, PATH_FILE_GADGET_CONSTANTS
 from utils.markdown_file import *
 
 
@@ -39,6 +40,8 @@ class GadgetDocExporter(DocExporter):
         file.add(MarkdownHeader(self._definitions["title"], 0))
         file.add(MarkdownText(self._definitions["description"]))
 
+        file.add(MarkdownDivider())
+        self._add_exported_libraries(PATH_FILE_GADGET_CONSTANTS, file)
         file.add(MarkdownDivider())
 
         characteristics_data = self._definitions["characteristic_definitions"]

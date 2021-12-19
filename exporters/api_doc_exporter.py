@@ -39,18 +39,7 @@ class ApiDocExporter(DocExporter):
         file.add(MarkdownText("Latest Api Version: " + self._definitions["version"]))
 
         file.add(MarkdownDivider())
-        language_info = [("C++", "h"), ("Python", "py")]
-        file.add(MarkdownHeader("Exported Code Libraries", 2))
-        file.add(MarkdownHeader("API", 3))
-        buf_table = MarkdownTable(["Language", "Link"])
-        for language, ending in language_info:
-            buf_table.add_line([language, f"{GITHUB_BASE_FILE_URI}{PATH_FILE_API_CONSTANTS}.{ending}"])
-        file.add(buf_table)
-        file.add(MarkdownHeader("Gadgets", 3))
-        buf_table = MarkdownTable(["Language", "Link"])
-        for language, ending in language_info:
-            buf_table.add_line([language, f"{GITHUB_BASE_FILE_URI}{PATH_FILE_GADGET_CONSTANTS}.{ending}"])
-        file.add(buf_table)
+        self._add_exported_libraries(PATH_FILE_API_CONSTANTS, file)
         file.add(MarkdownDivider())
 
         file.add(MarkdownHeader("Table of Contents", 1))
