@@ -1,5 +1,5 @@
 from exporters.doc_exporter import DocExporter
-from exporters.script_params import GITHUB_BASE_FILE_URI, PATH_FILE_GADGET_CONSTANTS
+from exporters.script_params import PATH_FILE_GADGET_CONSTANTS
 from utils.markdown_file import *
 
 
