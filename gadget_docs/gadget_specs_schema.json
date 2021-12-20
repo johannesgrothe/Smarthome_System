@@ -50,7 +50,9 @@
                     "name",
                     "description",
                     "enum_value",
-                    "characteristics"
+                    "characteristics",
+                    "ports",
+                    "config"
                   ],
                   "properties": {
                     "name": {
@@ -66,7 +68,52 @@
                       "minimum": 0
                     },
                     "characteristics": {
-
+                      "type": "string",
+                      "minLength": 5
+                    },
+                    "ports": {
+                      "type": "object",
+                      "patternProperties": {
+                        "^[0-4]$": {
+                          "type": "object",
+                          "required": [
+                            "properties"
+                          ],
+                          "properties": {
+                            "description": {
+                              "type": "string",
+                              "minLength": 10
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "config": {
+                      "type": "object",
+                      "patternProperties": {
+                        "^[a-z0-9_]$": {
+                          "type": "object",
+                          "required": [
+                            "type",
+                            "optional"
+                          ],
+                          "properties": {
+                            "type": {
+                              "type": "string",
+                              "enum": [
+                                "int",
+                                "uint",
+                                "string",
+                                "float",
+                                "bool"
+                              ]
+                            },
+                            "optional": {
+                              "type": "boolean"
+                            }
+                          }
+                        }
+                      }
                     }
                   }
                 }
@@ -94,7 +141,6 @@
           "minLength": 10
         },
         "items": {
-
         }
       }
     }

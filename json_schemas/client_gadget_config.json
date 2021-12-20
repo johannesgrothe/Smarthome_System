@@ -21,7 +21,7 @@
           "ports": {
             "type": "object",
             "patternProperties": {
-              "^port[0-9]+$": {
+              "^port[0-4]$": {
                 "type": "integer",
                 "minimum": 0
               }
