@@ -1,6 +1,6 @@
 """Module for the markdown file writer"""
 from abc import abstractmethod, ABCMeta, ABC
-from typing import Optional
+from typing import Optional, Union
 
 
 class MarkdownElementError(Exception):
@@ -21,51 +21,6 @@ class MarkdownElement(metaclass=ABCMeta):
 
         :return: A list of all lines rendered from the element
         """
-
-
-class MarkdownTable(MarkdownElement):
-    _header: list[str]
-    _lines: list[list[str]]
-
-    def __init__(self, header: list[str]):
-        super().__init__()
-        self._header = header
-        self._lines = []
-
-    @staticmethod
-    def _max_str_length(data: list[str]) -> int:
-        return max([len(x) for x in data])
-
-    @staticmethod
-    def _format_str(data: str, length: int) -> str:
-        return data + " " * (length - len(data))
-
-    @classmethod
-    def _format_line(cls, data: list[str], max_length) -> str:
-        return "|" + "|".join([" " + cls._format_str(x, max_length) for x in data]) + "|"
-
-    def _get_max_elem_length(self) -> int:
-        line_lengths = [self._max_str_length(x)
-                        for x
-                        in self._lines]
-        line_lengths.append(self._max_str_length(self._header))
-        return max(line_lengths)
-
-    def add_line(self, line: list[str]):
-        if len(line) != len(self._header):
-            raise MarkdownElementError(f"Length of passed list ({len(line)}) "
-                                       f"does not match length of header ({len(self._header)})")
-        self._lines.append(line)
-
-    def render_content(self) -> list[str]:
-        lines = []
-        max_len = self._get_max_elem_length() + 1
-
-        lines.append(self._format_line(self._header, max_len))
-        lines.append(self._format_line(["-" * max_len for _ in self._header], max_len).replace(" -", "--"))
-        for line in self._lines:
-            lines.append(self._format_line(line, max_len))
-        return lines
 
 
 class MarkdownHeader(MarkdownElement):
@@ -184,6 +139,60 @@ class MarkdownList(MarkdownElement):
     def render_content(self) -> list[str]:
         out_data = [f"- {x}" for x in self._lines]
         return out_data
+
+
+class MarkdownTable(MarkdownElement):
+    _header: list[str]
+    _lines: list[list[str]]
+
+    def __init__(self, header: list[str]):
+        super().__init__()
+        self._header = header
+        self._lines = []
+
+    @staticmethod
+    def _max_str_length(data: list[str]) -> int:
+        return max([len(x) for x in data])
+
+    @staticmethod
+    def _format_str(data: str, length: int) -> str:
+        return data + " " * (length - len(data))
+
+    @staticmethod
+    def _format_table_element(elem: Union[int, str, MarkdownText, MarkdownLink]) -> str:
+        if isinstance(elem, str):
+            return elem
+        elif isinstance(elem, MarkdownElement):
+            return " ".join(elem.render_content())
+        else:
+            return str(elem)
+
+    @classmethod
+    def _format_line(cls, data: list[str], max_length) -> str:
+        return "|" + "|".join([" " + cls._format_str(x, max_length) for x in data]) + "|"
+
+    def _get_max_elem_length(self) -> int:
+        line_lengths = [self._max_str_length(x)
+                        for x
+                        in self._lines]
+        line_lengths.append(self._max_str_length(self._header))
+        return max(line_lengths)
+
+    def add_line(self, line: list[Union[int, str, MarkdownText, MarkdownLink]]):
+        if len(line) != len(self._header):
+            raise MarkdownElementError(f"Length of passed list ({len(line)}) "
+                                       f"does not match length of header ({len(self._header)})")
+        self._lines.append([self._format_table_element(x) for x in line])
+
+    def render_content(self) -> list[str]:
+        lines = []
+        max_len = self._get_max_elem_length() + 1
+
+        lines.append(self._format_line(self._header, max_len))
+        lines.append(self._format_line(["-" * max_len for _ in self._header], max_len).replace(" -", "--"))
+        for line in self._lines:
+            lines.append(self._format_line(line, max_len))
+        return lines
 
 
 class MarkdownFile:

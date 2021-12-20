@@ -1,5 +1,6 @@
 """Module for the api doc exporter"""
 from exporters.doc_exporter import DocExporter
+from exporters.script_params import PATH_FILE_API_CONSTANTS
 from utils.markdown_file import *
 from utils.json_schema_formatter import JsonSchemaFormatter
 from utils.schema_loader import SchemaLoader
@@ -38,6 +39,9 @@ class ApiDocExporter(DocExporter):
         file.add(MarkdownText("Latest Api Version: " + self._definitions["version"]))
 
         file.add(MarkdownDivider())
+        self._add_exported_libraries(PATH_FILE_API_CONSTANTS, file)
+        file.add(MarkdownDivider())
+
         file.add(MarkdownHeader("Table of Contents", 1))
         for mapping in self._definitions["mappings"]:
             map_data = self._definitions["mappings"][mapping]

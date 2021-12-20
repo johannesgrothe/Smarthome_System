@@ -1,5 +1,8 @@
 import os
 
+# Base path of github repo for file links
+GITHUB_BASE_FILE_URI = "https://github.com/johannesgrothe/Smarthome_System/blob/master/"
+
 # Name of the file containing the api definitions
 PATH_API_SPECS = os.path.join("api_docs", "api_specs.json")
 
