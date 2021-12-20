@@ -50,6 +50,8 @@
                     "name",
                     "description",
                     "enum_value",
+                    "ir_required",
+                    "radio_required",
                     "characteristics",
                     "ports",
                     "config"
@@ -66,6 +68,12 @@
                     "enum_value": {
                       "type": "integer",
                       "minimum": 0
+                    },
+                    "ir_required": {
+                      "type": "boolean"
+                    },
+                    "radio_required": {
+                      "type": "boolean"
                     },
                     "characteristics": {
                       "type": "string",

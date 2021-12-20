@@ -26,13 +26,25 @@ class GadgetDocExporter(DocExporter):
         return status_table
 
     @staticmethod
-    def _add_info(key: str, data: dict, file: MarkdownFile):
+    def _add_characteristic_info(key: str, data: dict, file: MarkdownFile):
         file.add(MarkdownHeader(data["name"], 2))
         file.add(MarkdownText(data["description"]))
 
         identifier_table = MarkdownTable(["Parameter Name", "Parameter Value"])
         identifier_table.add_line(["Int Identifier", str(data['enum_value'])])
         identifier_table.add_line(["String Identifier", key])
+        file.add(identifier_table)
+
+    @staticmethod
+    def _add_gadget_info(key: str, data: dict, file: MarkdownFile):
+        file.add(MarkdownHeader(data["name"], 2))
+        file.add(MarkdownText(data["description"]))
+
+        identifier_table = MarkdownTable(["Parameter Name", "Parameter Value"])
+        identifier_table.add_line(["Int Identifier", str(data['enum_value'])])
+        identifier_table.add_line(["String Identifier", key])
+        identifier_table.add_line(["IR Required", str(data['ir_required'])])
+        identifier_table.add_line(["Radio Required", str(data['radio_required'])])
         file.add(identifier_table)
 
     def export_docs(self, out_file: str):
@@ -51,7 +63,7 @@ class GadgetDocExporter(DocExporter):
         file.add(self._gen_enum_table(characteristics_data))
 
         for key, data in characteristics_data["items"].items():
-            self._add_info(key, data, file)
+            self._add_characteristic_info(key, data, file)
 
             file.add(MarkdownDivider())
 
@@ -66,7 +78,7 @@ class GadgetDocExporter(DocExporter):
                 file.add(self._gen_enum_table(gadget_platform))
 
                 for g_key, gadget_data in gadget_platform["items"].items():
-                    self._add_info(g_key, gadget_data, file)
+                    self._add_gadget_info(g_key, gadget_data, file)
 
                     file.add(MarkdownHeader("Characteristics", 3))
                     if gadget_data["characteristics"]:
@@ -77,6 +89,11 @@ class GadgetDocExporter(DocExporter):
                         file.add(characteristics_list)
                     else:
                         file.add(MarkdownText("This gadget does not have any characteristics attached"))
+
+                    file.add(MarkdownHeader("Ports", 3))
+
+
+                    file.add(MarkdownHeader("Config", 3))
 
                     file.add(MarkdownDivider())
 

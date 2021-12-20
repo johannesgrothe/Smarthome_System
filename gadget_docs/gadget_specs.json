@@ -11,6 +11,8 @@
           "name": "Any Gadget",
           "description": "Special Identifier for faulty or abstract gadgets, depending on the context. It can have any combination of characteristics.",
           "enum_value": 0,
+          "ir_required": false,
+          "radio_required": false,
           "characteristics": [],
           "ports": {},
           "config": {}
@@ -19,6 +21,8 @@
           "name": "NeoPixel Basic RGB Lamp",
           "description": "AdaFruit NeoPixel controlled RGB Strips/Lamps",
           "enum_value": 1,
+          "ir_required": false,
+          "radio_required": false,
           "characteristics": [
             "status",
             "brightness",
@@ -41,6 +45,8 @@
           "name": "Basic Lamp",
           "description": "Basic Lamp that just can be turned on or off",
           "enum_value": 2,
+          "ir_required": false,
+          "radio_required": false,
           "characteristics": [
             "status"
           ],
@@ -55,6 +61,8 @@
           "name": "Westinghouse IR Fan",
           "description": "IR-controlled Westinghouse ceiling fan",
           "enum_value": 3,
+          "ir_required": true,
+          "radio_required": false,
           "characteristics": [
             "status",
             "fan_speed"
@@ -66,6 +74,8 @@
           "name": "Westinghouse IR Fan Lamp",
           "description": "IR-controlled Lamp connected to a Westinghouse ceiling fan",
           "enum_value": 4,
+          "ir_required": true,
+          "radio_required": false,
           "characteristics": [
             "status"
           ],
@@ -76,6 +86,8 @@
           "name": "Doorbell Basic",
           "description": "Basic Smart Doorbell only raising an event if pressed",
           "enum_value": 5,
+          "ir_required": false,
+          "radio_required": false,
           "characteristics": [],
           "ports": {
             "0": {
@@ -88,6 +100,8 @@
           "name": "Basic Wallswitch",
           "description": "Basic Wallswitch that throws an event if pressed",
           "enum_value": 6,
+          "ir_required": false,
+          "radio_required": false,
           "characteristics": [],
           "ports": {
             "0": {
@@ -100,6 +114,8 @@
           "name": "HR501 Motion Sensor",
           "description": "HR501 motion sensor that throws an event if triggered",
           "enum_value": 7,
+          "ir_required": false,
+          "radio_required": false,
           "characteristics": [],
           "ports": {
             "0": {
@@ -112,6 +128,8 @@
           "name": "DHT Temperature/Humidity Sensor",
           "description": "DHT temperature/humidity sensor that publishes the to values as characteristic",
           "enum_value": 8,
+          "ir_required": false,
+          "radio_required": false,
           "characteristics": [
             "temperature",
             "humidity"
