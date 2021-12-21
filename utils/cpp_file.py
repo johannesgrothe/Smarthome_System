@@ -112,6 +112,49 @@ class CppComment(CppElement):
         return [self._render_indent(indentation) + f"// {x}" for x in parts]
 
 
+class CppEnumClass(CppElement):
+    class _CppEnumClassElement(CppElement):
+        _name: str
+        _value: int
+        _docstring: str
+
+        def __init__(self, name: str, value: int, docstring: str = ""):
+            self._name = name
+            self._value = value
+            self._docstring = docstring
+
+        def render_content(self, indentation: int, last_elem: bool = False) -> str:
+            buf_comment = ""
+            if self._docstring:
+                buf_comment = f"  // {self._docstring}"
+            line_end = ""
+            if not last_elem:
+                line_end = ","
+            return f"{self._render_indent(indentation)}{self._name} = {str(self._value)}{line_end}{buf_comment}"
+
+    _name: str
+    _docstring: str
+    _items: list[_CppEnumClassElement]
+
+    def __init__(self, name: str, docstring: str):
+        super().__init__()
+        self._name = name
+        self._docstring = docstring
+        self._items = []
+
+    def add_element(self, name: str, value: int, docstring: str = ""):
+        self._items.append(self._CppEnumClassElement(name, value, docstring))
+
+    def render_content(self, indentation: int) -> [str]:
+
+        return [""] + \
+               CppComment(self._docstring).render_content(indentation) + \
+               [self._render_indent(indentation) + "enum class " + self._name + " {"] + \
+               [x.render_content(indentation + 1) for x in self._items[:-1]] + \
+               [self._items[-1].render_content(indentation + 1, True)] + \
+               [self._render_indent(indentation) + "};"]
+
+
 class CppNamespace(CppElement, CppContainer):
     _name: str
     _docstring: str

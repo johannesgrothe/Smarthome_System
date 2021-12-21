@@ -7,7 +7,7 @@
 
 #include <string>
 
-// Namespace for all gadget and characteristic definitions
+// Namespace for all api constants and definitions
 namespace api_definitions {
 
     // API Version

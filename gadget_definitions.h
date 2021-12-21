@@ -5,6 +5,7 @@
 // Do not modify this file, modify 'gadget_docs/gadget_specs.json' and export.
 // Every change made will be overwritten at next export.
 
+
 // Namespace for all gadget and characteristic definitions
 namespace gadget_definitions {
 

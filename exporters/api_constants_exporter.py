@@ -52,7 +52,7 @@ class ApiConstantsExporter(ConstantsExporter):
         file.add(CppImport("string", in_package=False))
 
         package_namespace = CppNamespace(CPP_NAMESPACE_API_DOCS,
-                                         "Namespace for all gadget and characteristic definitions")
+                                         "Namespace for all api constants and definitions")
 
         version = SoftwareVersion.from_string(self._definitions["version"])
         version_namespace = CppNamespace(CPP_NAMESPACE_API_VERSION,
