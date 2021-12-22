@@ -50,7 +50,11 @@
                     "name",
                     "description",
                     "enum_value",
-                    "characteristics"
+                    "ir_required",
+                    "radio_required",
+                    "characteristics",
+                    "ports",
+                    "config"
                   ],
                   "properties": {
                     "name": {
@@ -65,8 +69,59 @@
                       "type": "integer",
                       "minimum": 0
                     },
+                    "ir_required": {
+                      "type": "boolean"
+                    },
+                    "radio_required": {
+                      "type": "boolean"
+                    },
                     "characteristics": {
-
+                      "type": "string",
+                      "minLength": 5
+                    },
+                    "ports": {
+                      "type": "object",
+                      "patternProperties": {
+                        "^[0-4]$": {
+                          "type": "object",
+                          "required": [
+                            "properties"
+                          ],
+                          "properties": {
+                            "description": {
+                              "type": "string",
+                              "minLength": 10
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "config": {
+                      "type": "object",
+                      "patternProperties": {
+                        "^[a-z0-9_]$": {
+                          "type": "object",
+                          "required": [
+                            "type",
+                            "optional"
+                          ],
+                          "properties": {
+                            "type": {
+                              "type": "string",
+                              "enum": [
+                                "int",
+                                "uint",
+                                "string",
+                                "float",
+                                "bool"
+                              ]
+                            },
+                            "optional": {
+                              "type": "boolean"
+                            }
+                          }
+                        }
+                      }
                     }
                   }
                 }
@@ -94,7 +149,6 @@
           "minLength": 10
         },
         "items": {
-
         }
       }
     }
