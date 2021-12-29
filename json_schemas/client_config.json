@@ -11,7 +11,8 @@
     "name": {
       "type": "string",
       "description": "Name of the config to identify it in tools flashing configs to clients",
-      "maxLength": 30
+      "maxLength": 30,
+      "pattern": "^[a-zA-Z_0-9]+$"
     },
     "description": {
       "type": "string",
