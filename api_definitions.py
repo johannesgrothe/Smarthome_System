@@ -13,7 +13,7 @@ except ModuleNotFoundError:
 
 
 # API Version
-api_version = SoftwareVersion(1, 0, 1)
+api_version = SoftwareVersion(1, 0, 2)
 
 
 class ApiURIs(StringSystemIdentifier):
@@ -34,4 +34,8 @@ class ApiURIs(StringSystemIdentifier):
     sync_request = "sync"  # Client Sync Request
     sync_event = "sync/event"  # Sync Event
     test_echo = "echo"  # Test Echo
+    config_storage_get_all = "config/storage/get_all"  # Retrieve all stored configs
+    config_storage_get = "config/storage/get"  # Retrieve stored config
+    config_storage_save = "config/storage/save"  # Save config
+    config_storage_delete = "config/storage/delete"  # Delete Config
 

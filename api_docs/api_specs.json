@@ -2,7 +2,7 @@
   "$schema": "api_specs_schema.json",
   "title": "Smarthome API Specification",
   "description": "Documentation for the smarthome systems API endpoints",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "mappings": {
     "write_system_config": {
       "title": "Write System Config",
@@ -368,6 +368,106 @@
       "response": {
         "comment": "Response payload will be the same as the sent one",
         "schema": null
+      }
+    },
+    "config_storage_get_all": {
+      "title": "Retrieve all stored configs",
+      "description": "Retrieve all stored Configs, currently stored on the Bridge",
+      "broadcast_allowed": false,
+      "http_method": "GET",
+      "sender": [
+        "Web Application",
+        "Toolkit"
+      ],
+      "receiver": [
+        "Bridge"
+      ],
+      "uri": {
+        "value": "config/storage/get_all",
+        "var_name": "config_storage_get_all"
+      },
+      "request": {
+        "comment": "No data required for request",
+        "schema": "api_empty_request.json"
+      },
+      "response": {
+        "comment": "Response that contains the names and descriptions of all configs",
+        "schema": "api_config_get_all_response.json"
+      }
+    },
+    "config_storage_get": {
+      "title": "Retrieve stored config",
+      "description": "Retrieve the requested config, from the Bridge",
+      "broadcast_allowed": false,
+      "http_method": "GET",
+      "sender": [
+        "Web Application",
+        "Toolkit"
+      ],
+      "receiver": [
+        "Bridge"
+      ],
+      "uri": {
+        "value": "config/storage/get",
+        "var_name": "config_storage_get"
+      },
+      "request": {
+        "comment": "Name of the config to be retrieved",
+        "schema": "api_config_delete_get.json"
+      },
+      "response": {
+        "comment": "Response that contains the requested config",
+        "schema": "api_config_get_response.json"
+      }
+    },
+    "config_storage_save": {
+      "title": "Save config",
+      "description": "Save a config, received via request, on the Bridge",
+      "broadcast_allowed": false,
+      "http_method": "POST",
+      "sender": [
+        "Web Application",
+        "Toolkit"
+      ],
+      "receiver": [
+        "Bridge"
+      ],
+      "uri": {
+        "value": "config/storage/save",
+        "var_name": "config_storage_save"
+      },
+      "request": {
+        "comment": "Config received by the Bridge",
+        "schema": "api_config_save.json"
+      },
+      "response": {
+        "comment": "Response acknowledging the successful saving of the config",
+        "schema": "default_message.json"
+      }
+    },
+    "config_storage_delete": {
+      "title": "Delete Config",
+      "description": "Deletes a config from the Bridge",
+      "broadcast_allowed": false,
+      "http_method": "POST",
+      "sender": [
+        "Web Application",
+        "Toolkit"
+      ],
+      "receiver": [
+        "Bridge"
+      ],
+      "uri": {
+        "value": "config/storage/delete",
+        "var_name": "config_storage_delete"
+      },
+      "request": {
+        "comment": "Name, of config to be deleted, received by the Bridge",
+        "schema": "api_config_delete_get.json"
+      },
+      "response": {
+        "comment": "Response acknowledging the successful deletion of the config",
+        "schema": "default_message.json"
       }
     }
   }

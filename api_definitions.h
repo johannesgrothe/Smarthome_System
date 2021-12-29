@@ -14,7 +14,7 @@ namespace api_definitions {
     namespace version {
         constexpr uint8_t major = 1;
         constexpr uint8_t minor = 0;
-        constexpr uint8_t bugfix = 1;
+        constexpr uint8_t bugfix = 2;
     }
 
     // Api URIs
@@ -34,5 +34,9 @@ namespace api_definitions {
         constexpr char sync_request [] = "sync";  // Client Sync Request
         constexpr char sync_event [] = "sync/event";  // Sync Event
         constexpr char test_echo [] = "echo";  // Test Echo
+        constexpr char config_storage_get_all [] = "config/storage/get_all";  // Retrieve all stored configs
+        constexpr char config_storage_get [] = "config/storage/get";  // Retrieve stored config
+        constexpr char config_storage_save [] = "config/storage/save";  // Save config
+        constexpr char config_storage_delete [] = "config/storage/delete";  // Delete Config
     }
 }
