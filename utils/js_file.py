@@ -47,13 +47,11 @@ class JSImport(JSElement):
     _name: str
     _in_package: bool
 
-    def __init__(self, name: str, in_package: bool):
+    def __init__(self, name: str):
         self._name = name
-        self._in_package = in_package
 
     def render_content(self, indentation: int) -> [str]:
-        include_buf = f"\"{self._name}\"" if self._in_package else f"<{self._name}>"
-        return [self._render_indent(indentation) + f"#include {include_buf}"]
+        return [self._render_indent(indentation) + f"import {self._name} from \"react\";"]
 
 
 class JSBlankLine(JSElement):

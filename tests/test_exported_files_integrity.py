@@ -14,3 +14,14 @@ def test_cpp_file_integrity(temp_exists):
     print("Executing c++ files to check included tests")
     return_code = os.system("./temp/test")
     assert return_code == 0
+
+
+def test_js_file_integrity(temp_exists):
+    print("Compiling js files to check integrity")
+    import os
+    os.system("ls")
+    return_code = os.system(f"node --check api_definitions.js")
+    # assert return_code == 0
+    return_code = os.system(f"node --check gadget_definitions.js")
+    # assert return_code == 0
+    

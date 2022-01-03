@@ -9,18 +9,20 @@ from exporters.script_params import *
 def exported_temp_files(temp_exists):
     print("Creating temporary files")
     path_temp_api_export = os.path.join(PATH_TEMP_DIR, PATH_FILE_API_CONSTANTS)
-    temp_files = [f"{path_temp_api_export}.py", f"{path_temp_api_export}.h"]
+    temp_files = [f"{path_temp_api_export}.py", f"{path_temp_api_export}.h", f"{path_temp_api_export}.js"]
 
     path_temp_gadgets_export = os.path.join(PATH_TEMP_DIR, PATH_FILE_GADGET_CONSTANTS)
-    temp_files += [f"{path_temp_gadgets_export}.py", f"{path_temp_gadgets_export}.h"]
+    temp_files += [f"{path_temp_gadgets_export}.py", f"{path_temp_gadgets_export}.h", f"{path_temp_gadgets_export}.js"]
 
     exporter = ApiConstantsExporter(PATH_API_SPECS)
     exporter.export_python(f"{path_temp_api_export}.py")
     exporter.export_cpp(f"{path_temp_api_export}.h")
+    exporter.export_js(f"{path_temp_api_export}.js")
 
     exporter = GadgetConstantsExporter(PATH_GADGET_SPECS)
     exporter.export_python(f"{path_temp_gadgets_export}.py")
     exporter.export_cpp(f"{path_temp_gadgets_export}.h")
+    exporter.export_js(f"{path_temp_gadgets_export}.js")
 
     yield temp_files
 
