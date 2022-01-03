@@ -45,5 +45,8 @@ PY_VARNAME_API_VERSION = "api_version"
 # Namespace for gadget specification
 CPP_NAMESPACE_GADGET_DOCS = "gadget_definitions"
 
+# Classname for JS gadget specification
+JS_CLASSNAME_GADGET_SPECS = "GadgetDefinitions"
+
 # Classname for JS API constants
 JS_CLASSNAME_API = "ApiConstants"

@@ -1,7 +1,8 @@
 """Module for the gadget constants exporter"""
 from exporters.constants_exporter import ConstantsExporter
-from exporters.script_params import CPP_NAMESPACE_GADGET_DOCS
+from exporters.script_params import CPP_NAMESPACE_GADGET_DOCS, JS_CLASSNAME_GADGET_SPECS
 from utils.cpp_file import *
+from utils.js_file import *
 
 _export_file_docstring = "Collection of constants for all gadgets and characteristics"
 
@@ -101,5 +102,40 @@ class GadgetConstantsExporter(ConstantsExporter):
         package_namespace.add(gadget_enum)
 
         file.add(package_namespace)
+
+        file.save(out_file)
+
+    def export_js(self, out_file: str):
+        characteristics_data = self._definitions["characteristic_definitions"]
+        client_gadget_data = self._definitions["gadget_definitions"]["client_gadgets"]
+
+        file = JSFile()
+
+        gadget_definitions_class = JSConstantsClass(JS_CLASSNAME_GADGET_SPECS,
+                                                    "CLass for all gadget and characteristic definitions")
+
+        gadget_definitions_class.add(JSBlankLine())
+        gadget_definitions_class.add(JSComment("Count of the different gadget identifiers"))
+        gadget_definitions_class.add(JSVariable("static",
+                                                "GadgetIdentifierCount",
+                                                len(client_gadget_data['items'])))
+
+        gadget_definitions_class.add(JSBlankLine())
+        gadget_definitions_class.add(JSComment("Count of the different characteristic identifiers"))
+        gadget_definitions_class.add(JSVariable("static",
+                                                "CharacteristicIdentifierCount",
+                                                len(characteristics_data['items'])))
+
+        gadget_definitions_class.add(JSBlankLine())
+        gadget_definitions_class.add(JSComment("Gadget Identifier"))
+        for index, (key, data) in enumerate(client_gadget_data["items"].items()):
+            gadget_definitions_class.add(JSVariable("static", "gadget_" + key, data['enum_value'], data['name']))
+
+        gadget_definitions_class.add(JSBlankLine())
+        gadget_definitions_class.add(JSComment("Characteristic Identifier"))
+        for index, (key, data) in enumerate(characteristics_data["items"].items()):
+            gadget_definitions_class.add(JSVariable("static", "characteristic_" + key, data['enum_value'], data['name']))
+
+        file.add(gadget_definitions_class)
 
         file.save(out_file)

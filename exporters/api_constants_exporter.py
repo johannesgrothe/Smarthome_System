@@ -87,6 +87,8 @@ class ApiConstantsExporter(ConstantsExporter):
         api_constants_class = JSConstantsClass(JS_CLASSNAME_API,
                                                "Class for all API constants and definitions")
 
+        api_constants_class.add(JSBlankLine())
+
         version = SoftwareVersion.from_string(self._definitions["version"])
         api_constants_class.add(JSComment("API Version"))
 

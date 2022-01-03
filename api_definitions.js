@@ -6,7 +6,8 @@
 
 
 // Class for all API constants and definitions
-class ApiConstants {
+export default class ApiConstants {
+
     // API Version
     static version_major = 1;
     static version_minor = 0;

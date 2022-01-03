@@ -114,7 +114,7 @@ class JSConstantsClass(JSElement, JSContainer):
     def render_content(self, indentation: int) -> [str]:
         return [""] + \
                JSComment(self._docstring).render_content(indentation) + \
-               [self._render_indent(indentation) + "class " + self._name + " {"] + \
+               [self._render_indent(indentation) + "export default class " + self._name + " {"] + \
                self._render_elements(indentation + 1) + \
                [self._render_indent(indentation) + "}"]
 
