@@ -50,6 +50,7 @@ class ApiConstantsExporter(ConstantsExporter):
         self._add_cpp_header(_export_file_docstring, '/'.join(__file__.split('/')[-1:]), file)
 
         file.add(CppImport("string", in_package=False))
+        file.add(CppImport("cstdint", in_package=False))
 
         package_namespace = CppNamespace(CPP_NAMESPACE_API_DOCS,
                                          "Namespace for all api constants and definitions")
