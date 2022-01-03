@@ -6,6 +6,7 @@
 // Every change made will be overwritten at next export.
 
 #include <string>
+#include <cstdint>
 
 // Namespace for all api constants and definitions
 namespace api_definitions {
