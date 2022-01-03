@@ -33,9 +33,9 @@ jobs:
         run: git log --all --decorate --oneline --graph
 
       # Real check: Check if the branch to merge is actually on top of the primary branch
-      - name: Check Semi-Linear History for fun
+      - name: Check history to primary branch
         run: git merge-base --is-ancestor ${{ steps.branch_detect.outputs.PRIMARY_BRANCH }} ${{ steps.commit_detect.outputs.CHECK_COMMIT }}
 
       # For some fucking reason github gets stuck if we remove this totally useless step
-      - name: Check Semi-Linear History
+      - name: Check history to master
         run: git merge-base --is-ancestor origin/master HEAD
