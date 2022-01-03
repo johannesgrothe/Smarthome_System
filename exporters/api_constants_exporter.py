@@ -2,6 +2,7 @@
 from exporters.script_params import *
 from exporters.constants_exporter import ConstantsExporter
 from utils.software_version import SoftwareVersion
+from utils.cpp_file import *
 
 _export_file_docstring = "Collection of constants for all api uris"
 
@@ -44,31 +45,34 @@ class ApiConstantsExporter(ConstantsExporter):
             file_p.writelines([x + "\n" for x in lines])
 
     def export_cpp(self, out_file: str):
-        lines = self._generate_cpp_header(_export_file_docstring, '/'.join(__file__.split('/')[-1:]))
+        file = CppFile()
 
-        lines.append("")
-        lines.append("#include <string>")
-        lines.append("")
+        self._add_cpp_header(_export_file_docstring, '/'.join(__file__.split('/')[-1:]), file)
 
-        lines.append("// Namespace for all gadget and characteristic definitions")
-        lines.append("namespace " + CPP_NAMESPACE_API_DOCS + " {")
+        file.add(CppImport("string", in_package=False))
+
+        package_namespace = CppNamespace(CPP_NAMESPACE_API_DOCS,
+                                         "Namespace for all api constants and definitions")
 
         version = SoftwareVersion.from_string(self._definitions["version"])
-        lines.append("")
-        lines.append("    // API Version")
-        lines.append("    namespace " + CPP_NAMESPACE_API_VERSION + " {")
-        lines.append(f"        constexpr uint8_t major = {version.major};")
-        lines.append(f"        constexpr uint8_t minor = {version.minor};")
-        lines.append(f"        constexpr uint8_t bugfix = {version.bugfix};")
-        lines.append("    }")
-        lines.append("")
+        version_namespace = CppNamespace(CPP_NAMESPACE_API_VERSION,
+                                         "API Version")
+        version_namespace.add(CppVariable("constexpr uint8_t", "major", version.major))
+        version_namespace.add(CppVariable("constexpr uint8_t", "minor", version.minor))
+        version_namespace.add(CppVariable("constexpr uint8_t", "bugfix", version.bugfix))
 
-        lines.append("    // Api URIs")
-        lines.append("    namespace " + CPP_NAMESPACE_API_URIS + " {")
+        package_namespace.add(version_namespace)
+
+        uri_namespace = CppNamespace(CPP_NAMESPACE_API_URIS,
+                                     "Api URIs")
         for index, (key, data) in enumerate(self._definitions["mappings"].items()):
-            lines.append(f"        constexpr char {data['uri']['var_name']} [] = \"{data['uri']['value']}\";  // {data['title']}")
-        lines.append("    }")
-        lines.append("}")
+            uri_namespace.add(CppVariable("constexpr char []",
+                                          data['uri']['var_name'],
+                                          data['uri']['value'],
+                                          data['title']))
 
-        with open(out_file, "w") as file_p:
-            file_p.writelines([x + "\n" for x in lines])
+        package_namespace.add(uri_namespace)
+
+        file.add(package_namespace)
+
+        file.save(out_file)

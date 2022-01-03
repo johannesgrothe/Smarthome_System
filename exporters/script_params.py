@@ -41,3 +41,6 @@ PY_CLASSNAME_URIS = "ApiURIs"
 
 # Namespace api docs
 PY_VARNAME_API_VERSION = "api_version"
+
+# Namespace for gadget specification
+CPP_NAMESPACE_GADGET_DOCS = "gadget_definitions"

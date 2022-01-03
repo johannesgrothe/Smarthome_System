@@ -2,6 +2,7 @@ import logging
 from abc import abstractmethod
 
 from exporters.definitions_loader import DefinitionsLoader
+from utils.cpp_file import *
 
 
 class ConstantsExporter:
@@ -32,6 +33,13 @@ class ConstantsExporter:
             lines.append(f"# {line}")
 
         return lines
+
+    def _add_cpp_header(self, docstring: str, filename: str, file: CppFile):
+        file.add(CppPragma("once"))
+        file.add(CppComment(docstring))
+        file.add(CppBlankLine())
+        file.add(CppComment("\n".join(self._generate_header(filename))))
+        file.add(CppBlankLine())
 
     def _generate_cpp_header(self, docstring: str, filename: str) -> list[str]:
         lines = [f"#pragma once", f"// {docstring}", ""]

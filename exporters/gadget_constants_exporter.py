@@ -1,5 +1,7 @@
 """Module for the gadget constants exporter"""
 from exporters.constants_exporter import ConstantsExporter
+from exporters.script_params import CPP_NAMESPACE_GADGET_DOCS
+from utils.cpp_file import *
 
 _export_file_docstring = "Collection of constants for all gadgets and characteristics"
 
@@ -57,44 +59,45 @@ class GadgetConstantsExporter(ConstantsExporter):
         with open(out_file, "w") as file_p:
             file_p.writelines([x + "\n" for x in lines])
 
-    @staticmethod
-    def export_enum_class_items(enum_data: dict, lines: list[str]):
-        for index, (key, data) in enumerate(enum_data.items()):
-            if index < len(enum_data) - 1:
-                lines.append(f"        {key} = {data['enum_value']},  // {data['name']}")
-            else:
-                lines.append(f"        {key} = {data['enum_value']}  // {data['name']}")
-        lines.append("    };")
-
     def export_cpp(self, out_file: str):
         characteristics_data = self._definitions["characteristic_definitions"]
         client_gadget_data = self._definitions["gadget_definitions"]["client_gadgets"]
 
-        lines = self._generate_cpp_header(_export_file_docstring, '/'.join(__file__.split('/')[-1:]))
+        file = CppFile()
 
-        lines.append("")
+        self._add_cpp_header(_export_file_docstring, '/'.join(__file__.split('/')[-1:]), file)
 
-        lines.append("// Namespace for all gadget and characteristic definitions")
-        lines.append("namespace gadget_definitions {")
+        package_namespace = CppNamespace(CPP_NAMESPACE_GADGET_DOCS,
+                                         "Namespace for all gadget and characteristic definitions")
 
-        lines.append("")
-        lines.append("    // Count of the different gadget identifiers")
-        lines.append(f"    constexpr uint8_t GadgetIdentifierCount = {len(client_gadget_data['items'])};")
-        lines.append("")
-        lines.append("    // Count of the different characteristic identifiers")
-        lines.append(f"    constexpr uint8_t CharacteristicIdentifierCount = {len(characteristics_data['items'])};")
+        package_namespace.add(CppBlankLine())
+        package_namespace.add(CppComment("Count of the different gadget identifiers"))
+        package_namespace.add(CppVariable("constexpr uint8_t",
+                                          "GadgetIdentifierCount",
+                                          len(client_gadget_data['items'])))
 
-        lines.append("")
-        lines.append(f"    // {client_gadget_data['description']}")
-        lines.append("    enum class GadgetIdentifier {")
-        self.export_enum_class_items(client_gadget_data["items"], lines)
+        package_namespace.add(CppBlankLine())
+        package_namespace.add(CppComment("Count of the different characteristic identifiers"))
+        package_namespace.add(CppVariable("constexpr uint8_t",
+                                          "CharacteristicIdentifierCount",
+                                          len(characteristics_data['items'])))
 
-        lines.append("")
-        lines.append(f"    // {characteristics_data['description']}")
-        lines.append("    enum class CharacteristicIdentifier {")
-        self.export_enum_class_items(characteristics_data["items"], lines)
+        gadget_enum = CppEnumClass("GadgetIdentifier",
+                                   client_gadget_data['description'])
 
-        lines.append("}")
+        for key, data in client_gadget_data["items"].items():
+            gadget_enum.add_element(key, data['enum_value'], data['name'])
 
-        with open(out_file, "w") as file_p:
-            file_p.writelines([x + "\n" for x in lines])
+        package_namespace.add(gadget_enum)
+
+        gadget_enum = CppEnumClass("CharacteristicIdentifier",
+                                   characteristics_data['description'])
+
+        for key, data in characteristics_data["items"].items():
+            gadget_enum.add_element(key, data['enum_value'], data['name'])
+
+        package_namespace.add(gadget_enum)
+
+        file.add(package_namespace)
+
+        file.save(out_file)
