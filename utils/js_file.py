@@ -55,3 +55,81 @@ class JSImport(JSElement):
         include_buf = f"\"{self._name}\"" if self._in_package else f"<{self._name}>"
         return [self._render_indent(indentation) + f"#include {include_buf}"]
 
+
+class JSBlankLine(JSElement):
+    _blank_lines: int
+
+    def __init__(self, blank_lines: int = 0):
+        self._blank_lines = blank_lines
+
+    def render_content(self, indentation: int) -> [str]:
+        return ["\n" * self._blank_lines]
+
+
+class JSVariable(JSElement):
+    _type: str
+    _name: str
+    _value: Union[int, str]
+    _docstring: str
+
+    def __init__(self, var_type: str, name: str, value: Union[int, str], docstr: str = ""):
+        self._type = var_type
+        self._name = name
+        self._value = value
+        self._docstring = docstr
+
+    def render_content(self, indentation: int) -> [str]:
+        docstr_buf = "" if not self._docstring else f"  // {self._docstring}"
+        value_buf = str(self._value) if isinstance(self._value, int) else f"\"{self._value}\""
+        type_prefix = self._type
+        type_suffix = ""
+        if type_prefix.endswith("[]"):
+            type_prefix = type_prefix[:-2].strip()
+            type_suffix = "[] "
+
+        return [self._render_indent(indentation) +
+                f"{type_prefix} {self._name} {type_suffix}= {value_buf};{docstr_buf}"]
+
+
+class JSComment(JSElement):
+    _content: str
+
+    def __init__(self, content: str):
+        self._content = content
+
+    def render_content(self, indentation: int) -> [str]:
+        parts = self._content.split("\n")
+        return [self._render_indent(indentation) + f"// {x}" for x in parts]
+
+
+class JSConstantsClass(JSElement, JSContainer):
+    _name: str
+    _docstring: str
+
+    def __init__(self, name: str, docstring: str):
+        super().__init__()
+        self._name = name
+        self._docstring = docstring
+
+    def render_content(self, indentation: int) -> [str]:
+        return [""] + \
+               JSComment(self._docstring).render_content(indentation) + \
+               [self._render_indent(indentation) + "class " + self._name + " {"] + \
+               self._render_elements(indentation + 1) + \
+               [self._render_indent(indentation) + "}"]
+
+
+class JSFile(JSContainer):
+    """Contains a JS file for editing and saving"""
+
+    def save(self, filename: str):
+        """
+        Saves the JS file to the disk
+
+        :param filename: Name of the file to add
+        :return: None
+        """
+        lines = self._render_elements(0)
+        with open(filename, "w") as file_p:
+            out_lines = [x + "\n" for x in lines]
+            file_p.writelines(out_lines)

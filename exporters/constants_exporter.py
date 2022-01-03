@@ -3,6 +3,7 @@ from abc import abstractmethod
 
 from exporters.definitions_loader import DefinitionsLoader
 from utils.cpp_file import *
+from utils.js_file import *
 
 
 class ConstantsExporter:
@@ -48,6 +49,12 @@ class ConstantsExporter:
             lines.append(f"// {line}")
 
         return lines
+
+    def _add_js_header(self, docstring: str, filename: str, file: JSFile):
+        file.add(JSComment(docstring))
+        file.add(JSBlankLine())
+        file.add(JSComment("\n".join(self._generate_header(filename))))
+        file.add(JSBlankLine())
 
     @staticmethod
     def _generate_python_imports(imports: list[(str, str)]) -> list[str]:
