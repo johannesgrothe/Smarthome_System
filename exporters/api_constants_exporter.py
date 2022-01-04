@@ -3,6 +3,7 @@ from exporters.script_params import *
 from exporters.constants_exporter import ConstantsExporter
 from utils.software_version import SoftwareVersion
 from utils.cpp_file import *
+from utils.js_file import *
 
 _export_file_docstring = "Collection of constants for all api uris"
 
@@ -75,5 +76,36 @@ class ApiConstantsExporter(ConstantsExporter):
         package_namespace.add(uri_namespace)
 
         file.add(package_namespace)
+
+        file.save(out_file)
+
+    def export_js(self, out_file: str):
+        file = JSFile()
+
+        self._add_js_header(_export_file_docstring, '/'.join(__file__.split('/')[-1:]), file)
+
+        api_constants_class = JSConstantsClass(JS_CLASSNAME_API,
+                                               "Class for all API constants and definitions")
+
+        api_constants_class.add(JSBlankLine())
+
+        version = SoftwareVersion.from_string(self._definitions["version"])
+        api_constants_class.add(JSComment("API Version"))
+
+        api_constants_class.add(JSVariable("static", "version_major", version.major))
+        api_constants_class.add(JSVariable("static", "version_minor", version.minor))
+        api_constants_class.add(JSVariable("static", "version_bugfix", version.bugfix))
+
+        api_constants_class.add(JSBlankLine())
+
+        api_constants_class.add(JSComment("API URIs"))
+
+        for index, (key, data) in enumerate(self._definitions["mappings"].items()):
+            api_constants_class.add(JSVariable("static",
+                                               "uri_" + data['uri']['var_name'],
+                                               data['uri']['value'],
+                                               data['title']))
+
+        file.add(api_constants_class)
 
         file.save(out_file)

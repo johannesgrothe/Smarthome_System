@@ -1,5 +1,6 @@
 import argparse
 import logging
+import sys
 
 from exporters.gadget_doc_exporter import GadgetDocExporter
 from exporters.script_params import *
@@ -13,6 +14,7 @@ def export_api_constants():
     exporter = ApiConstantsExporter(PATH_API_SPECS)
     exporter.export_python(f"{PATH_FILE_API_CONSTANTS}.py")
     exporter.export_cpp(f"{PATH_FILE_API_CONSTANTS}.h")
+    exporter.export_js(f"{PATH_FILE_API_CONSTANTS}.js")
 
 
 def export_api_docs():
@@ -24,6 +26,7 @@ def export_gadget_constants():
     exporter = GadgetConstantsExporter(PATH_GADGET_SPECS)
     exporter.export_python(f"{PATH_FILE_GADGET_CONSTANTS}.py")
     exporter.export_cpp(f"{PATH_FILE_GADGET_CONSTANTS}.h")
+    exporter.export_js(f"{PATH_FILE_GADGET_CONSTANTS}.js")
     pass
 
 
@@ -43,6 +46,11 @@ def parse_args() -> argparse.Namespace:
 
 def main():
     args = parse_args()
+
+    if not args.export_docs and not args.export_constants:
+        print("Congratz, ye did absolutely nothin', ye bawbag!")
+        print("use -h for help on params")
+        sys.exit(1)
 
     if args.export_docs:
         TempDirManager(PATH_TEMP_DIR).assert_temp()
