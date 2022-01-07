@@ -33,4 +33,6 @@ export default class ApiConstants {
     static uri_config_storage_get = "config/storage/get";  // Retrieve stored config
     static uri_config_storage_save = "config/storage/save";  // Save config
     static uri_config_storage_delete = "config/storage/delete";  // Delete Config
+    static uri_bridge_update_check = "bridge/update/check";  // Bridge update check
+    static uri_bridge_update_execute = "bridge/update/execute";  // Bridge update execute
 }

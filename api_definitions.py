@@ -38,4 +38,6 @@ class ApiURIs(StringSystemIdentifier):
     config_storage_get = "config/storage/get"  # Retrieve stored config
     config_storage_save = "config/storage/save"  # Save config
     config_storage_delete = "config/storage/delete"  # Delete Config
+    bridge_update_check = "bridge/update/check"  # Bridge update check
+    bridge_update_execute = "bridge/update/execute"  # Bridge update execute
 
