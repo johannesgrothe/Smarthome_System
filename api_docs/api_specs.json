@@ -474,7 +474,7 @@
       "title": "Bridge update check",
       "description": "Checks whether the bridge has an update available. Responds with bool value for available update and branch information",
       "broadcast_allowed": true,
-      "http_method": null,
+      "http_method": "GET",
       "sender": [
         "Web Application",
         "Toolkit"
@@ -487,19 +487,19 @@
         "var_name": "bridge_update_check"
       },
       "request": {
-        "comment": "Any payload. Response will mirror the payload sent.",
+        "comment": "Any payload. Response contains information about bridge.",
         "schema": "api_empty_request.json"
       },
       "response": {
-        "comment": "Response payload contains bool value for update_available and branch information (old and new, if not newest)",
-        "schema": "api_bridge_update_response.json"
+        "comment": "Response payload contains bool value for update_available and branch information (old and new, if not newest).",
+        "schema": "api_bridge_update_check_response.json"
       }
     },
     "Bridge_update_execute": {
       "title": "Bridge update execute",
       "description": "Execute update on bridge. No Response required, system reboots",
       "broadcast_allowed": true,
-      "http_method": null,
+      "http_method": "POST",
       "sender": [
         "Web Application",
         "Toolkit"
@@ -512,13 +512,14 @@
         "var_name": "bridge_update_execute"
       },
       "request": {
-        "comment": "Any payload. Response will mirror the payload sent.",
+        "comment": "Any payload.",
         "schema": "api_empty_request.json"
       },
       "response": {
-        "comment": "No Response send, as system reboots to newer version",
-        "schema": null
+        "comment": "Response acknowledging the successful update of the bridge.",
+        "schema": "default_message.json"
       }
     }
   }
 }
+
