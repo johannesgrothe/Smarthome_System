@@ -15,7 +15,7 @@ namespace api_definitions {
     namespace version {
         constexpr uint8_t major = 1;
         constexpr uint8_t minor = 0;
-        constexpr uint8_t bugfix = 2;
+        constexpr uint8_t bugfix = 3;
     }
 
     // Api URIs
