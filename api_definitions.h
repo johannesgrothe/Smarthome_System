@@ -39,5 +39,7 @@ namespace api_definitions {
         constexpr char config_storage_get [] = "config/storage/get";  // Retrieve stored config
         constexpr char config_storage_save [] = "config/storage/save";  // Save config
         constexpr char config_storage_delete [] = "config/storage/delete";  // Delete Config
+        constexpr char bridge_update_check [] = "bridge/update/check";  // Bridge update check
+        constexpr char bridge_update_execute [] = "bridge/update/execute";  // Bridge update execute
     }
 }
