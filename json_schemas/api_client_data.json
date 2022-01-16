@@ -7,7 +7,8 @@
     "boot_mode",
     "sw_uploaded",
     "sw_commit",
-    "sw_branch"
+    "sw_branch",
+    "api_version"
   ],
   "properties": {
     "runtime_id": {
@@ -34,6 +35,10 @@
     },
     "sw_branch": {
       "type": ["string", "null"]
+    },
+    "api_version": {
+      "type": ["string"],
+      "pattern": "^[1-9][0-9]*\\.[1-9][0-9]*\\.[1-9][0-9]*$"
     }
   }
 }
