@@ -7,6 +7,7 @@
     "write_system_config": {
       "title": "Write System Config",
       "description": "Write a system config to the client",
+      "access_level": [],
       "broadcast_allowed": false,
       "http_method": null,
       "sender": [
@@ -32,6 +33,7 @@
     "write_event_config": {
       "title": "Write Event Config",
       "description": "Write an event config to the client",
+      "access_level": [],
       "broadcast_allowed": false,
       "http_method": null,
       "sender": [
@@ -57,6 +59,7 @@
     "write_gadget_config": {
       "title": "Write Gadget Config",
       "description": "Write a gadget config to the client",
+      "access_level": [],
       "broadcast_allowed": false,
       "http_method": null,
       "sender": [
@@ -82,6 +85,7 @@
     "write_config": {
       "title": "Write Complete Config to Client",
       "description": "Write a complete config to a client connected to the bridge",
+      "access_level": ["admin"],
       "broadcast_allowed": false,
       "http_method": "POST",
       "sender": [
@@ -107,6 +111,7 @@
     "delete_config": {
       "title": "Delete Config",
       "description": "Deletes all configuration files from a client",
+      "access_level": ["admin"],
       "broadcast_allowed": false,
       "http_method": "POST",
       "sender": [
@@ -133,6 +138,7 @@
     "client_heartbeat": {
       "title": "Client Heartbeat",
       "description": "Heartbeat sent periodically by the client",
+      "access_level": ["admin", "mqtt"],
       "broadcast_allowed": true,
       "http_method": null,
       "sender": [
@@ -155,6 +161,7 @@
     "info_bridge": {
       "title": "Read Bridge Info",
       "description": "Reads information about the bridge from the bridge",
+      "access_level": ["admin", "user", "guest"],
       "broadcast_allowed": true,
       "http_method": "GET",
       "sender": [
@@ -179,6 +186,7 @@
     "info_clients": {
       "title": "Read Clients Info",
       "description": "Reads information about the registered clients from the bridge",
+      "access_level": ["admin", "user", "guest"],
       "broadcast_allowed": true,
       "http_method": "GET",
       "sender": [
@@ -203,6 +211,7 @@
     "info_gadgets": {
       "title": "Read Gadgets Info",
       "description": "Reads information about the registered gadgets from the bridge",
+      "access_level": ["admin", "user", "guest"],
       "broadcast_allowed": true,
       "http_method": "GET",
       "sender": [
@@ -227,6 +236,7 @@
     "update_gadget": {
       "title": "Update Gadget",
       "description": "Updates the mutable characteristics of a gadget",
+      "access_level": ["admin", "user", "mqtt"],
       "broadcast_allowed": true,
       "http_method": "POST",
       "sender": [
@@ -252,6 +262,7 @@
     "sync_client": {
       "title": "Sync Client",
       "description": "Syncs a client with the bridge",
+      "access_level": ["admin", "mqtt"],
       "broadcast_allowed": true,
       "http_method": null,
       "sender": [
@@ -276,6 +287,7 @@
     "reboot_client": {
       "title": "Reboot Client",
       "description": "Reboots a client",
+      "access_level": ["admin", "user"],
       "broadcast_allowed": false,
       "http_method": "POST",
       "sender": [
@@ -303,6 +315,7 @@
     "sync_request": {
       "title": "Client Sync Request",
       "description": "Asks a client for sync information",
+      "access_level": [],
       "broadcast_allowed": true,
       "http_method": null,
       "sender": [
@@ -327,6 +340,7 @@
     "sync_event": {
       "title": "Sync Event",
       "description": "Syncs an Event created on the Client with the Bridge",
+      "access_level": ["admin", "mqtt"],
       "broadcast_allowed": true,
       "http_method": null,
       "sender": [
@@ -351,6 +365,7 @@
     "test_echo": {
       "title": "Test Echo",
       "description": "Test endpoint. Responds with the same payload as the request",
+      "access_level": ["admin"],
       "broadcast_allowed": true,
       "http_method": null,
       "sender": [],
@@ -373,6 +388,7 @@
     "config_storage_get_all": {
       "title": "Retrieve all stored configs",
       "description": "Retrieve all stored Configs, currently stored on the Bridge",
+      "access_level": ["admin", "user"],
       "broadcast_allowed": false,
       "http_method": "GET",
       "sender": [
@@ -398,6 +414,7 @@
     "config_storage_get": {
       "title": "Retrieve stored config",
       "description": "Retrieve the requested config, from the Bridge",
+      "access_level": ["admin", "user"],
       "broadcast_allowed": false,
       "http_method": "GET",
       "sender": [
@@ -423,6 +440,7 @@
     "config_storage_save": {
       "title": "Save config",
       "description": "Save a config, received via request, on the Bridge",
+      "access_level": ["admin"],
       "broadcast_allowed": false,
       "http_method": "POST",
       "sender": [
@@ -448,6 +466,7 @@
     "config_storage_delete": {
       "title": "Delete Config",
       "description": "Deletes a config from the Bridge",
+      "access_level": ["admin"],
       "broadcast_allowed": false,
       "http_method": "POST",
       "sender": [
@@ -473,6 +492,7 @@
     "bridge_update_check": {
       "title": "Bridge update check",
       "description": "Checks whether the bridge has an update available. Responds with bool value for available update and branch information",
+      "access_level": ["admin"],
       "broadcast_allowed": true,
       "http_method": "GET",
       "sender": [
@@ -498,6 +518,7 @@
     "Bridge_update_execute": {
       "title": "Bridge update execute",
       "description": "Execute update on bridge. No Response required, system reboots",
+      "access_level": ["admin"],
       "broadcast_allowed": true,
       "http_method": "POST",
       "sender": [
@@ -519,6 +540,32 @@
         "comment": "Response acknowledging the successful update of the bridge.",
         "schema": "default_message.json"
       }
+    }
+  },
+  "access_level": {
+    "admin": {
+      "description": "GIGA CHAD DESTROYER OF SLEEP",
+      "name": "Admin",
+      "id": 7,
+      "var_name": "admin"
+    },
+    "mqtt": {
+      "description": "MQTT access level",
+      "name": "MQTT",
+      "id": 6,
+      "var_name": "mqtt"
+    },
+    "user": {
+      "description": "Regular user access level",
+      "name": "User",
+      "id": 5,
+      "var_name": "user"
+    },
+    "guest": {
+      "description": "Guest access level, aka. not real friends",
+      "name": "guest",
+      "id": 4,
+      "var_name": "guest"
     }
   }
 }

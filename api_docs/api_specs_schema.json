@@ -5,7 +5,8 @@
     "title",
     "description",
     "version",
-    "mappings"
+    "mappings",
+    "access_level"
   ],
   "properties": {
     "title": {
@@ -26,6 +27,7 @@
         "required": [
           "title",
           "description",
+          "access_level",
           "broadcast_allowed",
           "sender",
           "receiver",
@@ -42,6 +44,12 @@
           "description": {
             "type": "string",
             "minLength": 15
+          },
+          "access_level": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
           },
           "sender": {
             "type": "array",
@@ -107,6 +115,37 @@
                 "type": "string"
               }
             }
+          }
+        }
+      }
+    },
+    "access_level": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "object",
+        "required": [
+          "description",
+          "name",
+          "id",
+          "var_name"
+        ],
+        "properties": {
+          "description": {
+            "type": "string",
+            "minLength": 15
+          },
+          "name": {
+            "type": "string",
+            "minLength": 1
+          },
+          "id": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "var_name": {
+            "type": "string",
+            "minLength": 3,
+            "pattern": "^[a-z_]+$"
           }
         }
       }
