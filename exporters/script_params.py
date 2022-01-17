@@ -39,6 +39,12 @@ CPP_NAMESPACE_API_VERSION = "version"
 # Classname for api URIs
 PY_CLASSNAME_URIS = "ApiURIs"
 
+# Classname for api access levels
+PY_CLASSNAME_ACCESS_LEVEL = "ApiAccessLevel"
+
+# Classname for api access level mapping
+PY_CLASSNAME_ACCESS_LEVEL_MAPPING = "ApiAccessLevelMapping"
+
 # Namespace api docs
 PY_VARNAME_API_VERSION = "api_version"
 
