@@ -13,7 +13,7 @@ except ModuleNotFoundError:
 
 
 # API Version
-api_version = SoftwareVersion(1, 0, 4)
+api_version = SoftwareVersion(1, 0, 5)
 
 
 class ApiURIs(StringSystemIdentifier):

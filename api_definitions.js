@@ -11,7 +11,7 @@ export default class ApiConstants {
     // API Version
     static version_major = 1;
     static version_minor = 0;
-    static version_bugfix = 4;
+    static version_bugfix = 5;
 
     // API URIs
     static uri_client_system_config_write = "config/system/write";  // Write System Config
