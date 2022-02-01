@@ -19,7 +19,7 @@ class ApiConstantsExporter(ConstantsExporter):
 
         lines.append("")
 
-        for x in self._generate_python_imports([("utils.system_identifier", "StringSystemIdentifier"),
+        for x in self._generate_python_imports([("utils.system_identifier", "StringSystemIdentifier, IntSystemIdentifier"),
                                                 ("utils.software_version", "SoftwareVersion")]):
             lines.append(x)
 
@@ -41,6 +41,47 @@ class ApiConstantsExporter(ConstantsExporter):
             lines.append(f"    {data['uri']['var_name']} = \"{data['uri']['value']}\"  # {data['title']}")
 
         lines.append("")
+        lines.append("")
+
+        lines.append(f"class {PY_CLASSNAME_ACCESS_LEVEL}(IntSystemIdentifier):")
+        lines.append(f"    \"\"\"Container for all API access levels\"\"\"")
+        lines.append("")
+
+        for mapping, data in self._definitions["access_level"].items():
+            lines.append(f"    {data['var_name']} = {data['id']}  # {data['name']}")
+
+        lines.append("")
+        lines.append("")
+
+        lines.append(f"class {PY_CLASSNAME_ACCESS_LEVEL_MAPPING}:")
+        lines.append(f"    \"\"\"Container for all API access levels\"\"\"")
+        lines.append("")
+
+        mappings = {}
+        for key, data in self._definitions["access_level"].items():
+            mappings[key] = []
+        for mapping, data in self._definitions["mappings"].items():
+            for access_level in data["access_level"]:
+                try:
+                    mappings[access_level].append(data["uri"]["var_name"])
+                except KeyError:
+                    raise Exception(f"Invalid access_level {access_level} in mapping {mapping}")
+        # lines.append(str(mappings))
+
+        lines.append("    mapping = {")
+        for index, (key, data) in enumerate(mappings.items()):
+            map_list = [f'{PY_CLASSNAME_URIS}.{x}' for x in data]
+            line_end = "," if index < len(mappings)-1 else ""
+            lines.append(f"        {PY_CLASSNAME_ACCESS_LEVEL}.{key}: [{', '.join(map_list)}]{line_end}")
+
+        lines.append("    }")
+
+        lines.append("")
+
+        lines.append("    @classmethod")
+        lines.append(f"    def get_mapping(cls, access_level: {PY_CLASSNAME_ACCESS_LEVEL}) -> list[{PY_CLASSNAME_URIS}]:")
+        lines.append("        return cls.mapping[access_level]")
+
 
         with open(out_file, "w") as file_p:
             file_p.writelines([x + "\n" for x in lines])

@@ -5,15 +5,15 @@
 # Every change made will be overwritten at next export.
 
 try:
-    from utils.system_identifier import StringSystemIdentifier
+    from utils.system_identifier import StringSystemIdentifier, IntSystemIdentifier
     from utils.software_version import SoftwareVersion
 except ModuleNotFoundError:
-    from .utils.system_identifier import StringSystemIdentifier
+    from .utils.system_identifier import StringSystemIdentifier, IntSystemIdentifier
     from .utils.software_version import SoftwareVersion
 
 
 # API Version
-api_version = SoftwareVersion(1, 0, 4)
+api_version = SoftwareVersion(1, 0, 5)
 
 
 class ApiURIs(StringSystemIdentifier):
@@ -41,3 +41,26 @@ class ApiURIs(StringSystemIdentifier):
     bridge_update_check = "bridge/update/check"  # Bridge update check
     bridge_update_execute = "bridge/update/execute"  # Bridge update execute
 
+
+class ApiAccessLevel(IntSystemIdentifier):
+    """Container for all API access levels"""
+
+    admin = 7  # Admin
+    mqtt = 6  # MQTT
+    user = 5  # User
+    guest = 4  # guest
+
+
+class ApiAccessLevelMapping:
+    """Container for all API access levels"""
+
+    mapping = {
+        ApiAccessLevel.admin: [ApiURIs.client_config_write, ApiURIs.client_config_delete, ApiURIs.heartbeat, ApiURIs.info_bridge, ApiURIs.info_clients, ApiURIs.info_gadgets, ApiURIs.update_gadget, ApiURIs.sync_client, ApiURIs.client_reboot, ApiURIs.sync_event, ApiURIs.test_echo, ApiURIs.config_storage_get_all, ApiURIs.config_storage_get, ApiURIs.config_storage_save, ApiURIs.config_storage_delete, ApiURIs.bridge_update_check, ApiURIs.bridge_update_execute],
+        ApiAccessLevel.mqtt: [ApiURIs.heartbeat, ApiURIs.update_gadget, ApiURIs.sync_client, ApiURIs.sync_event],
+        ApiAccessLevel.user: [ApiURIs.info_bridge, ApiURIs.info_clients, ApiURIs.info_gadgets, ApiURIs.update_gadget, ApiURIs.client_reboot, ApiURIs.config_storage_get_all, ApiURIs.config_storage_get],
+        ApiAccessLevel.guest: [ApiURIs.info_bridge, ApiURIs.info_clients, ApiURIs.info_gadgets]
+    }
+
+    @classmethod
+    def get_mapping(cls, access_level: ApiAccessLevel) -> list[ApiURIs]:
+        return cls.mapping[access_level]
