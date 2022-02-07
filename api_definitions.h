@@ -20,26 +20,12 @@ namespace api_definitions {
 
     // Api URIs
     namespace uris {
-        constexpr char client_system_config_write [] = "config/system/write";  // Write System Config
-        constexpr char client_event_config_write [] = "config/event/write";  // Write Event Config
-        constexpr char client_gadget_config_write [] = "config/gadget/write";  // Write Gadget Config
-        constexpr char client_config_write [] = "config/write";  // Write Complete Config to Client
-        constexpr char client_config_delete [] = "config/delete";  // Delete Config
         constexpr char heartbeat [] = "heartbeat";  // Client Heartbeat
-        constexpr char info_bridge [] = "info/bridge";  // Read Bridge Info
-        constexpr char info_clients [] = "info/clients";  // Read Clients Info
-        constexpr char info_gadgets [] = "info/gadgets";  // Read Gadgets Info
         constexpr char update_gadget [] = "update/gadget";  // Update Gadget
         constexpr char sync_client [] = "sync/client";  // Sync Client
-        constexpr char client_reboot [] = "reboot/client";  // Reboot Client
-        constexpr char sync_request [] = "sync";  // Client Sync Request
         constexpr char sync_event [] = "sync/event";  // Sync Event
-        constexpr char test_echo [] = "echo";  // Test Echo
-        constexpr char config_storage_get_all [] = "config/storage/get_all";  // Retrieve all stored configs
-        constexpr char config_storage_get [] = "config/storage/get";  // Retrieve stored config
-        constexpr char config_storage_save [] = "config/storage/save";  // Save config
-        constexpr char config_storage_delete [] = "config/storage/delete";  // Delete Config
-        constexpr char bridge_update_check [] = "bridge/update/check";  // Bridge update check
-        constexpr char bridge_update_execute [] = "bridge/update/execute";  // Bridge update execute
+        constexpr char update_gadget [] = "update/gadget";  // Update Gadget
+        constexpr char sync_client [] = "sync/client";  // Sync Client
+        constexpr char sync_event [] = "sync/event";  // Sync Event
     }
 }

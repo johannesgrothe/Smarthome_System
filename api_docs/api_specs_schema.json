@@ -15,8 +15,11 @@
     "req_sender": {
       "type": "array",
       "items": {
-        "type": "string",
-        "minLength": 5
+        "enum": [
+          "client",
+          "bridge",
+          "web_application"
+        ]
       }
     },
     "req_broadcast_allowed": {
@@ -162,7 +165,8 @@
               "response": {
                 "$ref": "#/definitions/req_response"
               }
-            }
+            },
+            "additionalProperties": false
           }
         },
         "client": {
@@ -185,24 +189,11 @@
               "description": {
                 "$ref": "#/definitions/req_title"
               },
-              "access_level": {
-                "type": "array",
-                "items": {
-                  "type": "string"
-                }
-              },
               "sender": {
                 "$ref": "#/definitions/req_sender"
               },
               "broadcast_allowed": {
                 "$ref": "#/definitions/req_broadcast_allowed"
-              },
-              "http_method": {
-                "enum": [
-                  "GET",
-                  "POST",
-                  null
-                ]
               },
               "uri": {
                 "$ref": "#/definitions/req_uri"
@@ -213,7 +204,8 @@
               "response": {
                 "$ref": "#/definitions/req_response"
               }
-            }
+            },
+            "additionalProperties": false
           }
         }
       }

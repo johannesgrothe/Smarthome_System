@@ -36,9 +36,15 @@ class ApiConstantsExporter(ConstantsExporter):
         lines.append(f"class {PY_CLASSNAME_URIS}(StringSystemIdentifier):")
         lines.append(f"    \"\"\"Container for all API URIs\"\"\"")
         lines.append("")
-
-        for mapping, data in self._definitions["mappings"].items():
+        lines.append("    # URIs exposed by the bridge")
+        for _, data in self._definitions["mappings"]["bridge"].items():
             lines.append(f"    {data['uri']['var_name']} = \"{data['uri']['value']}\"  # {data['title']}")
+
+        lines.append("")
+        lines.append("    # URIs exposed by the client")
+        for _, data in self._definitions["mappings"]["client"].items():
+            if "bridge" in data["sender"]:
+                lines.append(f"    {data['uri']['var_name']} = \"{data['uri']['value']}\"  # {data['title']}")
 
         lines.append("")
         lines.append("")
@@ -60,7 +66,7 @@ class ApiConstantsExporter(ConstantsExporter):
         mappings = {}
         for key, data in self._definitions["access_level"].items():
             mappings[key] = []
-        for mapping, data in self._definitions["mappings"].items():
+        for mapping, data in self._definitions["mappings"]["bridge"].items():
             for access_level in data["access_level"]:
                 try:
                     mappings[access_level].append(data["uri"]["var_name"])
@@ -87,6 +93,16 @@ class ApiConstantsExporter(ConstantsExporter):
             file_p.writelines([x + "\n" for x in lines])
 
     def export_cpp(self, out_file: str):
+
+        # Filter data to only export api constants relevant to the client
+        filtered_data = []
+        for key, data in self._definitions["mappings"]["bridge"].items():
+            if "client" in data["sender"]:
+                filtered_data.append(data)
+        for key, data in self._definitions["mappings"]["client"].items():
+            if "client" in data["sender"]:
+                filtered_data.append(data)
+
         file = CppFile()
 
         self._add_cpp_header(_export_file_docstring, '/'.join(__file__.split('/')[-1:]), file)
@@ -108,7 +124,7 @@ class ApiConstantsExporter(ConstantsExporter):
 
         uri_namespace = CppNamespace(CPP_NAMESPACE_API_URIS,
                                      "Api URIs")
-        for index, (key, data) in enumerate(self._definitions["mappings"].items()):
+        for data in filtered_data:
             uri_namespace.add(CppVariable("constexpr char []",
                                           data['uri']['var_name'],
                                           data['uri']['value'],
@@ -121,6 +137,13 @@ class ApiConstantsExporter(ConstantsExporter):
         file.save(out_file)
 
     def export_js(self, out_file: str):
+
+        # Filter data to only export api constants relevant to the web interface
+        filtered_data = []
+        for key, data in self._definitions["mappings"]["bridge"].items():
+            if "web_application" in data["sender"]:
+                filtered_data.append(data)
+
         file = JSFile()
 
         self._add_js_header(_export_file_docstring, '/'.join(__file__.split('/')[-1:]), file)
@@ -141,7 +164,7 @@ class ApiConstantsExporter(ConstantsExporter):
 
         api_constants_class.add(JSComment("API URIs"))
 
-        for index, (key, data) in enumerate(self._definitions["mappings"].items()):
+        for data in filtered_data:
             api_constants_class.add(JSVariable("static",
                                                "uri_" + data['uri']['var_name'],
                                                data['uri']['value'],

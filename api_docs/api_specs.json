@@ -5,96 +5,16 @@
   "version": "1.0.5",
   "mappings": {
     "bridge": {
-      "write_system_config": {
-        "title": "Write System Config",
-        "description": "Write a system config to the client",
-        "access_level": [],
-        "broadcast_allowed": false,
-        "http_method": null,
-        "sender": [
-          "Bridge",
-          "Toolkit"
-        ],
-        "receiver": [
-          "Client"
-        ],
-        "uri": {
-          "value": "config/system/write",
-          "var_name": "client_system_config_write"
-        },
-        "request": {
-          "comment": "Config received by the Client",
-          "schema": "api_client_write_system_config.json"
-        },
-        "response": {
-          "comment": "Response acknowledging the successful writing of the Config",
-          "schema": "default_message.json"
-        }
-      },
-      "write_event_config": {
-        "title": "Write Event Config",
-        "description": "Write an event config to the client",
-        "access_level": [],
-        "broadcast_allowed": false,
-        "http_method": null,
-        "sender": [
-          "Bridge",
-          "Toolkit"
-        ],
-        "receiver": [
-          "Client"
-        ],
-        "uri": {
-          "value": "config/event/write",
-          "var_name": "client_event_config_write"
-        },
-        "request": {
-          "comment": "Config received by the Client",
-          "schema": "api_client_write_event_config.json"
-        },
-        "response": {
-          "comment": "Response acknowledging the successful writing of the Config",
-          "schema": "default_message.json"
-        }
-      },
-      "write_gadget_config": {
-        "title": "Write Gadget Config",
-        "description": "Write a gadget config to the client",
-        "access_level": [],
-        "broadcast_allowed": false,
-        "http_method": null,
-        "sender": [
-          "Bridge",
-          "Toolkit"
-        ],
-        "receiver": [
-          "Client"
-        ],
-        "uri": {
-          "value": "config/gadget/write",
-          "var_name": "client_gadget_config_write"
-        },
-        "request": {
-          "comment": "Config received by the Client",
-          "schema": "api_client_write_gadget_config.json"
-        },
-        "response": {
-          "comment": "Response acknowledging the successful writing of the Config",
-          "schema": "default_message.json"
-        }
-      },
       "write_config": {
         "title": "Write Complete Config to Client",
         "description": "Write a complete config to a client connected to the bridge",
-        "access_level": ["admin"],
+        "access_level": [
+          "admin"
+        ],
         "broadcast_allowed": false,
         "http_method": "POST",
         "sender": [
-          "Web Application",
-          "Toolkit"
-        ],
-        "receiver": [
-          "Bridge"
+          "web_application"
         ],
         "uri": {
           "value": "config/write",
@@ -112,16 +32,13 @@
       "delete_config": {
         "title": "Delete Config",
         "description": "Deletes all configuration files from a client",
-        "access_level": ["admin"],
+        "access_level": [
+          "admin"
+        ],
         "broadcast_allowed": false,
         "http_method": "POST",
         "sender": [
-          "Web Application",
-          "Toolkit"
-        ],
-        "receiver": [
-          "Bridge",
-          "Client"
+          "web_application"
         ],
         "uri": {
           "value": "config/delete",
@@ -139,13 +56,15 @@
       "client_heartbeat": {
         "title": "Client Heartbeat",
         "description": "Heartbeat sent periodically by the client",
-        "access_level": ["admin", "mqtt"],
+        "access_level": [
+          "admin",
+          "mqtt"
+        ],
         "broadcast_allowed": true,
         "http_method": null,
         "sender": [
-          "Client"
+          "client"
         ],
-        "receiver": [],
         "uri": {
           "value": "heartbeat",
           "var_name": "heartbeat"
@@ -162,14 +81,15 @@
       "info_bridge": {
         "title": "Read Bridge Info",
         "description": "Reads information about the bridge from the bridge",
-        "access_level": ["admin", "user", "guest"],
+        "access_level": [
+          "admin",
+          "user",
+          "guest"
+        ],
         "broadcast_allowed": true,
         "http_method": "GET",
         "sender": [
-          "Web Application, Toolkit"
-        ],
-        "receiver": [
-          "Bridge"
+          "web_application"
         ],
         "uri": {
           "value": "info/bridge",
@@ -187,14 +107,15 @@
       "info_clients": {
         "title": "Read Clients Info",
         "description": "Reads information about the registered clients from the bridge",
-        "access_level": ["admin", "user", "guest"],
+        "access_level": [
+          "admin",
+          "user",
+          "guest"
+        ],
         "broadcast_allowed": true,
         "http_method": "GET",
         "sender": [
-          "Web Application, Toolkit"
-        ],
-        "receiver": [
-          "Bridge"
+          "web_application"
         ],
         "uri": {
           "value": "info/clients",
@@ -212,14 +133,15 @@
       "info_gadgets": {
         "title": "Read Gadgets Info",
         "description": "Reads information about the registered gadgets from the bridge",
-        "access_level": ["admin", "user", "guest"],
+        "access_level": [
+          "admin",
+          "user",
+          "guest"
+        ],
         "broadcast_allowed": true,
         "http_method": "GET",
         "sender": [
-          "Web Application, Toolkit"
-        ],
-        "receiver": [
-          "Bridge"
+          "web_application"
         ],
         "uri": {
           "value": "info/gadgets",
@@ -237,15 +159,16 @@
       "update_gadget": {
         "title": "Update Gadget",
         "description": "Updates the mutable characteristics of a gadget",
-        "access_level": ["admin", "user", "mqtt"],
+        "access_level": [
+          "admin",
+          "user",
+          "mqtt"
+        ],
         "broadcast_allowed": true,
         "http_method": "POST",
         "sender": [
-          "Client",
-          "Web Application"
-        ],
-        "receiver": [
-          "Bridge"
+          "client",
+          "web_application"
         ],
         "uri": {
           "value": "update/gadget",
@@ -263,14 +186,14 @@
       "sync_client": {
         "title": "Sync Client",
         "description": "Syncs a client with the bridge",
-        "access_level": ["admin", "mqtt"],
+        "access_level": [
+          "admin",
+          "mqtt"
+        ],
         "broadcast_allowed": true,
         "http_method": null,
         "sender": [
-          "Client"
-        ],
-        "receiver": [
-          "Bridge"
+          "client"
         ],
         "uri": {
           "value": "sync/client",
@@ -288,21 +211,18 @@
       "reboot_client": {
         "title": "Reboot Client",
         "description": "Reboots a client",
-        "access_level": ["admin", "user"],
+        "access_level": [
+          "admin",
+          "user"
+        ],
         "broadcast_allowed": false,
         "http_method": "POST",
         "sender": [
-          "Bridge",
-          "Web Application",
-          "Toolkit"
-        ],
-        "receiver": [
-          "Bridge",
-          "Client"
+          "web_application"
         ],
         "uri": {
           "value": "reboot/client",
-          "var_name": "client_reboot"
+          "var_name": "reboot_connected_client"
         },
         "request": {
           "comment": "Client ID is only needed when sent to bridge to identify client to reboot from",
@@ -313,42 +233,17 @@
           "schema": "default_message.json"
         }
       },
-      "sync_request": {
-        "title": "Client Sync Request",
-        "description": "Asks a client for sync information",
-        "access_level": [],
-        "broadcast_allowed": true,
-        "http_method": null,
-        "sender": [
-          "Bridge"
-        ],
-        "receiver": [
-          "Client"
-        ],
-        "uri": {
-          "value": "sync",
-          "var_name": "sync_request"
-        },
-        "request": {
-          "comment": "No request payload needed",
-          "schema": "api_empty_request.json"
-        },
-        "response": {
-          "comment": "No response is expected, the client sends a separate sync broadcast afterwards",
-          "schema": null
-        }
-      },
       "sync_event": {
         "title": "Sync Event",
         "description": "Syncs an Event created on the Client with the Bridge",
-        "access_level": ["admin", "mqtt"],
+        "access_level": [
+          "admin",
+          "mqtt"
+        ],
         "broadcast_allowed": true,
         "http_method": null,
         "sender": [
-          "Client"
-        ],
-        "receiver": [
-          "Bridge"
+          "client"
         ],
         "uri": {
           "value": "sync/event",
@@ -366,13 +261,12 @@
       "test_echo": {
         "title": "Test Echo",
         "description": "Test endpoint. Responds with the same payload as the request",
-        "access_level": ["admin"],
+        "access_level": [
+          "admin"
+        ],
         "broadcast_allowed": true,
         "http_method": null,
         "sender": [],
-        "receiver": [
-          "Bridge, Client"
-        ],
         "uri": {
           "value": "echo",
           "var_name": "test_echo"
@@ -389,15 +283,14 @@
       "config_storage_get_all": {
         "title": "Retrieve all stored configs",
         "description": "Retrieve all stored Configs, currently stored on the Bridge",
-        "access_level": ["admin", "user"],
+        "access_level": [
+          "admin",
+          "user"
+        ],
         "broadcast_allowed": false,
         "http_method": "GET",
         "sender": [
-          "Web Application",
-          "Toolkit"
-        ],
-        "receiver": [
-          "Bridge"
+          "web_application"
         ],
         "uri": {
           "value": "config/storage/get_all",
@@ -415,15 +308,14 @@
       "config_storage_get": {
         "title": "Retrieve stored config",
         "description": "Retrieve the requested config, from the Bridge",
-        "access_level": ["admin", "user"],
+        "access_level": [
+          "admin",
+          "user"
+        ],
         "broadcast_allowed": false,
         "http_method": "GET",
         "sender": [
-          "Web Application",
-          "Toolkit"
-        ],
-        "receiver": [
-          "Bridge"
+          "web_application"
         ],
         "uri": {
           "value": "config/storage/get",
@@ -441,15 +333,13 @@
       "config_storage_save": {
         "title": "Save config",
         "description": "Save a config, received via request, on the Bridge",
-        "access_level": ["admin"],
+        "access_level": [
+          "admin"
+        ],
         "broadcast_allowed": false,
         "http_method": "POST",
         "sender": [
-          "Web Application",
-          "Toolkit"
-        ],
-        "receiver": [
-          "Bridge"
+          "web_application"
         ],
         "uri": {
           "value": "config/storage/save",
@@ -467,15 +357,13 @@
       "config_storage_delete": {
         "title": "Delete Config",
         "description": "Deletes a config from the Bridge",
-        "access_level": ["admin"],
+        "access_level": [
+          "admin"
+        ],
         "broadcast_allowed": false,
         "http_method": "POST",
         "sender": [
-          "Web Application",
-          "Toolkit"
-        ],
-        "receiver": [
-          "Bridge"
+          "web_application"
         ],
         "uri": {
           "value": "config/storage/delete",
@@ -493,15 +381,13 @@
       "bridge_update_check": {
         "title": "Bridge update check",
         "description": "Checks whether the bridge has an update available. Responds with bool value for available update and branch information",
-        "access_level": ["admin"],
+        "access_level": [
+          "admin"
+        ],
         "broadcast_allowed": true,
         "http_method": "GET",
         "sender": [
-          "Web Application",
-          "Toolkit"
-        ],
-        "receiver": [
-          "Bridge"
+          "web_application"
         ],
         "uri": {
           "value": "bridge/update/check",
@@ -516,18 +402,16 @@
           "schema": "api_bridge_update_check_response.json"
         }
       },
-      "Bridge_update_execute": {
+      "bridge_update_execute": {
         "title": "Bridge update execute",
         "description": "Execute update on bridge. No Response required, system reboots",
-        "access_level": ["admin"],
+        "access_level": [
+          "admin"
+        ],
         "broadcast_allowed": true,
         "http_method": "POST",
         "sender": [
-          "Web Application",
-          "Toolkit"
-        ],
-        "receiver": [
-          "Bridge"
+          "web_application"
         ],
         "uri": {
           "value": "bridge/update/execute",
@@ -547,15 +431,9 @@
       "write_system_config": {
         "title": "Write System Config",
         "description": "Write a system config to the client",
-        "access_level": [],
         "broadcast_allowed": false,
-        "http_method": null,
         "sender": [
-          "Bridge",
-          "Toolkit"
-        ],
-        "receiver": [
-          "Client"
+          "bridge"
         ],
         "uri": {
           "value": "config/system/write",
@@ -573,15 +451,9 @@
       "write_event_config": {
         "title": "Write Event Config",
         "description": "Write an event config to the client",
-        "access_level": [],
         "broadcast_allowed": false,
-        "http_method": null,
         "sender": [
-          "Bridge",
-          "Toolkit"
-        ],
-        "receiver": [
-          "Client"
+          "bridge"
         ],
         "uri": {
           "value": "config/event/write",
@@ -599,15 +471,9 @@
       "write_gadget_config": {
         "title": "Write Gadget Config",
         "description": "Write a gadget config to the client",
-        "access_level": [],
         "broadcast_allowed": false,
-        "http_method": null,
         "sender": [
-          "Bridge",
-          "Toolkit"
-        ],
-        "receiver": [
-          "Client"
+          "bridge"
         ],
         "uri": {
           "value": "config/gadget/write",
@@ -622,45 +488,12 @@
           "schema": "default_message.json"
         }
       },
-      "write_config": {
-        "title": "Write Complete Config to Client",
-        "description": "Write a complete config to a client connected to the bridge",
-        "access_level": ["admin"],
-        "broadcast_allowed": false,
-        "http_method": "POST",
-        "sender": [
-          "Web Application",
-          "Toolkit"
-        ],
-        "receiver": [
-          "Bridge"
-        ],
-        "uri": {
-          "value": "config/write",
-          "var_name": "client_config_write"
-        },
-        "request": {
-          "comment": "Config to write to the client",
-          "schema": "api_client_write_config.json"
-        },
-        "response": {
-          "comment": "Response acknowledging the successful writing of the Config",
-          "schema": "default_message.json"
-        }
-      },
       "delete_config": {
         "title": "Delete Config",
         "description": "Deletes all configuration files from a client",
-        "access_level": ["admin"],
         "broadcast_allowed": false,
-        "http_method": "POST",
         "sender": [
-          "Web Application",
-          "Toolkit"
-        ],
-        "receiver": [
-          "Bridge",
-          "Client"
+          "web_application"
         ],
         "uri": {
           "value": "config/delete",
@@ -675,116 +508,13 @@
           "schema": "default_message.json"
         }
       },
-      "client_heartbeat": {
-        "title": "Client Heartbeat",
-        "description": "Heartbeat sent periodically by the client",
-        "access_level": ["admin", "mqtt"],
-        "broadcast_allowed": true,
-        "http_method": null,
-        "sender": [
-          "Client"
-        ],
-        "receiver": [],
-        "uri": {
-          "value": "heartbeat",
-          "var_name": "heartbeat"
-        },
-        "request": {
-          "comment": "Config received by the Client",
-          "schema": "bridge_heartbeat_request.json"
-        },
-        "response": {
-          "comment": "No response is expected",
-          "schema": null
-        }
-      },
-      "info_bridge": {
-        "title": "Read Bridge Info",
-        "description": "Reads information about the bridge from the bridge",
-        "access_level": ["admin", "user", "guest"],
-        "broadcast_allowed": true,
-        "http_method": "GET",
-        "sender": [
-          "Web Application, Toolkit"
-        ],
-        "receiver": [
-          "Bridge"
-        ],
-        "uri": {
-          "value": "info/bridge",
-          "var_name": "info_bridge"
-        },
-        "request": {
-          "comment": "No request payload needed",
-          "schema": "api_empty_request.json"
-        },
-        "response": {
-          "comment": "Every bit of relevant meta information about the bridge",
-          "schema": "api_get_info_response.json"
-        }
-      },
-      "info_clients": {
-        "title": "Read Clients Info",
-        "description": "Reads information about the registered clients from the bridge",
-        "access_level": ["admin", "user", "guest"],
-        "broadcast_allowed": true,
-        "http_method": "GET",
-        "sender": [
-          "Web Application, Toolkit"
-        ],
-        "receiver": [
-          "Bridge"
-        ],
-        "uri": {
-          "value": "info/clients",
-          "var_name": "info_clients"
-        },
-        "request": {
-          "comment": "No request payload needed",
-          "schema": "api_empty_request.json"
-        },
-        "response": {
-          "comment": "Json containing information about all clients currently known to the bridge",
-          "schema": "api_get_all_clients_response.json"
-        }
-      },
-      "info_gadgets": {
-        "title": "Read Gadgets Info",
-        "description": "Reads information about the registered gadgets from the bridge",
-        "access_level": ["admin", "user", "guest"],
-        "broadcast_allowed": true,
-        "http_method": "GET",
-        "sender": [
-          "Web Application, Toolkit"
-        ],
-        "receiver": [
-          "Bridge"
-        ],
-        "uri": {
-          "value": "info/gadgets",
-          "var_name": "info_gadgets"
-        },
-        "request": {
-          "comment": "No request payload needed",
-          "schema": "api_empty_request.json"
-        },
-        "response": {
-          "comment": "Json containing information about all gadgets currently known to the bridge",
-          "schema": "api_get_all_gadgets_response.json"
-        }
-      },
       "update_gadget": {
         "title": "Update Gadget",
         "description": "Updates the mutable characteristics of a gadget",
-        "access_level": ["admin", "user", "mqtt"],
         "broadcast_allowed": true,
-        "http_method": "POST",
         "sender": [
-          "Client",
-          "Web Application"
-        ],
-        "receiver": [
-          "Bridge"
+          "client",
+          "web_application"
         ],
         "uri": {
           "value": "update/gadget",
@@ -802,14 +532,9 @@
       "sync_client": {
         "title": "Sync Client",
         "description": "Syncs a client with the bridge",
-        "access_level": ["admin", "mqtt"],
         "broadcast_allowed": true,
-        "http_method": null,
         "sender": [
-          "Client"
-        ],
-        "receiver": [
-          "Bridge"
+          "client"
         ],
         "uri": {
           "value": "sync/client",
@@ -827,17 +552,10 @@
       "reboot_client": {
         "title": "Reboot Client",
         "description": "Reboots a client",
-        "access_level": ["admin", "user"],
         "broadcast_allowed": false,
-        "http_method": "POST",
         "sender": [
-          "Bridge",
-          "Web Application",
-          "Toolkit"
-        ],
-        "receiver": [
-          "Bridge",
-          "Client"
+          "bridge",
+          "web_application"
         ],
         "uri": {
           "value": "reboot/client",
@@ -855,14 +573,9 @@
       "sync_request": {
         "title": "Client Sync Request",
         "description": "Asks a client for sync information",
-        "access_level": [],
         "broadcast_allowed": true,
-        "http_method": null,
         "sender": [
-          "Bridge"
-        ],
-        "receiver": [
-          "Client"
+          "bridge"
         ],
         "uri": {
           "value": "sync",
@@ -880,14 +593,9 @@
       "sync_event": {
         "title": "Sync Event",
         "description": "Syncs an Event created on the Client with the Bridge",
-        "access_level": ["admin", "mqtt"],
         "broadcast_allowed": true,
-        "http_method": null,
         "sender": [
-          "Client"
-        ],
-        "receiver": [
-          "Bridge"
+          "client"
         ],
         "uri": {
           "value": "sync/event",
@@ -905,13 +613,8 @@
       "test_echo": {
         "title": "Test Echo",
         "description": "Test endpoint. Responds with the same payload as the request",
-        "access_level": ["admin"],
         "broadcast_allowed": true,
-        "http_method": null,
         "sender": [],
-        "receiver": [
-          "Bridge, Client"
-        ],
         "uri": {
           "value": "echo",
           "var_name": "test_echo"
@@ -923,162 +626,6 @@
         "response": {
           "comment": "Response payload will be the same as the sent one",
           "schema": null
-        }
-      },
-      "config_storage_get_all": {
-        "title": "Retrieve all stored configs",
-        "description": "Retrieve all stored Configs, currently stored on the Bridge",
-        "access_level": ["admin", "user"],
-        "broadcast_allowed": false,
-        "http_method": "GET",
-        "sender": [
-          "Web Application",
-          "Toolkit"
-        ],
-        "receiver": [
-          "Bridge"
-        ],
-        "uri": {
-          "value": "config/storage/get_all",
-          "var_name": "config_storage_get_all"
-        },
-        "request": {
-          "comment": "No data required for request",
-          "schema": "api_empty_request.json"
-        },
-        "response": {
-          "comment": "Response that contains the names and descriptions of all configs",
-          "schema": "api_config_get_all_response.json"
-        }
-      },
-      "config_storage_get": {
-        "title": "Retrieve stored config",
-        "description": "Retrieve the requested config, from the Bridge",
-        "access_level": ["admin", "user"],
-        "broadcast_allowed": false,
-        "http_method": "GET",
-        "sender": [
-          "Web Application",
-          "Toolkit"
-        ],
-        "receiver": [
-          "Bridge"
-        ],
-        "uri": {
-          "value": "config/storage/get",
-          "var_name": "config_storage_get"
-        },
-        "request": {
-          "comment": "Name of the config to be retrieved",
-          "schema": "api_config_delete_get.json"
-        },
-        "response": {
-          "comment": "Response that contains the requested config",
-          "schema": "api_config_get_response.json"
-        }
-      },
-      "config_storage_save": {
-        "title": "Save config",
-        "description": "Save a config, received via request, on the Bridge",
-        "access_level": ["admin"],
-        "broadcast_allowed": false,
-        "http_method": "POST",
-        "sender": [
-          "Web Application",
-          "Toolkit"
-        ],
-        "receiver": [
-          "Bridge"
-        ],
-        "uri": {
-          "value": "config/storage/save",
-          "var_name": "config_storage_save"
-        },
-        "request": {
-          "comment": "Config received by the Bridge",
-          "schema": "api_config_save.json"
-        },
-        "response": {
-          "comment": "Response acknowledging the successful saving of the config",
-          "schema": "default_message.json"
-        }
-      },
-      "config_storage_delete": {
-        "title": "Delete Config",
-        "description": "Deletes a config from the Bridge",
-        "access_level": ["admin"],
-        "broadcast_allowed": false,
-        "http_method": "POST",
-        "sender": [
-          "Web Application",
-          "Toolkit"
-        ],
-        "receiver": [
-          "Bridge"
-        ],
-        "uri": {
-          "value": "config/storage/delete",
-          "var_name": "config_storage_delete"
-        },
-        "request": {
-          "comment": "Name, of config to be deleted, received by the Bridge",
-          "schema": "api_config_delete_get.json"
-        },
-        "response": {
-          "comment": "Response acknowledging the successful deletion of the config",
-          "schema": "default_message.json"
-        }
-      },
-      "bridge_update_check": {
-        "title": "Bridge update check",
-        "description": "Checks whether the bridge has an update available. Responds with bool value for available update and branch information",
-        "access_level": ["admin"],
-        "broadcast_allowed": true,
-        "http_method": "GET",
-        "sender": [
-          "Web Application",
-          "Toolkit"
-        ],
-        "receiver": [
-          "Bridge"
-        ],
-        "uri": {
-          "value": "bridge/update/check",
-          "var_name": "bridge_update_check"
-        },
-        "request": {
-          "comment": "Any payload. Response contains information about bridge.",
-          "schema": "api_empty_request.json"
-        },
-        "response": {
-          "comment": "Response payload contains bool value for update_available and branch information (old and new, if not newest).",
-          "schema": "api_bridge_update_check_response.json"
-        }
-      },
-      "Bridge_update_execute": {
-        "title": "Bridge update execute",
-        "description": "Execute update on bridge. No Response required, system reboots",
-        "access_level": ["admin"],
-        "broadcast_allowed": true,
-        "http_method": "POST",
-        "sender": [
-          "Web Application",
-          "Toolkit"
-        ],
-        "receiver": [
-          "Bridge"
-        ],
-        "uri": {
-          "value": "bridge/update/execute",
-          "var_name": "bridge_update_execute"
-        },
-        "request": {
-          "comment": "Any payload.",
-          "schema": "api_empty_request.json"
-        },
-        "response": {
-          "comment": "Response acknowledging the successful update of the bridge.",
-          "schema": "default_message.json"
         }
       }
     }

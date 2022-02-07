@@ -27,7 +27,6 @@ def export_gadget_constants():
     exporter.export_python(f"{PATH_FILE_GADGET_CONSTANTS}.py")
     exporter.export_cpp(f"{PATH_FILE_GADGET_CONSTANTS}.h")
     exporter.export_js(f"{PATH_FILE_GADGET_CONSTANTS}.js")
-    pass
 
 
 def export_gadget_docs():
