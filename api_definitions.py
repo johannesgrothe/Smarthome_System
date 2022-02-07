@@ -44,6 +44,7 @@ class ApiURIs(StringSystemIdentifier):
     client_gadget_config_write = "config/gadget/write"  # Write Gadget Config
     client_reboot = "reboot/client"  # Reboot Client
     sync_request = "sync"  # Client Sync Request
+    client_sync_event = "sync/event"  # Sync Event
 
 
 class ApiAccessLevel(IntSystemIdentifier):

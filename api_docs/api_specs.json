@@ -518,31 +518,11 @@
         ],
         "uri": {
           "value": "update/gadget",
-          "var_name": "update_gadget"
+          "var_name": "client_update_gadget"
         },
         "request": {
           "comment": "Information to update the gadget with",
           "schema": "api_gadget_update_request.json"
-        },
-        "response": {
-          "comment": "No response is expected",
-          "schema": null
-        }
-      },
-      "sync_client": {
-        "title": "Sync Client",
-        "description": "Syncs a client with the bridge",
-        "broadcast_allowed": true,
-        "sender": [
-          "client"
-        ],
-        "uri": {
-          "value": "sync/client",
-          "var_name": "sync_client"
-        },
-        "request": {
-          "comment": "Sync information for the client",
-          "schema": "api_client_sync_request.json"
         },
         "response": {
           "comment": "No response is expected",
@@ -592,14 +572,14 @@
       },
       "sync_event": {
         "title": "Sync Event",
-        "description": "Syncs an Event created on the Client with the Bridge",
+        "description": "Syncs an event received by the bridge with other clients",
         "broadcast_allowed": true,
         "sender": [
-          "client"
+          "bridge"
         ],
         "uri": {
           "value": "sync/event",
-          "var_name": "sync_event"
+          "var_name": "client_sync_event"
         },
         "request": {
           "comment": "Event information for the Bridge",

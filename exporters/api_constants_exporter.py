@@ -100,8 +100,7 @@ class ApiConstantsExporter(ConstantsExporter):
             if "client" in data["sender"]:
                 filtered_data.append(data)
         for key, data in self._definitions["mappings"]["client"].items():
-            if "client" in data["sender"]:
-                filtered_data.append(data)
+            filtered_data.append(data)
 
         file = CppFile()
 

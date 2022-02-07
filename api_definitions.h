@@ -24,8 +24,14 @@ namespace api_definitions {
         constexpr char update_gadget [] = "update/gadget";  // Update Gadget
         constexpr char sync_client [] = "sync/client";  // Sync Client
         constexpr char sync_event [] = "sync/event";  // Sync Event
-        constexpr char update_gadget [] = "update/gadget";  // Update Gadget
-        constexpr char sync_client [] = "sync/client";  // Sync Client
-        constexpr char sync_event [] = "sync/event";  // Sync Event
+        constexpr char client_system_config_write [] = "config/system/write";  // Write System Config
+        constexpr char client_event_config_write [] = "config/event/write";  // Write Event Config
+        constexpr char client_gadget_config_write [] = "config/gadget/write";  // Write Gadget Config
+        constexpr char client_config_delete [] = "config/delete";  // Delete Config
+        constexpr char client_update_gadget [] = "update/gadget";  // Update Gadget
+        constexpr char client_reboot [] = "reboot/client";  // Reboot Client
+        constexpr char sync_request [] = "sync";  // Client Sync Request
+        constexpr char client_sync_event [] = "sync/event";  // Sync Event
+        constexpr char test_echo [] = "echo";  // Test Echo
     }
 }
