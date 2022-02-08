@@ -98,8 +98,10 @@ class ApiConstantsExporter(ConstantsExporter):
         filtered_data = []
         for key, data in self._definitions["mappings"]["bridge"].items():
             if "client" in data["sender"]:
+                data["receiver"] = "bridge"
                 filtered_data.append(data)
         for key, data in self._definitions["mappings"]["client"].items():
+            data["receiver"] = "client"
             filtered_data.append(data)
 
         file = CppFile()
@@ -124,10 +126,13 @@ class ApiConstantsExporter(ConstantsExporter):
         uri_namespace = CppNamespace(CPP_NAMESPACE_API_URIS,
                                      "Api URIs")
         for data in filtered_data:
+            sender = "Client" if "client" in data['sender'] else "Bridge"
+            receiver = "Bridge" if data['receiver'] == "bridge" else "Client"
+            comment = data['title'] + f" ({sender} -> {receiver})"
             uri_namespace.add(CppVariable("constexpr char []",
                                           data['uri']['var_name'],
                                           data['uri']['value'],
-                                          data['title']))
+                                          comment))
 
         package_namespace.add(uri_namespace)
 
@@ -141,6 +146,7 @@ class ApiConstantsExporter(ConstantsExporter):
         filtered_data = []
         for key, data in self._definitions["mappings"]["bridge"].items():
             if "web_application" in data["sender"]:
+                data["receiver"] = "bridge"
                 filtered_data.append(data)
 
         file = JSFile()
@@ -164,10 +170,13 @@ class ApiConstantsExporter(ConstantsExporter):
         api_constants_class.add(JSComment("API URIs"))
 
         for data in filtered_data:
+            sender = "Web Application" if "web_application" in data['sender'] else "Bridge"
+            receiver = "Bridge" if data['receiver'] == "bridge" else "Web Application"
+            comment = data['title'] + f" ({sender} -> {receiver})"
             api_constants_class.add(JSVariable("static",
                                                "uri_" + data['uri']['var_name'],
                                                data['uri']['value'],
-                                               data['title']))
+                                               comment))
 
         file.add(api_constants_class)
 
