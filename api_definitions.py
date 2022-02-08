@@ -53,7 +53,7 @@ class ApiAccessLevel(IntSystemIdentifier):
     admin = 7  # Admin
     mqtt = 6  # MQTT
     user = 5  # User
-    guest = 4  # guest
+    guest = 4  # Guest
 
 
 class ApiAccessLevelMapping:

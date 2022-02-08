@@ -33,8 +33,15 @@ class ApiDocExporter(DocExporter):
             return ", ".join(data)
 
     @staticmethod
+    def _format_access_levels(data: list[str], default: str) -> str:
+        if not data:
+            return default
+        else:
+            return ", ".join(data)
+
+    @staticmethod
     def _format_sender(sender: str) -> str:
-        switcher =  {
+        switcher = {
             "bridge": "Bridge",
             "client": "Client",
             "web_application": "Web Application"
@@ -44,6 +51,8 @@ class ApiDocExporter(DocExporter):
     def _export_mapping(self, map_data: dict, file: MarkdownFile, receiver: str):
         file.add(MarkdownHeader(map_data["title"], 2))
         file.add(MarkdownText(map_data["description"]))
+
+        file.add(MarkdownCode(map_data["uri"]["value"], language="json", block=False))
 
         status_table = MarkdownTable(["Option", "Value"])
         status_table.add_line(["Broadcast Allowed", ('Yes' if map_data['broadcast_allowed'] else 'No')])
@@ -59,7 +68,14 @@ class ApiDocExporter(DocExporter):
 
         file.add(status_table)
 
-        file.add(MarkdownCode(map_data["uri"]["value"], language="json", block=False))
+        if "access_level" in map_data:
+            file.add(MarkdownHeader("Access Levels", 3))
+            file.add(MarkdownText("Access levels required to access this ressource"))
+            access_level_list = MarkdownList()
+            for access_level in map_data["access_level"]:
+                level_name = self._definitions["access_level"][access_level]["name"]
+                access_level_list.add_line(MarkdownInternalLinkGithub(level_name, level_name))
+            file.add(access_level_list)
 
         file.add(MarkdownHeader("Request", 3))
         req_data = map_data["request"]
@@ -99,11 +115,11 @@ class ApiDocExporter(DocExporter):
 
         file.add(MarkdownDivider())
 
-        file.add(MarkdownHeader("Bridge", 1))
+        file.add(MarkdownHeader("Bridge URIs", 1))
         for _, map_data in self._definitions["mappings"]["bridge"].items():
             self._export_mapping(map_data, file, "bridge")
 
-        file.add(MarkdownHeader("Client", 1))
+        file.add(MarkdownHeader("Client URIs", 1))
         for _, map_data in self._definitions["mappings"]["client"].items():
             self._export_mapping(map_data, file, "client")
 

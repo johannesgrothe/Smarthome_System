@@ -73,11 +73,13 @@ class MarkdownLink(MarkdownElement, ABC):
             self._prefix_text = prefix_text
 
 
-class MarkdownInternalLink(MarkdownLink):
-    """A link to a internal target"""
+class MarkdownInternalLinkGithub(MarkdownLink):
+    """A link to an internal target on github"""
 
     def __init__(self, text: str, target: str, prefix_text: Optional[str] = None):
-        super().__init__(text, target, prefix_text)
+        # GitHub allows for internal links to other headlines
+        buf_target = target.lower().strip().replace(".", "").replace(" ", "-")
+        super().__init__(text, buf_target, prefix_text)
 
     def render_content(self) -> list[str]:
         return [f"{self._prefix_text}[{self._text}](#{self._target})"]
@@ -127,14 +129,18 @@ class MarkdownList(MarkdownElement):
         super().__init__()
         self._lines = []
 
-    def add_line(self, text: str):
+    # def add_line(self, text: str):
+    def add_line(self, line: Union[str, MarkdownText, MarkdownLink]):
         """
         Adds an entry to the markdown list
 
-        :param text: Entry to add
+        :param line: Entry to add
         :return: None
         """
-        self._lines.append(text)
+        if isinstance(line, str):
+            self._lines.append(line)
+        else:
+            self._lines.append(" ".join(line.render_content()))
 
     def render_content(self) -> list[str]:
         out_data = [f"- {x}" for x in self._lines]
