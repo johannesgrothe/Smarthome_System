@@ -631,10 +631,9 @@
     },
     "guest": {
       "description": "Guest access level, aka. not real friends",
-      "name": "guest",
+      "name": "Guest",
       "id": 4,
       "var_name": "guest"
     }
   }
 }
-

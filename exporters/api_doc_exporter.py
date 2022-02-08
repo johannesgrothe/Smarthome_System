@@ -88,6 +88,17 @@ class ApiDocExporter(DocExporter):
         self._add_exported_libraries(PATH_FILE_API_CONSTANTS, file)
         file.add(MarkdownDivider())
 
+        file.add(MarkdownHeader("Access Levels", 1))
+        for _, data in self._definitions["access_level"].items():
+            file.add(MarkdownHeader(data["name"], 2))
+            file.add(MarkdownText(data["description"]))
+            status_table = MarkdownTable(["Option", "Value"])
+            status_table.add_line(["Int Identifier", data["id"]])
+            status_table.add_line(["Variable Name", data["var_name"]])
+            file.add(status_table)
+
+        file.add(MarkdownDivider())
+
         file.add(MarkdownHeader("Bridge", 1))
         for _, map_data in self._definitions["mappings"]["bridge"].items():
             self._export_mapping(map_data, file, "bridge")
