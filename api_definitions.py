@@ -15,7 +15,7 @@ except ModuleNotFoundError:
 
 
 # API Version
-api_version = SoftwareVersion(1, 0, 8)
+api_version = SoftwareVersion(1, 0, 9)
 
 
 class ApiAccessLevel(ApiAccessLevelSuper, enum.IntEnum):
@@ -136,4 +136,3 @@ class ApiURIs:
 
     # Sync Event
     client_sync_event = ApiEndpointDefinition("sync/event", [], None)
-

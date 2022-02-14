@@ -82,8 +82,6 @@ class ApiConstantsExporter(ConstantsExporter):
             if "bridge" in data["sender"]:
                 lines += self._export_definition(data, access_level_data, False)
 
-        lines.append("")
-
         with open(out_file, "w") as file_p:
             file_p.writelines([x + "\n" for x in lines])
 
