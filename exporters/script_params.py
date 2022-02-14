@@ -42,6 +42,15 @@ PY_CLASSNAME_URIS = "ApiURIs"
 # Classname for api access levels
 PY_CLASSNAME_ACCESS_LEVEL = "ApiAccessLevel"
 
+# Classname for api access type superclass
+PY_CLASSNAME_ACCESS_TYPE_SUPER = "ApiAccessLevelSuper"
+
+# Classname for api access types
+PY_CLASSNAME_ACCESS_TYPE = "ApiAccessType"
+
+# Classname for api access types
+PY_CLASSNAME_API_DEFINITION_CONTAINER = "ApiEndpointDefinition"
+
 # Classname for api access level mapping
 PY_CLASSNAME_ACCESS_LEVEL_MAPPING = "ApiAccessLevelMapping"
 

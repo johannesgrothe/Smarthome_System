@@ -32,7 +32,6 @@ def export_gadget_constants():
 def export_gadget_docs():
     exporter = GadgetDocExporter(PATH_GADGET_SPECS)
     exporter.export_docs(os.path.join(PATH_TEMP_DIR, NAME_FILE_GADGET_DOCS))
-    pass
 
 
 def parse_args() -> argparse.Namespace:
