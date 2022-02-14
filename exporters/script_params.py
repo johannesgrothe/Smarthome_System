@@ -39,6 +39,9 @@ CPP_NAMESPACE_API_VERSION = "version"
 # Classname for api URIs
 PY_CLASSNAME_URIS = "ApiURIs"
 
+# Classname for api URIs superclass
+PY_CLASSNAME_URIS_SUPER = "ApiURIsSuper"
+
 # Classname for api access levels
 PY_CLASSNAME_ACCESS_LEVEL = "ApiAccessLevel"
 
