@@ -44,7 +44,7 @@ class ApiConstantsExporter(ConstantsExporter):
         lines.append("")
 
         for x in self._generate_python_imports([("utils.api_endpoint_definition",
-                                                 f"{PY_CLASSNAME_API_DEFINITION_CONTAINER}, {PY_CLASSNAME_ACCESS_TYPE}, {PY_CLASSNAME_ACCESS_TYPE_SUPER}"),
+                                                 f"{PY_CLASSNAME_API_DEFINITION_CONTAINER}, {PY_CLASSNAME_ACCESS_TYPE}, {PY_CLASSNAME_ACCESS_TYPE_SUPER}, {PY_CLASSNAME_URIS_SUPER}"),
                                                 ("utils.software_version", "SoftwareVersion")]):
             lines.append(x)
 
@@ -69,7 +69,7 @@ class ApiConstantsExporter(ConstantsExporter):
         lines.append("")
         lines.append("")
 
-        lines.append(f"class {PY_CLASSNAME_URIS}:")
+        lines.append(f"class {PY_CLASSNAME_URIS}({PY_CLASSNAME_URIS_SUPER}):")
         lines.append(f"    \"\"\"Container for all API URIs\"\"\"")
         lines.append("")
         lines.append("    # URIs exposed by the bridge")

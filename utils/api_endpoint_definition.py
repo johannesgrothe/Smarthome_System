@@ -22,10 +22,14 @@ class ApiEndpointDefinition:
         self.access_type = access_type
 
 
-class ApiURIs:
-    affe = ApiEndpointDefinition("yolo", [], ApiAccessType.read)
+class ApiURIsSuper:
+    @classmethod
+    def _get_endpoints(cls) -> list[ApiEndpointDefinition]:
+        return [x for x in cls.__dict__.keys() if isinstance(getattr(cls, x), ApiEndpointDefinition)]
 
-
-if __name__ == "__main__":
-    print(ApiURIs.affe.uri)
-    print(ApiURIs.affe.access_type)
+    @classmethod
+    def get_definition_for_uri(cls, value: str):
+        for endpoint in cls._get_endpoints():
+            if endpoint.uri == value:
+                return endpoint
+        raise ValueError(value)

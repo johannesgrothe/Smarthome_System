@@ -7,15 +7,15 @@
 import enum
 
 try:
-    from utils.api_endpoint_definition import ApiEndpointDefinition, ApiAccessType, ApiAccessLevelSuper
+    from utils.api_endpoint_definition import ApiEndpointDefinition, ApiAccessType, ApiAccessLevelSuper, ApiURIsSuper
     from utils.software_version import SoftwareVersion
 except ModuleNotFoundError:
-    from .utils.api_endpoint_definition import ApiEndpointDefinition, ApiAccessType, ApiAccessLevelSuper
+    from .utils.api_endpoint_definition import ApiEndpointDefinition, ApiAccessType, ApiAccessLevelSuper, ApiURIsSuper
     from .utils.software_version import SoftwareVersion
 
 
 # API Version
-api_version = SoftwareVersion(1, 0, 9)
+api_version = SoftwareVersion(1, 0, 10)
 
 
 class ApiAccessLevel(ApiAccessLevelSuper, enum.IntEnum):
@@ -27,7 +27,7 @@ class ApiAccessLevel(ApiAccessLevelSuper, enum.IntEnum):
     guest = 4  # Guest
 
 
-class ApiURIs:
+class ApiURIs(ApiURIsSuper):
     """Container for all API URIs"""
 
     # URIs exposed by the bridge
