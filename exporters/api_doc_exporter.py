@@ -60,11 +60,12 @@ class ApiDocExporter(DocExporter):
                                                            "Anybody")])
         status_table.add_line(["Receiver", self._format_sender(receiver)])
 
-        try:
-            http_method = "No HTTP Allowed" if not map_data['http_method'] else map_data['http_method']
+        if "access_type" in map_data:
+            access_type = "Read" if map_data["access_type"] == "read" else "Write"
+            http_method = "GET" if map_data["access_type"] == "read" else "POST"
+
+            status_table.add_line(["Access Type", access_type])
             status_table.add_line(["HTTP Method", http_method])
-        except KeyError:
-            pass
 
         file.add(status_table)
 
