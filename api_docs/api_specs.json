@@ -12,7 +12,8 @@
           "admin"
         ],
         "broadcast_allowed": false,
-        "http_method": "POST",
+        "access_type": "write",
+        "client_channel_only": false,
         "sender": [
           "web_application"
         ],
@@ -36,7 +37,8 @@
           "admin"
         ],
         "broadcast_allowed": false,
-        "http_method": "POST",
+        "access_type": "write",
+        "client_channel_only": false,
         "sender": [
           "web_application"
         ],
@@ -61,7 +63,8 @@
           "mqtt"
         ],
         "broadcast_allowed": true,
-        "http_method": null,
+        "access_type": "write",
+        "client_channel_only": false,
         "sender": [
           "client"
         ],
@@ -87,7 +90,8 @@
           "guest"
         ],
         "broadcast_allowed": true,
-        "http_method": "GET",
+        "access_type": "read",
+        "client_channel_only": false,
         "sender": [
           "web_application"
         ],
@@ -113,7 +117,8 @@
           "guest"
         ],
         "broadcast_allowed": true,
-        "http_method": "GET",
+        "access_type": "read",
+        "client_channel_only": false,
         "sender": [
           "web_application"
         ],
@@ -139,7 +144,8 @@
           "guest"
         ],
         "broadcast_allowed": true,
-        "http_method": "GET",
+        "access_type": "read",
+        "client_channel_only": false,
         "sender": [
           "web_application"
         ],
@@ -165,7 +171,8 @@
           "mqtt"
         ],
         "broadcast_allowed": true,
-        "http_method": "POST",
+        "access_type": "write",
+        "client_channel_only": false,
         "sender": [
           "client",
           "web_application"
@@ -191,7 +198,8 @@
           "mqtt"
         ],
         "broadcast_allowed": true,
-        "http_method": null,
+        "access_type": "write",
+        "client_channel_only": false,
         "sender": [
           "client"
         ],
@@ -216,7 +224,8 @@
           "user"
         ],
         "broadcast_allowed": false,
-        "http_method": "POST",
+        "access_type": "write",
+        "client_channel_only": false,
         "sender": [
           "web_application"
         ],
@@ -241,7 +250,8 @@
           "mqtt"
         ],
         "broadcast_allowed": true,
-        "http_method": null,
+        "access_type": "write",
+        "client_channel_only": false,
         "sender": [
           "client"
         ],
@@ -265,7 +275,8 @@
           "admin"
         ],
         "broadcast_allowed": true,
-        "http_method": null,
+        "access_type": "write",
+        "client_channel_only": false,
         "sender": [],
         "uri": {
           "value": "echo",
@@ -288,7 +299,8 @@
           "user"
         ],
         "broadcast_allowed": false,
-        "http_method": "GET",
+        "access_type": "read",
+        "client_channel_only": false,
         "sender": [
           "web_application"
         ],
@@ -313,7 +325,8 @@
           "user"
         ],
         "broadcast_allowed": false,
-        "http_method": "GET",
+        "access_type": "read",
+        "client_channel_only": false,
         "sender": [
           "web_application"
         ],
@@ -337,7 +350,8 @@
           "admin"
         ],
         "broadcast_allowed": false,
-        "http_method": "POST",
+        "access_type": "write",
+        "client_channel_only": false,
         "sender": [
           "web_application"
         ],
@@ -361,7 +375,8 @@
           "admin"
         ],
         "broadcast_allowed": false,
-        "http_method": "POST",
+        "access_type": "write",
+        "client_channel_only": false,
         "sender": [
           "web_application"
         ],
@@ -385,7 +400,8 @@
           "admin"
         ],
         "broadcast_allowed": true,
-        "http_method": "GET",
+        "access_type": "read",
+        "client_channel_only": false,
         "sender": [
           "web_application"
         ],
@@ -409,7 +425,8 @@
           "admin"
         ],
         "broadcast_allowed": true,
-        "http_method": "POST",
+        "access_type": "write",
+        "client_channel_only": false,
         "sender": [
           "web_application"
         ],
