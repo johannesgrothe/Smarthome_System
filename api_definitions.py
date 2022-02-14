@@ -4,11 +4,13 @@
 # Do not modify this file, modify 'api_docs/api_specs.json' and export.
 # Every change made will be overwritten at next export.
 
+import enum
+
 try:
-    from utils.system_identifier import StringSystemIdentifier, IntSystemIdentifier
+    from utils.api_endpoint_definition import ApiEndpointDefinition, ApiAccessType, ApiAccessLevelSuper
     from utils.software_version import SoftwareVersion
 except ModuleNotFoundError:
-    from .utils.system_identifier import StringSystemIdentifier, IntSystemIdentifier
+    from .utils.api_endpoint_definition import ApiEndpointDefinition, ApiAccessType, ApiAccessLevelSuper
     from .utils.software_version import SoftwareVersion
 
 
@@ -16,38 +18,7 @@ except ModuleNotFoundError:
 api_version = SoftwareVersion(1, 0, 8)
 
 
-class ApiURIs(StringSystemIdentifier):
-    """Container for all API URIs"""
-
-    # URIs exposed by the bridge
-    client_config_write = "config/write"  # Write Complete Config to Client
-    client_config_delete = "config/delete"  # Delete Config
-    heartbeat = "heartbeat"  # Client Heartbeat
-    info_bridge = "info/bridge"  # Read Bridge Info
-    info_clients = "info/clients"  # Read Clients Info
-    info_gadgets = "info/gadgets"  # Read Gadgets Info
-    update_gadget = "update/gadget"  # Update Gadget
-    sync_client = "sync/client"  # Sync Client
-    reboot_connected_client = "reboot/client"  # Reboot Client
-    sync_event = "sync/event"  # Sync Event
-    test_echo = "echo"  # Test Echo
-    config_storage_get_all = "config/storage/get_all"  # Retrieve all stored configs
-    config_storage_get = "config/storage/get"  # Retrieve stored config
-    config_storage_save = "config/storage/save"  # Save config
-    config_storage_delete = "config/storage/delete"  # Delete Config
-    bridge_update_check = "bridge/update/check"  # Bridge update check
-    bridge_update_execute = "bridge/update/execute"  # Bridge update execute
-
-    # URIs exposed by the client
-    client_system_config_write = "config/system/write"  # Write System Config
-    client_event_config_write = "config/event/write"  # Write Event Config
-    client_gadget_config_write = "config/gadget/write"  # Write Gadget Config
-    client_reboot = "reboot/client"  # Reboot Client
-    sync_request = "sync"  # Client Sync Request
-    client_sync_event = "sync/event"  # Sync Event
-
-
-class ApiAccessLevel(IntSystemIdentifier):
+class ApiAccessLevel(ApiAccessLevelSuper, enum.IntEnum):
     """Container for all API access levels"""
 
     admin = 7  # Admin
@@ -56,16 +27,113 @@ class ApiAccessLevel(IntSystemIdentifier):
     guest = 4  # Guest
 
 
-class ApiAccessLevelMapping:
-    """Container for all API access levels"""
+class ApiURIs:
+    """Container for all API URIs"""
 
-    mapping = {
-        ApiAccessLevel.admin: [ApiURIs.client_config_write, ApiURIs.client_config_delete, ApiURIs.heartbeat, ApiURIs.info_bridge, ApiURIs.info_clients, ApiURIs.info_gadgets, ApiURIs.update_gadget, ApiURIs.sync_client, ApiURIs.reboot_connected_client, ApiURIs.sync_event, ApiURIs.test_echo, ApiURIs.config_storage_get_all, ApiURIs.config_storage_get, ApiURIs.config_storage_save, ApiURIs.config_storage_delete, ApiURIs.bridge_update_check, ApiURIs.bridge_update_execute],
-        ApiAccessLevel.mqtt: [ApiURIs.heartbeat, ApiURIs.update_gadget, ApiURIs.sync_client, ApiURIs.sync_event],
-        ApiAccessLevel.user: [ApiURIs.info_bridge, ApiURIs.info_clients, ApiURIs.info_gadgets, ApiURIs.update_gadget, ApiURIs.reboot_connected_client, ApiURIs.config_storage_get_all, ApiURIs.config_storage_get],
-        ApiAccessLevel.guest: [ApiURIs.info_bridge, ApiURIs.info_clients, ApiURIs.info_gadgets]
-    }
+    # URIs exposed by the bridge
 
-    @classmethod
-    def get_mapping(cls, access_level: ApiAccessLevel) -> list[ApiURIs]:
-        return cls.mapping[access_level]
+    # Write Complete Config to Client
+    client_config_write = ApiEndpointDefinition("config/write",
+                                                [ApiAccessLevel.admin],
+                                                ApiAccessType.write)
+
+    # Delete Config
+    client_config_delete = ApiEndpointDefinition("config/delete",
+                                                 [ApiAccessLevel.admin],
+                                                 ApiAccessType.write)
+
+    # Client Heartbeat
+    heartbeat = ApiEndpointDefinition("heartbeat",
+                                      [ApiAccessLevel.admin, ApiAccessLevel.mqtt],
+                                      ApiAccessType.write)
+
+    # Read Bridge Info
+    info_bridge = ApiEndpointDefinition("info/bridge",
+                                        [ApiAccessLevel.admin, ApiAccessLevel.user, ApiAccessLevel.guest],
+                                        ApiAccessType.read)
+
+    # Read Clients Info
+    info_clients = ApiEndpointDefinition("info/clients",
+                                         [ApiAccessLevel.admin, ApiAccessLevel.user, ApiAccessLevel.guest],
+                                         ApiAccessType.read)
+
+    # Read Gadgets Info
+    info_gadgets = ApiEndpointDefinition("info/gadgets",
+                                         [ApiAccessLevel.admin, ApiAccessLevel.user, ApiAccessLevel.guest],
+                                         ApiAccessType.read)
+
+    # Update Gadget
+    update_gadget = ApiEndpointDefinition("update/gadget",
+                                          [ApiAccessLevel.admin, ApiAccessLevel.mqtt, ApiAccessLevel.user],
+                                          ApiAccessType.write)
+
+    # Sync Client
+    sync_client = ApiEndpointDefinition("sync/client",
+                                        [ApiAccessLevel.admin, ApiAccessLevel.mqtt],
+                                        ApiAccessType.write)
+
+    # Reboot Client
+    reboot_connected_client = ApiEndpointDefinition("reboot/client",
+                                                    [ApiAccessLevel.admin, ApiAccessLevel.user],
+                                                    ApiAccessType.write)
+
+    # Sync Event
+    sync_event = ApiEndpointDefinition("sync/event",
+                                       [ApiAccessLevel.admin, ApiAccessLevel.mqtt],
+                                       ApiAccessType.write)
+
+    # Test Echo
+    test_echo = ApiEndpointDefinition("echo",
+                                      [ApiAccessLevel.admin],
+                                      ApiAccessType.write)
+
+    # Retrieve all stored configs
+    config_storage_get_all = ApiEndpointDefinition("config/storage/get_all",
+                                                   [ApiAccessLevel.admin, ApiAccessLevel.user],
+                                                   ApiAccessType.read)
+
+    # Retrieve stored config
+    config_storage_get = ApiEndpointDefinition("config/storage/get",
+                                               [ApiAccessLevel.admin, ApiAccessLevel.user],
+                                               ApiAccessType.read)
+
+    # Save config
+    config_storage_save = ApiEndpointDefinition("config/storage/save",
+                                                [ApiAccessLevel.admin],
+                                                ApiAccessType.write)
+
+    # Delete Config
+    config_storage_delete = ApiEndpointDefinition("config/storage/delete",
+                                                  [ApiAccessLevel.admin],
+                                                  ApiAccessType.write)
+
+    # Bridge update check
+    bridge_update_check = ApiEndpointDefinition("bridge/update/check",
+                                                [ApiAccessLevel.admin],
+                                                ApiAccessType.read)
+
+    # Bridge update execute
+    bridge_update_execute = ApiEndpointDefinition("bridge/update/execute",
+                                                  [ApiAccessLevel.admin],
+                                                  ApiAccessType.write)
+
+    # URIs exposed by the client
+
+    # Write System Config
+    client_system_config_write = ApiEndpointDefinition("config/system/write", [], None)
+
+    # Write Event Config
+    client_event_config_write = ApiEndpointDefinition("config/event/write", [], None)
+
+    # Write Gadget Config
+    client_gadget_config_write = ApiEndpointDefinition("config/gadget/write", [], None)
+
+    # Reboot Client
+    client_reboot = ApiEndpointDefinition("reboot/client", [], None)
+
+    # Client Sync Request
+    sync_request = ApiEndpointDefinition("sync", [], None)
+
+    # Sync Event
+    client_sync_event = ApiEndpointDefinition("sync/event", [], None)
+

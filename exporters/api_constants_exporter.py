@@ -14,12 +14,37 @@ class ApiConstantsExporter(ConstantsExporter):
     def __init__(self, definitions: str):
         super().__init__(definitions)
 
+    def _export_definition(self, data: dict, access_levels_data: dict, linebreak: bool) -> list[str]:
+        if "access_level" in data:
+            access_level_buffer = [access_levels_data[x]["var_name"] for x in access_levels_data if x in data["access_level"]]
+            access_levels = f"[{', '.join([f'{PY_CLASSNAME_ACCESS_LEVEL}.{x}' for x in access_level_buffer])}]"
+        else:
+            access_levels = "[]"
+
+        if linebreak:
+            indent = "\n" + " " * (len(data['uri']['var_name']) + len(PY_CLASSNAME_API_DEFINITION_CONTAINER) + 8)
+        else:
+            indent = " "
+
+        lines = [""]
+        uri = data['uri']['value']
+        access_type = f"{PY_CLASSNAME_ACCESS_TYPE}.{data['access_type']}" if "access_type" in data else "None"
+
+        lines.append(f"    # {data['title']}")
+        lines.append(
+            f"    {data['uri']['var_name']} = {PY_CLASSNAME_API_DEFINITION_CONTAINER}(\"{uri}\",{indent}{access_levels},{indent}{access_type})")
+        return lines
+
     def export_python(self, out_file: str):
         lines = self._generate_python_header(_export_file_docstring, '/'.join(__file__.split('/')[-1:]))
 
         lines.append("")
 
-        for x in self._generate_python_imports([("utils.system_identifier", "StringSystemIdentifier, IntSystemIdentifier"),
+        lines.append("import enum")
+        lines.append("")
+
+        for x in self._generate_python_imports([("utils.api_endpoint_definition",
+                                                 f"{PY_CLASSNAME_API_DEFINITION_CONTAINER}, {PY_CLASSNAME_ACCESS_TYPE}, {PY_CLASSNAME_ACCESS_TYPE_SUPER}"),
                                                 ("utils.software_version", "SoftwareVersion")]):
             lines.append(x)
 
@@ -33,61 +58,31 @@ class ApiConstantsExporter(ConstantsExporter):
         lines.append("")
         lines.append("")
 
-        lines.append(f"class {PY_CLASSNAME_URIS}(StringSystemIdentifier):")
-        lines.append(f"    \"\"\"Container for all API URIs\"\"\"")
-        lines.append("")
-        lines.append("    # URIs exposed by the bridge")
-        for _, data in self._definitions["mappings"]["bridge"].items():
-            lines.append(f"    {data['uri']['var_name']} = \"{data['uri']['value']}\"  # {data['title']}")
-
-        lines.append("")
-        lines.append("    # URIs exposed by the client")
-        for _, data in self._definitions["mappings"]["client"].items():
-            if "bridge" in data["sender"]:
-                lines.append(f"    {data['uri']['var_name']} = \"{data['uri']['value']}\"  # {data['title']}")
-
-        lines.append("")
-        lines.append("")
-
-        lines.append(f"class {PY_CLASSNAME_ACCESS_LEVEL}(IntSystemIdentifier):")
+        lines.append(f"class {PY_CLASSNAME_ACCESS_LEVEL}({PY_CLASSNAME_ACCESS_TYPE_SUPER}, enum.IntEnum):")
         lines.append(f"    \"\"\"Container for all API access levels\"\"\"")
         lines.append("")
 
-        for mapping, data in self._definitions["access_level"].items():
+        access_level_data = self._definitions["access_level"]
+        for mapping, data in access_level_data.items():
             lines.append(f"    {data['var_name']} = {data['id']}  # {data['name']}")
 
         lines.append("")
         lines.append("")
 
-        lines.append(f"class {PY_CLASSNAME_ACCESS_LEVEL_MAPPING}:")
-        lines.append(f"    \"\"\"Container for all API access levels\"\"\"")
+        lines.append(f"class {PY_CLASSNAME_URIS}:")
+        lines.append(f"    \"\"\"Container for all API URIs\"\"\"")
         lines.append("")
-
-        mappings = {}
-        for key, data in self._definitions["access_level"].items():
-            mappings[key] = []
-        for mapping, data in self._definitions["mappings"]["bridge"].items():
-            for access_level in data["access_level"]:
-                try:
-                    mappings[access_level].append(data["uri"]["var_name"])
-                except KeyError:
-                    raise Exception(f"Invalid access_level {access_level} in mapping {mapping}")
-        # lines.append(str(mappings))
-
-        lines.append("    mapping = {")
-        for index, (key, data) in enumerate(mappings.items()):
-            map_list = [f'{PY_CLASSNAME_URIS}.{x}' for x in data]
-            line_end = "," if index < len(mappings)-1 else ""
-            lines.append(f"        {PY_CLASSNAME_ACCESS_LEVEL}.{key}: [{', '.join(map_list)}]{line_end}")
-
-        lines.append("    }")
+        lines.append("    # URIs exposed by the bridge")
+        for _, data in self._definitions["mappings"]["bridge"].items():
+            lines += self._export_definition(data, access_level_data, True)
 
         lines.append("")
+        lines.append("    # URIs exposed by the client")
+        for _, data in self._definitions["mappings"]["client"].items():
+            if "bridge" in data["sender"]:
+                lines += self._export_definition(data, access_level_data, False)
 
-        lines.append("    @classmethod")
-        lines.append(f"    def get_mapping(cls, access_level: {PY_CLASSNAME_ACCESS_LEVEL}) -> list[{PY_CLASSNAME_URIS}]:")
-        lines.append("        return cls.mapping[access_level]")
-
+        lines.append("")
 
         with open(out_file, "w") as file_p:
             file_p.writelines([x + "\n" for x in lines])
