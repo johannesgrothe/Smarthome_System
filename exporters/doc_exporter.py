@@ -20,7 +20,7 @@ class DocExporter:
 
     @staticmethod
     def _add_exported_libraries(base_filename: str, file: MarkdownFile):
-        language_info = [("C++", "h"), ("Python", "py")]
+        language_info = [("C++", "h"), ("Python", "py"), ("JavaScript", "js")]
         file.add(MarkdownHeader("Exported Code Libraries", 2))
         buf_table = MarkdownTable(["Language", "Link"])
         for language, ending in language_info:

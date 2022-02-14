@@ -13,15 +13,13 @@ except ModuleNotFoundError:
 
 
 # API Version
-api_version = SoftwareVersion(1, 0, 5)
+api_version = SoftwareVersion(1, 0, 6)
 
 
 class ApiURIs(StringSystemIdentifier):
     """Container for all API URIs"""
 
-    client_system_config_write = "config/system/write"  # Write System Config
-    client_event_config_write = "config/event/write"  # Write Event Config
-    client_gadget_config_write = "config/gadget/write"  # Write Gadget Config
+    # URIs exposed by the bridge
     client_config_write = "config/write"  # Write Complete Config to Client
     client_config_delete = "config/delete"  # Delete Config
     heartbeat = "heartbeat"  # Client Heartbeat
@@ -30,8 +28,7 @@ class ApiURIs(StringSystemIdentifier):
     info_gadgets = "info/gadgets"  # Read Gadgets Info
     update_gadget = "update/gadget"  # Update Gadget
     sync_client = "sync/client"  # Sync Client
-    client_reboot = "reboot/client"  # Reboot Client
-    sync_request = "sync"  # Client Sync Request
+    reboot_connected_client = "reboot/client"  # Reboot Client
     sync_event = "sync/event"  # Sync Event
     test_echo = "echo"  # Test Echo
     config_storage_get_all = "config/storage/get_all"  # Retrieve all stored configs
@@ -40,6 +37,14 @@ class ApiURIs(StringSystemIdentifier):
     config_storage_delete = "config/storage/delete"  # Delete Config
     bridge_update_check = "bridge/update/check"  # Bridge update check
     bridge_update_execute = "bridge/update/execute"  # Bridge update execute
+
+    # URIs exposed by the client
+    client_system_config_write = "config/system/write"  # Write System Config
+    client_event_config_write = "config/event/write"  # Write Event Config
+    client_gadget_config_write = "config/gadget/write"  # Write Gadget Config
+    client_reboot = "reboot/client"  # Reboot Client
+    sync_request = "sync"  # Client Sync Request
+    client_sync_event = "sync/event"  # Sync Event
 
 
 class ApiAccessLevel(IntSystemIdentifier):
@@ -55,9 +60,9 @@ class ApiAccessLevelMapping:
     """Container for all API access levels"""
 
     mapping = {
-        ApiAccessLevel.admin: [ApiURIs.client_config_write, ApiURIs.client_config_delete, ApiURIs.heartbeat, ApiURIs.info_bridge, ApiURIs.info_clients, ApiURIs.info_gadgets, ApiURIs.update_gadget, ApiURIs.sync_client, ApiURIs.client_reboot, ApiURIs.sync_event, ApiURIs.test_echo, ApiURIs.config_storage_get_all, ApiURIs.config_storage_get, ApiURIs.config_storage_save, ApiURIs.config_storage_delete, ApiURIs.bridge_update_check, ApiURIs.bridge_update_execute],
+        ApiAccessLevel.admin: [ApiURIs.client_config_write, ApiURIs.client_config_delete, ApiURIs.heartbeat, ApiURIs.info_bridge, ApiURIs.info_clients, ApiURIs.info_gadgets, ApiURIs.update_gadget, ApiURIs.sync_client, ApiURIs.reboot_connected_client, ApiURIs.sync_event, ApiURIs.test_echo, ApiURIs.config_storage_get_all, ApiURIs.config_storage_get, ApiURIs.config_storage_save, ApiURIs.config_storage_delete, ApiURIs.bridge_update_check, ApiURIs.bridge_update_execute],
         ApiAccessLevel.mqtt: [ApiURIs.heartbeat, ApiURIs.update_gadget, ApiURIs.sync_client, ApiURIs.sync_event],
-        ApiAccessLevel.user: [ApiURIs.info_bridge, ApiURIs.info_clients, ApiURIs.info_gadgets, ApiURIs.update_gadget, ApiURIs.client_reboot, ApiURIs.config_storage_get_all, ApiURIs.config_storage_get],
+        ApiAccessLevel.user: [ApiURIs.info_bridge, ApiURIs.info_clients, ApiURIs.info_gadgets, ApiURIs.update_gadget, ApiURIs.reboot_connected_client, ApiURIs.config_storage_get_all, ApiURIs.config_storage_get],
         ApiAccessLevel.guest: [ApiURIs.info_bridge, ApiURIs.info_clients, ApiURIs.info_gadgets]
     }
 

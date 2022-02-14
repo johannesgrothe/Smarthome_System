@@ -1,5 +1,92 @@
 {
   "$schema": "http://json-schema.org/draft-04/schema#",
+  "definitions": {
+    "req_title": {
+      "type": "string",
+      "minLength": 5
+    },
+    "req_description": {
+      "type": "string",
+      "minLength": 15
+    },
+    "req_comment": {
+      "type": "string"
+    },
+    "req_sender": {
+      "type": "array",
+      "items": {
+        "enum": [
+          "client",
+          "bridge",
+          "web_application"
+        ]
+      }
+    },
+    "req_broadcast_allowed": {
+      "type": "boolean"
+    },
+    "req_uri": {
+      "properties": {
+        "value": {
+          "$ref": "#/definitions/uri_value"
+        },
+        "var_name": {
+          "$ref": "#/definitions/var_name"
+        }
+      }
+    },
+    "res_schema": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "pattern": ".+\\.json$"
+    },
+    "req_request": {
+      "type": "object",
+      "required": [
+        "schema",
+        "comment"
+      ],
+      "properties": {
+        "schema": {
+          "type": "string",
+          "pattern": ".+\\.json$"
+        },
+        "comment": {
+          "$ref": "#/definitions/req_comment"
+        }
+      }
+    },
+    "req_response": {
+      "type": "object",
+      "required": [
+        "schema",
+        "comment"
+      ],
+      "properties": {
+        "schema": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "pattern": ".+\\.json$"
+        },
+        "comment": {
+          "$ref": "#/definitions/req_comment"
+        }
+      }
+    },
+    "uri_value": {
+      "type": "string",
+      "pattern": "^([a-z0-9_]+/)*?[a-z0-9_]+$"
+    },
+    "var_name": {
+      "type": "string",
+      "minLength": 5,
+      "pattern": "^[a-z_]+$"
+    }
+  },
   "type": "object",
   "required": [
     "title",
@@ -23,98 +110,102 @@
     },
     "mappings": {
       "type": "object",
-      "additionalProperties": {
-        "required": [
-          "title",
-          "description",
-          "access_level",
-          "broadcast_allowed",
-          "sender",
-          "receiver",
-          "http_method",
-          "uri",
-          "request",
-          "response"
-        ],
-        "properties": {
-          "title": {
-            "type": "string",
-            "minLength": 5
-          },
-          "description": {
-            "type": "string",
-            "minLength": 15
-          },
-          "access_level": {
-            "type": "array",
-            "items": {
-              "type": "string"
-            }
-          },
-          "sender": {
-            "type": "array",
-            "items": {
-              "type": "string",
-              "minLength": 5
-            }
-          },
-          "receiver": {
-            "type": "array",
-            "items": {
-              "type": "string",
-              "minLength": 5
-            }
-          },
-          "broadcast_allowed": {
-            "type": "boolean"
-          },
-          "http_method": {
-            "enum": ["GET","POST", null]
-          },
-          "uri": {
-            "properties": {
-              "value": {
-                "type": "string",
-                "pattern": "^([a-z0-9_]+/)*?[a-z0-9_]+$"
-              },
-              "var_name": {
-                "type": "string",
-                "minLength": 5,
-                "pattern": "^[a-z_]+$"
-              }
-            }
-          },
-          "request": {
+      "required": [
+        "bridge",
+        "client"
+      ],
+      "properties": {
+        "bridge": {
+          "type": "object",
+          "additionalProperties": {
             "type": "object",
             "required": [
-              "schema",
-              "comment"
+              "title",
+              "description",
+              "access_level",
+              "broadcast_allowed",
+              "sender",
+              "http_method",
+              "uri",
+              "request",
+              "response"
             ],
             "properties": {
-              "schema": {
-                "type": "string",
-                "pattern": ".+\\.json$"
+              "title": {
+                "$ref": "#/definitions/req_title"
               },
-              "comment": {
-                "type": "string"
+              "description": {
+                "$ref": "#/definitions/req_title"
+              },
+              "access_level": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "sender": {
+                "$ref": "#/definitions/req_sender"
+              },
+              "broadcast_allowed": {
+                "$ref": "#/definitions/req_broadcast_allowed"
+              },
+              "http_method": {
+                "enum": [
+                  "GET",
+                  "POST",
+                  null
+                ]
+              },
+              "uri": {
+                "$ref": "#/definitions/req_uri"
+              },
+              "request": {
+                "$ref": "#/definitions/req_request"
+              },
+              "response": {
+                "$ref": "#/definitions/req_response"
               }
-            }
-          },
-          "response": {
+            },
+            "additionalProperties": false
+          }
+        },
+        "client": {
+          "type": "object",
+          "additionalProperties": {
             "type": "object",
             "required": [
-              "schema",
-              "comment"
+              "title",
+              "description",
+              "broadcast_allowed",
+              "sender",
+              "uri",
+              "request",
+              "response"
             ],
             "properties": {
-              "schema": {
-                "type": ["string", "null"],
-                "pattern": ".+\\.json$"
+              "title": {
+                "$ref": "#/definitions/req_title"
               },
-              "comment": {
-                "type": "string"
+              "description": {
+                "$ref": "#/definitions/req_title"
+              },
+              "sender": {
+                "$ref": "#/definitions/req_sender"
+              },
+              "broadcast_allowed": {
+                "$ref": "#/definitions/req_broadcast_allowed"
+              },
+              "uri": {
+                "$ref": "#/definitions/req_uri"
+              },
+              "request": {
+                "$ref": "#/definitions/req_request"
+              },
+              "response": {
+                "$ref": "#/definitions/req_response"
               }
-            }
+            },
+            "additionalProperties": false
           }
         }
       }

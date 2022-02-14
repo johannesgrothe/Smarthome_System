@@ -11,28 +11,20 @@ export default class ApiConstants {
     // API Version
     static version_major = 1;
     static version_minor = 0;
-    static version_bugfix = 5;
+    static version_bugfix = 6;
 
     // API URIs
-    static uri_client_system_config_write = "config/system/write";  // Write System Config
-    static uri_client_event_config_write = "config/event/write";  // Write Event Config
-    static uri_client_gadget_config_write = "config/gadget/write";  // Write Gadget Config
-    static uri_client_config_write = "config/write";  // Write Complete Config to Client
-    static uri_client_config_delete = "config/delete";  // Delete Config
-    static uri_heartbeat = "heartbeat";  // Client Heartbeat
-    static uri_info_bridge = "info/bridge";  // Read Bridge Info
-    static uri_info_clients = "info/clients";  // Read Clients Info
-    static uri_info_gadgets = "info/gadgets";  // Read Gadgets Info
-    static uri_update_gadget = "update/gadget";  // Update Gadget
-    static uri_sync_client = "sync/client";  // Sync Client
-    static uri_client_reboot = "reboot/client";  // Reboot Client
-    static uri_sync_request = "sync";  // Client Sync Request
-    static uri_sync_event = "sync/event";  // Sync Event
-    static uri_test_echo = "echo";  // Test Echo
-    static uri_config_storage_get_all = "config/storage/get_all";  // Retrieve all stored configs
-    static uri_config_storage_get = "config/storage/get";  // Retrieve stored config
-    static uri_config_storage_save = "config/storage/save";  // Save config
-    static uri_config_storage_delete = "config/storage/delete";  // Delete Config
-    static uri_bridge_update_check = "bridge/update/check";  // Bridge update check
-    static uri_bridge_update_execute = "bridge/update/execute";  // Bridge update execute
+    static uri_client_config_write = "config/write";  // Write Complete Config to Client (Web Application -> Bridge)
+    static uri_client_config_delete = "config/delete";  // Delete Config (Web Application -> Bridge)
+    static uri_info_bridge = "info/bridge";  // Read Bridge Info (Web Application -> Bridge)
+    static uri_info_clients = "info/clients";  // Read Clients Info (Web Application -> Bridge)
+    static uri_info_gadgets = "info/gadgets";  // Read Gadgets Info (Web Application -> Bridge)
+    static uri_update_gadget = "update/gadget";  // Update Gadget (Web Application -> Bridge)
+    static uri_reboot_connected_client = "reboot/client";  // Reboot Client (Web Application -> Bridge)
+    static uri_config_storage_get_all = "config/storage/get_all";  // Retrieve all stored configs (Web Application -> Bridge)
+    static uri_config_storage_get = "config/storage/get";  // Retrieve stored config (Web Application -> Bridge)
+    static uri_config_storage_save = "config/storage/save";  // Save config (Web Application -> Bridge)
+    static uri_config_storage_delete = "config/storage/delete";  // Delete Config (Web Application -> Bridge)
+    static uri_bridge_update_check = "bridge/update/check";  // Bridge update check (Web Application -> Bridge)
+    static uri_bridge_update_execute = "bridge/update/execute";  // Bridge update execute (Web Application -> Bridge)
 }
