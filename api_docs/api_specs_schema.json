@@ -22,6 +22,12 @@
         ]
       }
     },
+    "req_access_type": {
+      "enum": [
+        "read",
+        "write"
+      ]
+    },
     "req_broadcast_allowed": {
       "type": "boolean"
     },
@@ -125,7 +131,7 @@
               "access_level",
               "broadcast_allowed",
               "sender",
-              "http_method",
+              "access_type",
               "uri",
               "request",
               "response"
@@ -149,12 +155,8 @@
               "broadcast_allowed": {
                 "$ref": "#/definitions/req_broadcast_allowed"
               },
-              "http_method": {
-                "enum": [
-                  "GET",
-                  "POST",
-                  null
-                ]
+              "access_type": {
+                "$ref": "#/definitions/req_access_type"
               },
               "uri": {
                 "$ref": "#/definitions/req_uri"
