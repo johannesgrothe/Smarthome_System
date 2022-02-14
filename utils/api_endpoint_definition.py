@@ -25,7 +25,7 @@ class ApiEndpointDefinition:
 class ApiURIsSuper:
     @classmethod
     def _get_endpoints(cls) -> list[ApiEndpointDefinition]:
-        return [x for x in cls.__dict__.keys() if isinstance(getattr(cls, x), ApiEndpointDefinition)]
+        return [getattr(cls, x) for x in cls.__dict__.keys() if isinstance(getattr(cls, x), ApiEndpointDefinition)]
 
     @classmethod
     def get_definition_for_uri(cls, value: str):
