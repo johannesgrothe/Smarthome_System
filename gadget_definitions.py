@@ -4,8 +4,10 @@
 # Do not modify this file, modify 'gadget_docs/gadget_specs.json' and export.
 # Every change made will be overwritten at next export.
 
+import enum
 
-class CharacteristicIdentifier:
+
+class CharacteristicIdentifier(enum.IntEnum):
     """Characteristics Gadgets can contain"""
 
     err_type = 0  # Error-Characteristic
@@ -18,7 +20,7 @@ class CharacteristicIdentifier:
     humidity = 7  # Humidity
 
 
-class GadgetIdentifier:
+class GadgetIdentifier(enum.IntEnum):
     """Gadgets running on the ESP Clients"""
 
     any_gadget = 0  # Any Gadget
@@ -32,6 +34,6 @@ class GadgetIdentifier:
     sensor_temperature_dht = 8  # DHT Temperature/Humidity Sensor
 
 
-class BridgeGadgetIdentifier:
+class BridgeGadgetIdentifier(enum.IntEnum):
     """Gadgets running on the Bridge itself (virtual Gadgets)"""
 

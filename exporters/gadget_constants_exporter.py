@@ -23,9 +23,13 @@ class GadgetConstantsExporter(ConstantsExporter):
         lines = self._generate_python_header(_export_file_docstring, '/'.join(__file__.split('/')[-1:]))
 
         lines.append("")
+
+        lines.append("import enum")
+
+        lines.append("")
         lines.append("")
 
-        lines.append("class CharacteristicIdentifier:")
+        lines.append("class CharacteristicIdentifier(enum.IntEnum):")
         lines.append(f"    \"\"\"{characteristics_data['description']}\"\"\"")
         lines.append("")
 
@@ -35,7 +39,7 @@ class GadgetConstantsExporter(ConstantsExporter):
         lines.append("")
         lines.append("")
 
-        lines.append("class GadgetIdentifier:")
+        lines.append("class GadgetIdentifier(enum.IntEnum):")
         lines.append(f"    \"\"\"{client_gadget_data['description']}\"\"\"")
         lines.append("")
 
@@ -45,7 +49,7 @@ class GadgetConstantsExporter(ConstantsExporter):
         lines.append("")
         lines.append("")
 
-        lines.append("class BridgeGadgetIdentifier:")
+        lines.append("class BridgeGadgetIdentifier(enum.IntEnum):")
         lines.append(f"    \"\"\"{bridge_gadget_data['description']}\"\"\"")
         lines.append("")
 
