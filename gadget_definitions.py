@@ -4,13 +4,10 @@
 # Do not modify this file, modify 'gadget_docs/gadget_specs.json' and export.
 # Every change made will be overwritten at next export.
 
-try:
-    from utils.system_identifier import IntSystemIdentifier
-except ModuleNotFoundError:
-    from .utils.system_identifier import IntSystemIdentifier
+import enum
 
 
-class CharacteristicIdentifier(IntSystemIdentifier):
+class CharacteristicIdentifier(enum.IntEnum):
     """Characteristics Gadgets can contain"""
 
     err_type = 0  # Error-Characteristic
@@ -23,7 +20,7 @@ class CharacteristicIdentifier(IntSystemIdentifier):
     humidity = 7  # Humidity
 
 
-class GadgetIdentifier(IntSystemIdentifier):
+class GadgetIdentifier(enum.IntEnum):
     """Gadgets running on the ESP Clients"""
 
     any_gadget = 0  # Any Gadget
@@ -37,6 +34,6 @@ class GadgetIdentifier(IntSystemIdentifier):
     sensor_temperature_dht = 8  # DHT Temperature/Humidity Sensor
 
 
-class BridgeGadgetIdentifier(IntSystemIdentifier):
+class BridgeGadgetIdentifier(enum.IntEnum):
     """Gadgets running on the Bridge itself (virtual Gadgets)"""
 

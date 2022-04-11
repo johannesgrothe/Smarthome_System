@@ -15,7 +15,7 @@ except ModuleNotFoundError:
 
 
 # API Version
-api_version = SoftwareVersion(1, 0, 10)
+api_version = SoftwareVersion(1, 0, 11)
 
 
 class ApiAccessLevel(ApiAccessLevelSuper, enum.IntEnum):
