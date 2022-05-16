@@ -5,7 +5,8 @@
     "sender",
     "receiver",
     "session_id",
-    "payload"
+    "payload",
+    "is_response"
   ],
   "properties": {
     "sender": {
@@ -20,6 +21,9 @@
     },
     "payload": {
       "type": "object"
+    },
+    "is_response": {
+      "type": "boolean"
     }
   }
 }

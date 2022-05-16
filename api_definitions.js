@@ -10,8 +10,8 @@ export default class ApiConstants {
 
     // API Version
     static version_major = 1;
-    static version_minor = 0;
-    static version_bugfix = 11;
+    static version_minor = 1;
+    static version_bugfix = 0;
 
     // API URIs
     static uri_client_config_write = "config/write";  // Write Complete Config to Client (Web Application -> Bridge)

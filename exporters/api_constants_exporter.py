@@ -14,7 +14,7 @@ class ApiConstantsExporter(ConstantsExporter):
     def __init__(self, definitions: str):
         super().__init__(definitions)
 
-    def _export_definition(self, data: dict, access_levels_data: dict, linebreak: bool) -> list[str]:
+    def _export_definition(self, data: dict, access_levels_data: dict, linebreak: bool, bridge_is_requester: bool) -> list[str]:
         if "access_level" in data:
             access_level_buffer = [access_levels_data[x]["var_name"] for x in access_levels_data if x in data["access_level"]]
             access_levels = f"[{', '.join([f'{PY_CLASSNAME_ACCESS_LEVEL}.{x}' for x in access_level_buffer])}]"
@@ -32,7 +32,7 @@ class ApiConstantsExporter(ConstantsExporter):
 
         lines.append(f"    # {data['title']}")
         lines.append(
-            f"    {data['uri']['var_name']} = {PY_CLASSNAME_API_DEFINITION_CONTAINER}(\"{uri}\",{indent}{access_levels},{indent}{access_type})")
+            f"    {data['uri']['var_name']} = {PY_CLASSNAME_API_DEFINITION_CONTAINER}(\"{uri}\",{indent}{access_levels},{indent}{access_type},{indent}{bridge_is_requester})")
         return lines
 
     def export_python(self, out_file: str):
@@ -74,13 +74,13 @@ class ApiConstantsExporter(ConstantsExporter):
         lines.append("")
         lines.append("    # URIs exposed by the bridge")
         for _, data in self._definitions["mappings"]["bridge"].items():
-            lines += self._export_definition(data, access_level_data, True)
+            lines += self._export_definition(data, access_level_data, True, False)
 
         lines.append("")
         lines.append("    # URIs exposed by the client")
         for _, data in self._definitions["mappings"]["client"].items():
             if "bridge" in data["sender"]:
-                lines += self._export_definition(data, access_level_data, False)
+                lines += self._export_definition(data, access_level_data, False, True)
 
         with open(out_file, "w") as file_p:
             file_p.writelines([x + "\n" for x in lines])
