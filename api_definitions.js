@@ -19,6 +19,7 @@ export default class ApiConstants {
     static uri_info_bridge = "info/bridge";  // Read Bridge Info (Web Application -> Bridge)
     static uri_info_clients = "info/clients";  // Read Clients Info (Web Application -> Bridge)
     static uri_info_gadgets = "info/gadgets";  // Read Gadgets Info (Web Application -> Bridge)
+    static uri_info_gadget_publishers = "info/gadget_publishers";  // Read Gadget Publisher Info (Web Application -> Bridge)
     static uri_update_gadget = "update/gadget";  // Update Gadget (Web Application -> Bridge)
     static uri_reboot_connected_client = "reboot/client";  // Reboot Client (Web Application -> Bridge)
     static uri_config_storage_get_all = "config/storage/get_all";  // Retrieve all stored configs (Web Application -> Bridge)

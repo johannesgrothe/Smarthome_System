@@ -68,6 +68,12 @@ class ApiURIs(ApiURIsSuper):
                                          ApiAccessType.read,
                                          False)
 
+    # Read Gadget Publisher Info
+    info_gadget_publishers = ApiEndpointDefinition("info/gadget_publishers",
+                                                   [ApiAccessLevel.admin, ApiAccessLevel.user],
+                                                   ApiAccessType.read,
+                                                   False)
+
     # Update Gadget
     update_gadget = ApiEndpointDefinition("update/gadget",
                                           [ApiAccessLevel.admin, ApiAccessLevel.mqtt, ApiAccessLevel.user],

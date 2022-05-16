@@ -156,6 +156,31 @@
           "schema": "api_get_all_gadgets_response.json"
         }
       },
+      "info_gadget_publishers": {
+        "title": "Read Gadget Publisher Info",
+        "description": "Reads information about the active gadget publishers from the bridge",
+        "access_level": [
+          "admin",
+          "user"
+        ],
+        "broadcast_allowed": true,
+        "access_type": "read",
+        "sender": [
+          "web_application"
+        ],
+        "uri": {
+          "value": "info/gadget_publishers",
+          "var_name": "info_gadget_publishers"
+        },
+        "request": {
+          "comment": "No request payload needed",
+          "schema": "api_empty_request.json"
+        },
+        "response": {
+          "comment": "Json containing information about all gadget publishers currently running on the bridge",
+          "schema": "api_get_all_gadget_publishers.json"
+        }
+      },
       "update_gadget": {
         "title": "Update Gadget",
         "description": "Updates the mutable characteristics of a gadget",
