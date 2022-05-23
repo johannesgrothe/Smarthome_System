@@ -15,7 +15,7 @@ except ModuleNotFoundError:
 
 
 # API Version
-api_version = SoftwareVersion(1, 1, 1)
+api_version = SoftwareVersion(1, 1, 2)
 
 
 class ApiAccessLevel(ApiAccessLevelSuper, enum.IntEnum):
@@ -67,6 +67,12 @@ class ApiURIs(ApiURIsSuper):
                                          [ApiAccessLevel.admin, ApiAccessLevel.user, ApiAccessLevel.guest],
                                          ApiAccessType.read,
                                          False)
+
+    # Read Gadget Publisher Info
+    info_gadget_publishers = ApiEndpointDefinition("info/gadget_publishers",
+                                                   [ApiAccessLevel.admin, ApiAccessLevel.user],
+                                                   ApiAccessType.read,
+                                                   False)
 
     # Update Gadget
     update_gadget = ApiEndpointDefinition("update/gadget",
