@@ -5,7 +5,7 @@
     "title",
     "description",
     "gadget_definitions",
-    "characteristic_definitions"
+    "gadget_classes"
   ],
   "properties": {
     "title": {
@@ -131,9 +131,8 @@
         }
       }
     },
-    "characteristic_definitions": {
+    "gadget_classes": {
       "type": "object",
-      "description": "Definitions for all characteristics",
       "required": [
         "title",
         "description",
@@ -141,14 +140,33 @@
       ],
       "properties": {
         "title": {
-          "type": "string",
-          "minLength": 10
+          "type": "string"
         },
         "description": {
-          "type": "string",
-          "minLength": 10
+          "type": "string"
         },
         "items": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "object",
+            "required": [
+              "name",
+              "description",
+              "enum_value"
+            ],
+            "properties": {
+              "name": {
+                "type": "string"
+              },
+              "description": {
+                "type": "string"
+              },
+              "enum_value": {
+                "type": "integer",
+                "minimum": 0
+              }
+            }
+          }
         }
       }
     }

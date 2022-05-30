@@ -4,7 +4,8 @@
   "required": [
     "id",
     "type",
-    "characteristics"
+    "class",
+    "attributes"
   ],
   "properties": {
     "id": {
@@ -14,45 +15,14 @@
       "type": "integer",
       "minimum": 0
     },
-    "characteristics": {
-      "type": "array",
-      "items": {
-        "type": "object",
-        "required": [
-          "type",
-          "min",
-          "max",
-          "steps",
-          "step_value"
-        ],
-        "properties": {
-          "type": {
-            "type": "integer",
-            "minimum": 0
-          },
-          "min": {
-            "type": "integer"
-          },
-          "max": {
-            "type": "integer"
-          },
-          "steps": {
-            "type": "integer",
-            "minimum": 0
-          },
-          "step_value": {
-            "type": "integer",
-            "minimum": 0
-          },
-          "true_value": {
-            "type": "integer"
-          },
-          "percentage_value": {
-            "type": "integer",
-            "minimum": 0,
-            "maximum": 100
-          }
-        }
+    "class": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "attributes": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "object"
       }
     },
     "client": {

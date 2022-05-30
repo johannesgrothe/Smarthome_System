@@ -16,25 +16,15 @@ class GadgetConstantsExporter(ConstantsExporter):
         super().__init__(definitions)
 
     def export_python(self, out_file: str):
-        characteristics_data = self._definitions["characteristic_definitions"]
         client_gadget_data = self._definitions["gadget_definitions"]["client_gadgets"]
         bridge_gadget_data = self._definitions["gadget_definitions"]["bridge_gadgets"]
+        gadget_class_data = self._definitions["gadget_classes"]
 
         lines = self._generate_python_header(_export_file_docstring, '/'.join(__file__.split('/')[-1:]))
 
         lines.append("")
 
         lines.append("import enum")
-
-        lines.append("")
-        lines.append("")
-
-        lines.append("class CharacteristicIdentifier(enum.IntEnum):")
-        lines.append(f"    \"\"\"{characteristics_data['description']}\"\"\"")
-        lines.append("")
-
-        for key, data in characteristics_data["items"].items():
-            lines.append(f"    {key} = {data['enum_value']}  # {data['name']}")
 
         lines.append("")
         lines.append("")
@@ -56,11 +46,36 @@ class GadgetConstantsExporter(ConstantsExporter):
         for key, data in bridge_gadget_data["items"].items():
             lines.append(f"    {key} = {data['enum_value']}  # {data['name']}")
 
+        lines.append("")
+        lines.append("")
+
+        lines.append("class GadgetClass(enum.IntEnum):")
+        lines.append(f"    \"\"\"{gadget_class_data['description']}\"\"\"")
+        lines.append("")
+
+        for key, data in gadget_class_data["items"].items():
+            lines.append(f"    {key} = {data['enum_value']}  # {data['name']}")
+
+        lines.append("")
+        lines.append("")
+
+        lines.append("GadgetClassMapping = {")
+
+        for i, (key, data) in enumerate(gadget_class_data["items"].items()):
+            class_val = data['enum_value']
+            local_gadgets = ["BridgeGadgetIdentifier." + key for key, data in bridge_gadget_data["items"].items() if
+                             data['class'] == class_val]
+            remote_gadgets = ["GadgetIdentifier." + key for key, data in client_gadget_data["items"].items() if
+                              data['class'] == class_val]
+            sep = "," if i < len(gadget_class_data["items"]) - 1 else ""
+            lines.append(f"    GadgetClass.{key}: [{', '.join(local_gadgets + remote_gadgets)}]{sep}")
+        lines.append("}")
+
         with open(out_file, "w") as file_p:
             file_p.writelines([x + "\n" for x in lines])
 
     def export_cpp(self, out_file: str):
-        characteristics_data = self._definitions["characteristic_definitions"]
+        # characteristics_data = self._definitions["characteristic_definitions"]
         client_gadget_data = self._definitions["gadget_definitions"]["client_gadgets"]
 
         file = CppFile()
@@ -78,11 +93,11 @@ class GadgetConstantsExporter(ConstantsExporter):
                                           "GadgetIdentifierCount",
                                           len(client_gadget_data['items'])))
 
-        package_namespace.add(CppBlankLine())
-        package_namespace.add(CppComment("Count of the different characteristic identifiers"))
-        package_namespace.add(CppVariable("constexpr uint8_t",
-                                          "CharacteristicIdentifierCount",
-                                          len(characteristics_data['items'])))
+        # package_namespace.add(CppBlankLine())
+        # package_namespace.add(CppComment("Count of the different characteristic identifiers"))
+        # package_namespace.add(CppVariable("constexpr uint8_t",
+        #                                   "CharacteristicIdentifierCount",
+        #                                   len(characteristics_data['items'])))
 
         gadget_enum = CppEnumClass("GadgetIdentifier",
                                    client_gadget_data['description'])
@@ -92,20 +107,20 @@ class GadgetConstantsExporter(ConstantsExporter):
 
         package_namespace.add(gadget_enum)
 
-        gadget_enum = CppEnumClass("CharacteristicIdentifier",
-                                   characteristics_data['description'])
+        # characteristic_enum = CppEnumClass("CharacteristicIdentifier",
+        #                                    characteristics_data['description'])
+        #
+        # for key, data in characteristics_data["items"].items():
+        #     characteristic_enum.add_element(key, data['enum_value'], data['name'])
 
-        for key, data in characteristics_data["items"].items():
-            gadget_enum.add_element(key, data['enum_value'], data['name'])
-
-        package_namespace.add(gadget_enum)
+        # package_namespace.add(characteristic_enum)
 
         file.add(package_namespace)
 
         file.save(out_file)
 
     def export_js(self, out_file: str):
-        characteristics_data = self._definitions["characteristic_definitions"]
+        # characteristics_data = self._definitions["characteristic_definitions"]
         client_gadget_data = self._definitions["gadget_definitions"]["client_gadgets"]
 
         file = JSFile()
@@ -119,21 +134,22 @@ class GadgetConstantsExporter(ConstantsExporter):
                                                 "GadgetIdentifierCount",
                                                 len(client_gadget_data['items'])))
 
-        gadget_definitions_class.add(JSBlankLine())
-        gadget_definitions_class.add(JSComment("Count of the different characteristic identifiers"))
-        gadget_definitions_class.add(JSVariable("static",
-                                                "CharacteristicIdentifierCount",
-                                                len(characteristics_data['items'])))
+        # gadget_definitions_class.add(JSBlankLine())
+        # gadget_definitions_class.add(JSComment("Count of the different characteristic identifiers"))
+        # gadget_definitions_class.add(JSVariable("static",
+        #                                         "CharacteristicIdentifierCount",
+        #                                         len(characteristics_data['items'])))
 
         gadget_definitions_class.add(JSBlankLine())
         gadget_definitions_class.add(JSComment("Gadget Identifier"))
         for index, (key, data) in enumerate(client_gadget_data["items"].items()):
             gadget_definitions_class.add(JSVariable("static", "gadget_" + key, data['enum_value'], data['name']))
 
-        gadget_definitions_class.add(JSBlankLine())
-        gadget_definitions_class.add(JSComment("Characteristic Identifier"))
-        for index, (key, data) in enumerate(characteristics_data["items"].items()):
-            gadget_definitions_class.add(JSVariable("static", "characteristic_" + key, data['enum_value'], data['name']))
+        # gadget_definitions_class.add(JSBlankLine())
+        # gadget_definitions_class.add(JSComment("Characteristic Identifier"))
+        # for index, (key, data) in enumerate(characteristics_data["items"].items()):
+        #     gadget_definitions_class.add(
+        #         JSVariable("static", "characteristic_" + key, data['enum_value'], data['name']))
 
         file.add(gadget_definitions_class)
 

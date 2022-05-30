@@ -7,20 +7,11 @@
       "title": "Client Gadgets",
       "description": "Gadgets running on the ESP Clients",
       "items": {
-        "any_gadget": {
-          "name": "Any Gadget",
-          "description": "Special Identifier for faulty or abstract gadgets, depending on the context. It can have any combination of characteristics.",
-          "enum_value": 0,
-          "ir_required": false,
-          "radio_required": false,
-          "characteristics": [],
-          "ports": {},
-          "config": {}
-        },
         "lamp_neopixel_rgb_basic": {
           "name": "NeoPixel Basic RGB Lamp",
           "description": "AdaFruit NeoPixel controlled RGB Strips/Lamps",
-          "enum_value": 1,
+          "class": 2,
+          "enum_value": 0,
           "ir_required": false,
           "radio_required": false,
           "characteristics": [
@@ -44,7 +35,8 @@
         "lamp_basic": {
           "name": "Basic Lamp",
           "description": "Basic Lamp that just can be turned on or off",
-          "enum_value": 2,
+          "class": 0,
+          "enum_value": 1,
           "ir_required": false,
           "radio_required": false,
           "characteristics": [
@@ -60,7 +52,8 @@
         "fan_westinghouse_ir": {
           "name": "Westinghouse IR Fan",
           "description": "IR-controlled Westinghouse ceiling fan",
-          "enum_value": 3,
+          "class": 3,
+          "enum_value": 2,
           "ir_required": true,
           "radio_required": false,
           "characteristics": [
@@ -73,7 +66,8 @@
         "lamp_westinghouse_ir": {
           "name": "Westinghouse IR Fan Lamp",
           "description": "IR-controlled Lamp connected to a Westinghouse ceiling fan",
-          "enum_value": 4,
+          "class": 0,
+          "enum_value": 3,
           "ir_required": true,
           "radio_required": false,
           "characteristics": [
@@ -85,7 +79,8 @@
         "doorbell_basic": {
           "name": "Doorbell Basic",
           "description": "Basic Smart Doorbell only raising an event if pressed",
-          "enum_value": 5,
+          "class": 10,
+          "enum_value": 4,
           "ir_required": false,
           "radio_required": false,
           "characteristics": [],
@@ -99,7 +94,8 @@
         "wallswitch_basic": {
           "name": "Basic Wallswitch",
           "description": "Basic Wallswitch that throws an event if pressed",
-          "enum_value": 6,
+          "class": 11,
+          "enum_value": 5,
           "ir_required": false,
           "radio_required": false,
           "characteristics": [],
@@ -113,7 +109,8 @@
         "sensor_motion_hr501": {
           "name": "HR501 Motion Sensor",
           "description": "HR501 motion sensor that throws an event if triggered",
-          "enum_value": 7,
+          "class": 9,
+          "enum_value": 6,
           "ir_required": false,
           "radio_required": false,
           "characteristics": [],
@@ -127,7 +124,8 @@
         "sensor_temperature_dht": {
           "name": "DHT Temperature/Humidity Sensor",
           "description": "DHT temperature/humidity sensor that publishes the to values as characteristic",
-          "enum_value": 8,
+          "class": 8,
+          "enum_value": 7,
           "ir_required": false,
           "radio_required": false,
           "characteristics": [
@@ -147,52 +145,78 @@
       "title": "Bridge Gadgets",
       "description": "Gadgets running on the Bridge itself (virtual Gadgets)",
       "items": {
+
       }
     }
   },
-  "characteristic_definitions": {
-    "title": "Characteristics",
-    "description": "Characteristics Gadgets can contain",
+  "gadget_classes": {
+    "title": "Gadget Classes",
+    "description": "General categories of gadgets. Two gadgets of the same class have the same attributes but may differ in implemetation",
     "items": {
-      "err_type": {
-        "name": "Error-Characteristic",
-        "description": "Special Identifier for faulty characteristics. Can not legally be included in any gadget",
+      "lamp": {
+        "name": "Lamp",
+        "description": "Normal On/Off Lamp",
         "enum_value": 0
       },
-      "status": {
-        "name": "Status",
-        "description": "Basic Status (On/Off) Characteristic",
+      "lamp_adjustable": {
+        "name": "Adjustable Lamp",
+        "description": "Brightness-Adjustable Lamp",
         "enum_value": 1
       },
-      "fan_speed": {
-        "name": "Fan Speed",
-        "description": "Fan Speed Characteristic",
+      "lamp_rgb": {
+        "name": "RGB Lamp",
+        "description": "Fully RGB-Controllable Lightsource",
         "enum_value": 2
       },
-      "brightness": {
-        "name": "Brightness",
-        "description": "Brightness Characteristic",
+      "fan": {
+        "name": "Fan",
+        "description": "Any kind of Fan",
         "enum_value": 3
       },
-      "hue": {
-        "name": "Hue",
-        "description": "Hue Characteristic (Color)",
+      "tv": {
+        "name": "TV",
+        "description": "A Television. You know, the shiny noisy thing",
         "enum_value": 4
       },
-      "saturation": {
-        "name": "Saturation",
-        "description": "Saturation Characteristic (Color)",
+      "media_player": {
+        "name": "Media Player",
+        "description": "Any kind of media player/game console",
         "enum_value": 5
       },
-      "temperature": {
-        "name": "Temperature",
-        "description": "Temperature Characteristic",
+      "hum_sensor": {
+        "name": "Humidity Sensor",
+        "description": "Humidity Sensor",
         "enum_value": 6
       },
-      "humidity": {
-        "name": "Humidity",
-        "description": "Humidity Characteristic",
+      "temp_sensor": {
+        "name": "Temperature Sensor",
+        "description": "Temperature Sensor",
         "enum_value": 7
+      },
+      "hum_temp_sensor": {
+        "name": "Humidity + Temperature Sensor",
+        "description": "Humidity + Temperature Sensor",
+        "enum_value": 8
+      },
+      "mov_sensor": {
+        "name": "Movement Sensor",
+        "description": "Movement Sensor",
+        "enum_value": 9
+      },
+      "doorbell": {
+        "name": "Doorbell",
+        "description": "A basic door bell",
+        "enum_value": 10
+      },
+      "stateless_switch": {
+        "name": "Stateless Switch",
+        "description": "A trigger-switch without a state",
+        "enum_value": 11
+      },
+      "state_switch": {
+        "name": "Switch",
+        "description": "A basic switch that can be on or off",
+        "enum_value": 12
       }
     }
   }
