@@ -3,7 +3,6 @@ def test_python_file_integrity():
     import api_definitions
     import gadget_definitions
     buffer = api_definitions.ApiURIs.test_echo
-    buffer = gadget_definitions.GadgetIdentifier.any_gadget
 
 
 def test_cpp_file_integrity(temp_exists):
