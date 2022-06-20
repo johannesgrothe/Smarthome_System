@@ -15,6 +15,7 @@ def export_api_constants():
     exporter.export_python(f"{PATH_FILE_API_CONSTANTS}.py")
     exporter.export_cpp(f"{PATH_FILE_API_CONSTANTS}.h")
     exporter.export_js(f"{PATH_FILE_API_CONSTANTS}.js")
+    exporter.export_swift(f"{PATH_FILE_API_CONSTANTS}.swift")
 
 
 def export_api_docs():

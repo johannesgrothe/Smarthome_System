@@ -125,47 +125,64 @@
           "type": "object",
           "additionalProperties": {
             "type": "object",
-            "required": [
-              "title",
-              "description",
-              "access_level",
-              "broadcast_allowed",
-              "sender",
-              "access_type",
-              "uri",
-              "request",
-              "response"
-            ],
             "properties": {
-              "title": {
-                "$ref": "#/definitions/req_title"
+              "name": {
+                "type": "string",
+                "minLength": 5
               },
               "description": {
-                "$ref": "#/definitions/req_title"
+                "type": "string",
+                "minLength": 10
               },
-              "access_level": {
-                "type": "array",
-                "items": {
-                  "type": "string"
+              "endpoints": {
+                "type": "object",
+                "additionalProperties": {
+                  "type": "object",
+                  "required": [
+                    "title",
+                    "description",
+                    "access_level",
+                    "broadcast_allowed",
+                    "sender",
+                    "access_type",
+                    "uri",
+                    "request",
+                    "response"
+                  ],
+                  "properties": {
+                    "title": {
+                      "$ref": "#/definitions/req_title"
+                    },
+                    "description": {
+                      "$ref": "#/definitions/req_title"
+                    },
+                    "access_level": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    },
+                    "sender": {
+                      "$ref": "#/definitions/req_sender"
+                    },
+                    "broadcast_allowed": {
+                      "$ref": "#/definitions/req_broadcast_allowed"
+                    },
+                    "access_type": {
+                      "$ref": "#/definitions/req_access_type"
+                    },
+                    "uri": {
+                      "$ref": "#/definitions/req_uri"
+                    },
+                    "request": {
+                      "$ref": "#/definitions/req_request"
+                    },
+                    "response": {
+                      "$ref": "#/definitions/req_response"
+                    }
+                  },
+                  "additionalProperties": false
                 }
-              },
-              "sender": {
-                "$ref": "#/definitions/req_sender"
-              },
-              "broadcast_allowed": {
-                "$ref": "#/definitions/req_broadcast_allowed"
-              },
-              "access_type": {
-                "$ref": "#/definitions/req_access_type"
-              },
-              "uri": {
-                "$ref": "#/definitions/req_uri"
-              },
-              "request": {
-                "$ref": "#/definitions/req_request"
-              },
-              "response": {
-                "$ref": "#/definitions/req_response"
               }
             },
             "additionalProperties": false

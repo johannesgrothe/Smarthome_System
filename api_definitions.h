@@ -15,15 +15,14 @@ namespace api_definitions {
     namespace version {
         constexpr uint8_t major = 1;
         constexpr uint8_t minor = 1;
-        constexpr uint8_t bugfix = 2;
+        constexpr uint8_t bugfix = 3;
     }
 
     // Api URIs
     namespace uris {
-        constexpr char heartbeat [] = "heartbeat";  // Client Heartbeat (Client -> Bridge)
         constexpr char update_gadget [] = "update/gadget";  // Update Gadget (Client -> Bridge)
+        constexpr char heartbeat [] = "heartbeat";  // Client Heartbeat (Client -> Bridge)
         constexpr char sync_client [] = "sync/client";  // Sync Client (Client -> Bridge)
-        constexpr char sync_event [] = "sync/event";  // Sync Event (Client -> Bridge)
         constexpr char client_system_config_write [] = "config/system/write";  // Write System Config (Bridge -> Client)
         constexpr char client_event_config_write [] = "config/event/write";  // Write Event Config (Bridge -> Client)
         constexpr char client_gadget_config_write [] = "config/gadget/write";  // Write Gadget Config (Bridge -> Client)

@@ -1,4 +1,6 @@
 """Module for the api constants exporter"""
+from typing import Optional
+
 from exporters.script_params import *
 from exporters.constants_exporter import ConstantsExporter
 from utils.software_version import SoftwareVersion
@@ -14,9 +16,11 @@ class ApiConstantsExporter(ConstantsExporter):
     def __init__(self, definitions: str):
         super().__init__(definitions)
 
-    def _export_definition(self, data: dict, access_levels_data: dict, linebreak: bool, bridge_is_requester: bool) -> list[str]:
+    def _export_definition(self, data: dict, access_levels_data: dict, linebreak: bool, bridge_is_requester: bool,
+                           category: Optional[str]) -> list[str]:
         if "access_level" in data:
-            access_level_buffer = [access_levels_data[x]["var_name"] for x in access_levels_data if x in data["access_level"]]
+            access_level_buffer = [access_levels_data[x]["var_name"] for x in access_levels_data if
+                                   x in data["access_level"]]
             access_levels = f"[{', '.join([f'{PY_CLASSNAME_ACCESS_LEVEL}.{x}' for x in access_level_buffer])}]"
         else:
             access_levels = "[]"
@@ -26,13 +30,17 @@ class ApiConstantsExporter(ConstantsExporter):
         else:
             indent = " "
 
+        cat_str = "None"
+        if category is not None:
+            cat_str = PY_CLASSNAME_ENDPOINT_TYPE + "." + category
+
         lines = [""]
         uri = data['uri']['value']
         access_type = f"{PY_CLASSNAME_ACCESS_TYPE}.{data['access_type']}" if "access_type" in data else "None"
 
         lines.append(f"    # {data['title']}")
         lines.append(
-            f"    {data['uri']['var_name']} = {PY_CLASSNAME_API_DEFINITION_CONTAINER}(\"{uri}\",{indent}{access_levels},{indent}{access_type},{indent}{bridge_is_requester})")
+            f"    {data['uri']['var_name']} = {PY_CLASSNAME_API_DEFINITION_CONTAINER}(\"{uri}\",{indent}{access_levels},{indent}{cat_str},{indent}{access_type},{indent}{bridge_is_requester})")
         return lines
 
     def export_python(self, out_file: str):
@@ -44,7 +52,7 @@ class ApiConstantsExporter(ConstantsExporter):
         lines.append("")
 
         for x in self._generate_python_imports([("utils.api_endpoint_definition",
-                                                 f"{PY_CLASSNAME_API_DEFINITION_CONTAINER}, {PY_CLASSNAME_ACCESS_TYPE}, {PY_CLASSNAME_ACCESS_TYPE_SUPER}, {PY_CLASSNAME_URIS_SUPER}"),
+                                                 f"{PY_CLASSNAME_API_DEFINITION_CONTAINER}, {PY_CLASSNAME_ACCESS_TYPE}, {PY_CLASSNAME_ACCESS_TYPE_SUPER}, {PY_CLASSNAME_URIS_SUPER}, {PY_CLASSNAME_ENDPOINT_TYPE_SUPER}"),
                                                 ("utils.software_version", "SoftwareVersion")]):
             lines.append(x)
 
@@ -69,18 +77,30 @@ class ApiConstantsExporter(ConstantsExporter):
         lines.append("")
         lines.append("")
 
+        lines.append(f"class {PY_CLASSNAME_ENDPOINT_TYPE}({PY_CLASSNAME_ENDPOINT_TYPE_SUPER}, enum.IntEnum):")
+        lines.append(f"    \"\"\"Container for all API endpoint types\"\"\"")
+        lines.append("")
+
+        for index, (endpoint_id, data) in enumerate(self._definitions["mappings"]["bridge"].items()):
+            lines.append(f"    {endpoint_id.capitalize()} = {index}  # {data['name']}")
+
+        lines.append("")
+        lines.append("")
+
         lines.append(f"class {PY_CLASSNAME_URIS}({PY_CLASSNAME_URIS_SUPER}):")
         lines.append(f"    \"\"\"Container for all API URIs\"\"\"")
         lines.append("")
         lines.append("    # URIs exposed by the bridge")
-        for _, data in self._definitions["mappings"]["bridge"].items():
-            lines += self._export_definition(data, access_level_data, True, False)
+        for category, definitions in self._definitions["mappings"]["bridge"].items():
+            cat_value = category.capitalize()
+            for _, data in definitions["endpoints"].items():
+                lines += self._export_definition(data, access_level_data, True, False, cat_value)
 
         lines.append("")
         lines.append("    # URIs exposed by the client")
         for _, data in self._definitions["mappings"]["client"].items():
             if "bridge" in data["sender"]:
-                lines += self._export_definition(data, access_level_data, False, True)
+                lines += self._export_definition(data, access_level_data, False, True, None)
 
         with open(out_file, "w") as file_p:
             file_p.writelines([x + "\n" for x in lines])
@@ -89,10 +109,11 @@ class ApiConstantsExporter(ConstantsExporter):
 
         # Filter data to only export api constants relevant to the client
         filtered_data = []
-        for key, data in self._definitions["mappings"]["bridge"].items():
-            if "client" in data["sender"]:
-                data["receiver"] = "bridge"
-                filtered_data.append(data)
+        for category, cat_data in self._definitions["mappings"]["bridge"].items():
+            for key, data in cat_data["endpoints"].items():
+                if "client" in data["sender"]:
+                    data["receiver"] = "bridge"
+                    filtered_data.append(data)
         for key, data in self._definitions["mappings"]["client"].items():
             data["receiver"] = "client"
             filtered_data.append(data)
@@ -137,10 +158,11 @@ class ApiConstantsExporter(ConstantsExporter):
 
         # Filter data to only export api constants relevant to the web interface
         filtered_data = []
-        for key, data in self._definitions["mappings"]["bridge"].items():
-            if "web_application" in data["sender"]:
-                data["receiver"] = "bridge"
-                filtered_data.append(data)
+        for category, cat_data in self._definitions["mappings"]["bridge"].items():
+            for key, data in cat_data["endpoints"].items():
+                if "web_application" in data["sender"]:
+                    data["receiver"] = "bridge"
+                    filtered_data.append(data)
 
         file = JSFile()
 
@@ -174,3 +196,34 @@ class ApiConstantsExporter(ConstantsExporter):
         file.add(api_constants_class)
 
         file.save(out_file)
+
+    def export_swift(self, out_file: str):
+        # Filter data to only export api constants relevant to the web interface
+        filtered_data = []
+        for category, cat_data in self._definitions["mappings"]["bridge"].items():
+            for key, data in cat_data["endpoints"].items():
+                if "web_application" in data["sender"]:
+                    data["receiver"] = "bridge"
+                    filtered_data.append(data)
+
+        lines = self._generate_swift_header(_export_file_docstring, '/'.join(__file__.split('/')[-1:]))
+
+        lines.append("")
+        lines.append("")
+
+        version = SoftwareVersion.from_string(self._definitions["version"])
+        lines.append(
+            f"let {PY_VARNAME_API_VERSION} = SoftwareVersion({version.major}, {version.minor}, {version.bugfix})")
+
+        lines.append("")
+        lines.append("")
+
+        lines.append("enum ApiUris : String {")
+
+        for data in filtered_data:
+            lines.append(f"    case {data['uri']['var_name']} = \"{data['uri']['value']}\"   // {data['title']}")
+
+        lines.append("}")
+
+        with open(out_file, "w") as file_p:
+            file_p.writelines([x + "\n" for x in lines])

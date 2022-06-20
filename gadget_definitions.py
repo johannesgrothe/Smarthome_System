@@ -44,7 +44,6 @@ class GadgetClass(enum.IntEnum):
 
 
 GadgetClassMapping = {
-
     GadgetClass.lamp: [GadgetIdentifier.lamp_basic, GadgetIdentifier.lamp_westinghouse_ir],
     GadgetClass.lamp_adjustable: [],
     GadgetClass.lamp_rgb: [GadgetIdentifier.lamp_neopixel_rgb_basic],

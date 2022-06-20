@@ -154,3 +154,8 @@ class GadgetConstantsExporter(ConstantsExporter):
         file.add(gadget_definitions_class)
 
         file.save(out_file)
+
+    def export_swift(self, out_file: str):
+        lines = []
+        with open(out_file, "w") as file_p:
+            file_p.writelines([x + "\n" for x in lines])

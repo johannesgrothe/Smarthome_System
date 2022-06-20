@@ -48,6 +48,12 @@ PY_CLASSNAME_ACCESS_LEVEL = "ApiAccessLevel"
 # Classname for api access type superclass
 PY_CLASSNAME_ACCESS_TYPE_SUPER = "ApiAccessLevelSuper"
 
+# Classname for api access levels
+PY_CLASSNAME_ENDPOINT_TYPE = "ApiEndpointCategory"
+
+# Classname for api access type superclass
+PY_CLASSNAME_ENDPOINT_TYPE_SUPER = "ApiEndpointCategorySuper"
+
 # Classname for api access types
 PY_CLASSNAME_ACCESS_TYPE = "ApiAccessType"
 
