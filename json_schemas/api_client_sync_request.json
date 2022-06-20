@@ -9,7 +9,7 @@
     "gadgets": {
       "type": "array",
       "items": {
-        "$ref": "api_gadget_data.json"
+        "$ref": "api_gadget_sync_data.json"
       }
     }
   }

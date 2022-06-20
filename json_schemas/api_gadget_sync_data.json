@@ -1,0 +1,49 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "type": "object",
+  "required": [
+    "id",
+    "type",
+    "attributes"
+  ],
+  "properties": {
+    "id": {
+      "type": "string"
+    },
+    "type": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "class": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "is_local": {
+      "type": "boolean"
+    },
+    "attributes": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "object"
+      }
+    },
+    "host_client": {
+      "type": "object",
+      "description": "When communicating gadget information from the bridge to an app/webinterface the client id needed",
+      "required": [
+        "id",
+        "is_active"
+      ],
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "is_active": {
+          "type": "boolean"
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": false
+}
