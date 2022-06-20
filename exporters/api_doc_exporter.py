@@ -48,8 +48,8 @@ class ApiDocExporter(DocExporter):
         }
         return switcher.get(sender)
 
-    def _export_mapping(self, map_data: dict, file: MarkdownFile, receiver: str):
-        file.add(MarkdownHeader(map_data["title"], 2))
+    def _export_mapping(self, map_data: dict, file: MarkdownFile, receiver: str, title_level: int):
+        file.add(MarkdownHeader(map_data["title"], title_level))
         file.add(MarkdownText(map_data["description"]))
 
         file.add(MarkdownCode(map_data["uri"]["value"], language="json", block=False))
@@ -70,7 +70,7 @@ class ApiDocExporter(DocExporter):
         file.add(status_table)
 
         if "access_level" in map_data:
-            file.add(MarkdownHeader("Access Levels", 3))
+            file.add(MarkdownHeader("Access Levels", title_level + 1))
             file.add(MarkdownText("Access levels required to access this ressource"))
             access_level_list = MarkdownList()
             for access_level in map_data["access_level"]:
@@ -78,14 +78,14 @@ class ApiDocExporter(DocExporter):
                 access_level_list.add_line(MarkdownInternalLinkGithub(level_name, level_name))
             file.add(access_level_list)
 
-        file.add(MarkdownHeader("Request", 3))
+        file.add(MarkdownHeader("Request", title_level + 1))
         req_data = map_data["request"]
         file.add(MarkdownText(req_data["comment"]))
         file.add(MarkdownHyperLink(req_data['schema'], f"{_schema_link_base_path}{req_data['schema']}", "Schema: "))
         req_schema = self._read_schema(req_data["schema"])
         file.add(MarkdownCode(req_schema, language="json"))
 
-        file.add(MarkdownHeader("Response", 3))
+        file.add(MarkdownHeader("Response", title_level + 1))
         res_data = map_data["response"]
         file.add(MarkdownText(res_data["comment"]))
         if res_data["schema"] is not None:
@@ -117,11 +117,15 @@ class ApiDocExporter(DocExporter):
         file.add(MarkdownDivider())
 
         file.add(MarkdownHeader("Bridge URIs", 1))
-        for _, map_data in self._definitions["mappings"]["bridge"].items():
-            self._export_mapping(map_data, file, "bridge")
+        for category, cat_data in self._definitions["mappings"]["bridge"].items():
+            cat_name = cat_data["name"]
+            file.add(MarkdownHeader(cat_name, 2))
+            file.add(MarkdownText(cat_data["description"]))
+            for _, map_data in cat_data["endpoints"].items():
+                self._export_mapping(map_data, file, "bridge", 3)
 
         file.add(MarkdownHeader("Client URIs", 1))
         for _, map_data in self._definitions["mappings"]["client"].items():
-            self._export_mapping(map_data, file, "client")
+            self._export_mapping(map_data, file, "client", 3)
 
         file.save(out_file)

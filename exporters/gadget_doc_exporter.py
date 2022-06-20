@@ -58,17 +58,6 @@ class GadgetDocExporter(DocExporter):
         self._add_exported_libraries(PATH_FILE_GADGET_CONSTANTS, file)
         file.add(MarkdownDivider())
 
-        characteristics_data = self._definitions["characteristic_definitions"]
-        file.add(MarkdownHeader(characteristics_data["title"], 1))
-        file.add(MarkdownText(characteristics_data["description"]))
-
-        file.add(self._gen_enum_table(characteristics_data))
-
-        for key, data in characteristics_data["items"].items():
-            self._add_characteristic_info(key, data, file)
-
-            file.add(MarkdownDivider())
-
         for _, gadget_platform in self._definitions["gadget_definitions"].items():
             file.add(MarkdownHeader(gadget_platform["title"], 1))
             file.add(MarkdownText(gadget_platform["description"]))
@@ -81,16 +70,6 @@ class GadgetDocExporter(DocExporter):
 
                 for g_key, gadget_data in gadget_platform["items"].items():
                     self._add_gadget_info(g_key, gadget_data, file)
-
-                    file.add(MarkdownHeader("Characteristics", 3))
-                    if gadget_data["characteristics"]:
-                        characteristics_list = MarkdownList()
-                        for c_identifier in gadget_data["characteristics"]:
-                            c_data = self._definitions["characteristic_definitions"]["items"][c_identifier]
-                            characteristics_list.add_line(f"{c_data['name']}")
-                        file.add(characteristics_list)
-                    else:
-                        file.add(MarkdownText("This gadget does not have any characteristics attached"))
 
                     file.add(MarkdownHeader("Ports", 3))
                     if gadget_data["ports"]:
