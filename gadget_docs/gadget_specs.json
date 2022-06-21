@@ -145,7 +145,6 @@
       "title": "Bridge Gadgets",
       "description": "Gadgets running on the Bridge itself (virtual Gadgets)",
       "items": {
-
       }
     }
   },
@@ -156,67 +155,93 @@
       "lamp": {
         "name": "Lamp",
         "description": "Normal On/Off Lamp",
-        "enum_value": 0
+        "enum_value": 0,
+        "attributes": "",
+        "sync_attributes": ""
       },
       "lamp_adjustable": {
         "name": "Adjustable Lamp",
         "description": "Brightness-Adjustable Lamp",
-        "enum_value": 1
+        "enum_value": 1,
+        "attributes": "",
+        "sync_attributes": ""
       },
       "lamp_rgb": {
         "name": "RGB Lamp",
         "description": "Fully RGB-Controllable Lightsource",
-        "enum_value": 2
+        "enum_value": 2,
+        "attributes": "api_gadget_data_rgb_lamp.json",
+        "sync_attributes": "api_gadget_update_rgb_lamp.json"
       },
       "fan": {
         "name": "Fan",
         "description": "Any kind of Fan",
-        "enum_value": 3
+        "enum_value": 3,
+        "attributes": "api_gadget_data_fan.json",
+        "sync_attributes": "api_gadget_update_fan.json"
       },
       "tv": {
         "name": "TV",
         "description": "A Television. You know, the shiny noisy thing",
-        "enum_value": 4
+        "enum_value": 4,
+        "attributes": "api_gadget_data_tv.json",
+        "sync_attributes": "api_gadget_update_tv.json"
       },
       "media_player": {
         "name": "Media Player",
         "description": "Any kind of media player/game console",
-        "enum_value": 5
+        "enum_value": 5,
+        "attributes": "",
+        "sync_attributes": ""
       },
       "hum_sensor": {
         "name": "Humidity Sensor",
         "description": "Humidity Sensor",
-        "enum_value": 6
+        "enum_value": 6,
+        "attributes": "",
+        "sync_attributes": ""
       },
       "temp_sensor": {
         "name": "Temperature Sensor",
         "description": "Temperature Sensor",
-        "enum_value": 7
+        "enum_value": 7,
+        "attributes": "",
+        "sync_attributes": ""
       },
       "hum_temp_sensor": {
         "name": "Humidity + Temperature Sensor",
         "description": "Humidity + Temperature Sensor",
-        "enum_value": 8
+        "enum_value": 8,
+        "attributes": "",
+        "sync_attributes": ""
       },
       "mov_sensor": {
         "name": "Movement Sensor",
         "description": "Movement Sensor",
-        "enum_value": 9
+        "enum_value": 9,
+        "attributes": "",
+        "sync_attributes": ""
       },
       "doorbell": {
         "name": "Doorbell",
         "description": "A basic door bell",
-        "enum_value": 10
+        "enum_value": 10,
+        "attributes": "",
+        "sync_attributes": ""
       },
       "stateless_switch": {
         "name": "Stateless Switch",
         "description": "A trigger-switch without a state",
-        "enum_value": 11
+        "enum_value": 11,
+        "attributes": "",
+        "sync_attributes": ""
       },
       "state_switch": {
         "name": "Switch",
         "description": "A basic switch that can be on or off",
-        "enum_value": 12
+        "enum_value": 12,
+        "attributes": "",
+        "sync_attributes": ""
       }
     }
   }

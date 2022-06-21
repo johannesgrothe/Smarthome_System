@@ -22,6 +22,9 @@ PATH_FILE_GADGET_CONSTANTS = "gadget_definitions"
 NAME_FILE_API_DOCS = "api.md"
 
 # Path to the exported gadget documentation markdown
+NAME_FILE_GADGET_CLASS_DOCS = "gadget_classes.md"
+
+# Path to the exported gadget documentation markdown
 NAME_FILE_GADGET_DOCS = "gadgets.md"
 
 # Path to temporary generated files

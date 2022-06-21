@@ -138,6 +138,7 @@
         "description",
         "items"
       ],
+      "additionalProperties": false,
       "properties": {
         "title": {
           "type": "string"
@@ -152,8 +153,11 @@
             "required": [
               "name",
               "description",
-              "enum_value"
+              "enum_value",
+              "attributes",
+              "sync_attributes"
             ],
+            "additionalProperties": false,
             "properties": {
               "name": {
                 "type": "string"
@@ -164,6 +168,12 @@
               "enum_value": {
                 "type": "integer",
                 "minimum": 0
+              },
+              "attributes": {
+                "type": "string"
+              },
+              "sync_attributes": {
+                "type": "string"
               }
             }
           }

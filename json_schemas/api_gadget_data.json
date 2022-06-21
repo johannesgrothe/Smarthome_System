@@ -24,10 +24,7 @@
       "type": "boolean"
     },
     "attributes": {
-      "type": "object",
-      "additionalProperties": {
-        "type": "object"
-      }
+      "type": "object"
     },
     "host_client": {
       "type": "object",

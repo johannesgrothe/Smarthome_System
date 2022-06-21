@@ -8,6 +8,7 @@ from exporters.temp_dir_manager import TempDirManager
 from exporters.api_constants_exporter import ApiConstantsExporter
 from exporters.api_doc_exporter import ApiDocExporter
 from exporters.gadget_constants_exporter import GadgetConstantsExporter
+from system.exporters.gadget_api_doc_exporter import GadgetApiDocExporter
 
 
 def export_api_constants():
@@ -33,6 +34,9 @@ def export_gadget_constants():
 def export_gadget_docs():
     exporter = GadgetDocExporter(PATH_GADGET_SPECS)
     exporter.export_docs(os.path.join(PATH_TEMP_DIR, NAME_FILE_GADGET_DOCS))
+
+    exporter = GadgetApiDocExporter(PATH_GADGET_SPECS, PATH_JSON_SCHEMAS)
+    exporter.export_docs(os.path.join(PATH_TEMP_DIR, NAME_FILE_GADGET_CLASS_DOCS))
 
 
 def parse_args() -> argparse.Namespace:

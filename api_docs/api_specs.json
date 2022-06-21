@@ -133,7 +133,7 @@
               "schema": "api_empty_request.json"
             },
             "response": {
-              "comment": "Json containing information about all gadgets currently known to the bridge",
+              "comment": "Json containing information about all gadgets currently known to the bridge. The attributes of the individual gadgets differ between the gadget classes, see the gadget docs for detailed information.",
               "schema": "api_get_all_gadgets_response.json"
             }
           },
@@ -156,8 +156,8 @@
               "var_name": "update_gadget"
             },
             "request": {
-              "comment": "Information to update the gadget with",
-              "schema": "api_gadget_update_request.json"
+              "comment": "Information to update the gadget with. The updatable attributes of the individual gadgets differ between the gadget classes, see the gadget docs for detailed information.",
+              "schema": "api_gadget_update.json"
             },
             "response": {
               "comment": "No response is expected",
@@ -552,7 +552,7 @@
         },
         "request": {
           "comment": "Information to update the gadget with",
-          "schema": "api_gadget_update_request.json"
+          "schema": "api_gadget_update.json"
         },
         "response": {
           "comment": "No response is expected",
