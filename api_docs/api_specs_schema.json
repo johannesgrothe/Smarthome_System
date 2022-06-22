@@ -120,6 +120,7 @@
         "bridge",
         "client"
       ],
+      "additionalProperties": false,
       "properties": {
         "bridge": {
           "type": "object",
@@ -239,6 +240,7 @@
           "id",
           "var_name"
         ],
+        "additionalProperties": false,
         "properties": {
           "description": {
             "type": "string",

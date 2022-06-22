@@ -7,8 +7,8 @@
 import enum
 
 
-class GadgetIdentifier(enum.IntEnum):
-    """Gadgets running on the ESP Clients"""
+class RemoteGadgetIdentifier(enum.IntEnum):
+    """Gadgets running on the ESP clients (remote gadgets)"""
 
     lamp_neopixel_rgb_basic = 0  # NeoPixel Basic RGB Lamp
     lamp_basic = 1  # Basic Lamp
@@ -20,9 +20,10 @@ class GadgetIdentifier(enum.IntEnum):
     sensor_temperature_dht = 7  # DHT Temperature/Humidity Sensor
 
 
-class BridgeGadgetIdentifier(enum.IntEnum):
-    """Gadgets running on the Bridge itself (virtual Gadgets)"""
+class LocalGadgetIdentifier(enum.IntEnum):
+    """Gadgets running on the bridge itself (local gadget)"""
 
+    denon_av_receiver = 0  # Denon AV Receiver
 
 
 class GadgetClass(enum.IntEnum):
@@ -44,17 +45,17 @@ class GadgetClass(enum.IntEnum):
 
 
 GadgetClassMapping = {
-    GadgetClass.lamp: [GadgetIdentifier.lamp_basic, GadgetIdentifier.lamp_westinghouse_ir],
+    GadgetClass.lamp: [RemoteGadgetIdentifier.lamp_basic, RemoteGadgetIdentifier.lamp_westinghouse_ir],
     GadgetClass.lamp_adjustable: [],
-    GadgetClass.lamp_rgb: [GadgetIdentifier.lamp_neopixel_rgb_basic],
-    GadgetClass.fan: [GadgetIdentifier.fan_westinghouse_ir],
-    GadgetClass.tv: [],
+    GadgetClass.lamp_rgb: [RemoteGadgetIdentifier.lamp_neopixel_rgb_basic],
+    GadgetClass.fan: [RemoteGadgetIdentifier.fan_westinghouse_ir],
+    GadgetClass.tv: [BridgeGadgetIdentifier.denon_av_receiver],
     GadgetClass.media_player: [],
     GadgetClass.hum_sensor: [],
     GadgetClass.temp_sensor: [],
-    GadgetClass.hum_temp_sensor: [GadgetIdentifier.sensor_temperature_dht],
-    GadgetClass.mov_sensor: [GadgetIdentifier.sensor_motion_hr501],
-    GadgetClass.doorbell: [GadgetIdentifier.doorbell_basic],
-    GadgetClass.stateless_switch: [GadgetIdentifier.wallswitch_basic],
+    GadgetClass.hum_temp_sensor: [RemoteGadgetIdentifier.sensor_temperature_dht],
+    GadgetClass.mov_sensor: [RemoteGadgetIdentifier.sensor_motion_hr501],
+    GadgetClass.doorbell: [RemoteGadgetIdentifier.doorbell_basic],
+    GadgetClass.stateless_switch: [RemoteGadgetIdentifier.wallswitch_basic],
     GadgetClass.state_switch: []
 }

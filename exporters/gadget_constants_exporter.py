@@ -29,7 +29,7 @@ class GadgetConstantsExporter(ConstantsExporter):
         lines.append("")
         lines.append("")
 
-        lines.append("class GadgetIdentifier(enum.IntEnum):")
+        lines.append("class RemoteGadgetIdentifier(enum.IntEnum):")
         lines.append(f"    \"\"\"{client_gadget_data['description']}\"\"\"")
         lines.append("")
 
@@ -39,7 +39,7 @@ class GadgetConstantsExporter(ConstantsExporter):
         lines.append("")
         lines.append("")
 
-        lines.append("class BridgeGadgetIdentifier(enum.IntEnum):")
+        lines.append("class LocalGadgetIdentifier(enum.IntEnum):")
         lines.append(f"    \"\"\"{bridge_gadget_data['description']}\"\"\"")
         lines.append("")
 
@@ -65,7 +65,7 @@ class GadgetConstantsExporter(ConstantsExporter):
             class_val = data['enum_value']
             local_gadgets = ["BridgeGadgetIdentifier." + key for key, data in bridge_gadget_data["items"].items() if
                              data['class'] == class_val]
-            remote_gadgets = ["GadgetIdentifier." + key for key, data in client_gadget_data["items"].items() if
+            remote_gadgets = ["RemoteGadgetIdentifier." + key for key, data in client_gadget_data["items"].items() if
                               data['class'] == class_val]
             sep = "," if i < len(gadget_class_data["items"]) - 1 else ""
             lines.append(f"    GadgetClass.{key}: [{', '.join(local_gadgets + remote_gadgets)}]{sep}")

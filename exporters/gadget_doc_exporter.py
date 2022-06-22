@@ -45,8 +45,10 @@ class GadgetDocExporter(DocExporter):
         identifier_table = MarkdownTable(["Parameter Name", "Parameter Value"])
         identifier_table.add_line(["Int Identifier", str(data['enum_value'])])
         identifier_table.add_line(["String Identifier", key])
-        identifier_table.add_line(["IR Required", str(data['ir_required'])])
-        identifier_table.add_line(["Radio Required", str(data['radio_required'])])
+        if "ir_required" in data:
+            identifier_table.add_line(["IR Required", str(data['ir_required'])])
+        if "radio_required" in data:
+            identifier_table.add_line(["Radio Required", str(data['radio_required'])])
         file.add(identifier_table)
 
     def export_docs(self, out_file: str):
@@ -71,14 +73,15 @@ class GadgetDocExporter(DocExporter):
                 for g_key, gadget_data in gadget_platform["items"].items():
                     self._add_gadget_info(g_key, gadget_data, file)
 
-                    file.add(MarkdownHeader("Ports", 3))
-                    if gadget_data["ports"]:
-                        characteristics_list = MarkdownList()
-                        for port, data in gadget_data["ports"].items():
-                            characteristics_list.add_line(f"{port}: {data['description']}")
-                        file.add(characteristics_list)
-                    else:
-                        file.add(MarkdownText("This gadget does not require any hardware port access"))
+                    if "ports" in gadget_data:
+                        file.add(MarkdownHeader("Ports", 3))
+                        if gadget_data["ports"]:
+                            characteristics_list = MarkdownList()
+                            for port, data in gadget_data["ports"].items():
+                                characteristics_list.add_line(f"{port}: {data['description']}")
+                            file.add(characteristics_list)
+                        else:
+                            file.add(MarkdownText("This gadget does not require any hardware port access"))
 
                     file.add(MarkdownHeader("Config", 3))
                     if gadget_data["config"]:

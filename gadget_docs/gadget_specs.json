@@ -1,11 +1,11 @@
 {
   "$schema": "gadget_specs_schema.json",
-  "title": "Gadget and Characteristic Specifications",
-  "description": "Documentation for the gadgets and characteristics available to the system",
+  "title": "Gadget Specifications",
+  "description": "Documentation for the gadget classes and their local and remote implementations",
   "gadget_definitions": {
     "client_gadgets": {
       "title": "Client Gadgets",
-      "description": "Gadgets running on the ESP Clients",
+      "description": "Gadgets running on the ESP clients (remote gadgets)",
       "items": {
         "lamp_neopixel_rgb_basic": {
           "name": "NeoPixel Basic RGB Lamp",
@@ -14,12 +14,6 @@
           "enum_value": 0,
           "ir_required": false,
           "radio_required": false,
-          "characteristics": [
-            "status",
-            "brightness",
-            "hue",
-            "saturation"
-          ],
           "ports": {
             "0": {
               "description": "Port to connect the RGB Strip to"
@@ -39,9 +33,6 @@
           "enum_value": 1,
           "ir_required": false,
           "radio_required": false,
-          "characteristics": [
-            "status"
-          ],
           "ports": {
             "0": {
               "description": "Port to connect the Lamp control relais/transistor to"
@@ -56,10 +47,6 @@
           "enum_value": 2,
           "ir_required": true,
           "radio_required": false,
-          "characteristics": [
-            "status",
-            "fan_speed"
-          ],
           "ports": {},
           "config": {}
         },
@@ -70,9 +57,6 @@
           "enum_value": 3,
           "ir_required": true,
           "radio_required": false,
-          "characteristics": [
-            "status"
-          ],
           "ports": {},
           "config": {}
         },
@@ -83,7 +67,6 @@
           "enum_value": 4,
           "ir_required": false,
           "radio_required": false,
-          "characteristics": [],
           "ports": {
             "0": {
               "description": "Port to connect the doorbell switch to"
@@ -98,7 +81,6 @@
           "enum_value": 5,
           "ir_required": false,
           "radio_required": false,
-          "characteristics": [],
           "ports": {
             "0": {
               "description": "Port to connect the switch to"
@@ -113,7 +95,6 @@
           "enum_value": 6,
           "ir_required": false,
           "radio_required": false,
-          "characteristics": [],
           "ports": {
             "0": {
               "description": "Port to connect the HR501 motion sensor to"
@@ -128,10 +109,6 @@
           "enum_value": 7,
           "ir_required": false,
           "radio_required": false,
-          "characteristics": [
-            "temperature",
-            "humidity"
-          ],
           "ports": {
             "0": {
               "description": "Port to connect the DHT sensor to"
@@ -143,8 +120,20 @@
     },
     "bridge_gadgets": {
       "title": "Bridge Gadgets",
-      "description": "Gadgets running on the Bridge itself (virtual Gadgets)",
+      "description": "Gadgets running on the bridge itself (local gadget)",
       "items": {
+        "denon_av_receiver": {
+          "name": "Denon AV Receiver",
+          "description": "Network-controlled denon av receiver",
+          "class": 4,
+          "enum_value": 0,
+          "config": {
+            "ip": {
+              "type": "string",
+              "optional": false
+            }
+          }
+        }
       }
     }
   },

@@ -13,7 +13,7 @@ namespace gadget_definitions {
     // Count of the different gadget identifiers
     constexpr uint8_t GadgetIdentifierCount = 8;
 
-    // Gadgets running on the ESP Clients
+    // Gadgets running on the ESP clients (remote gadgets)
     enum class GadgetIdentifier {
         lamp_neopixel_rgb_basic = 0,  // NeoPixel Basic RGB Lamp
         lamp_basic = 1,  // Basic Lamp
