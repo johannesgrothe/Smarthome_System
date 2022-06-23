@@ -1,669 +1,675 @@
 {
   "$schema": "api_specs_schema.json",
-  "title": "Smarthome API Specification",
-  "description": "Documentation for the smarthome systems API endpoints",
   "version": "1.1.3",
-  "mappings": {
-    "bridge": {
-      "system": {
-        "name": "System",
-        "description": "Endpoints for access of basic system properties and functionalities",
-        "endpoints": {
-          "info_bridge": {
-            "title": "Read Bridge Info",
-            "description": "Reads information about the bridge from the bridge",
-            "access_level": [
-              "admin",
-              "user",
-              "guest"
-            ],
-            "broadcast_allowed": true,
-            "access_type": "read",
-            "sender": [
-              "web_application"
-            ],
-            "uri": {
-              "value": "info/bridge",
-              "var_name": "info_bridge"
+  "endpoints": {
+    "title": "API Endpoints",
+    "description": "Definition of all API endpoints of the system",
+    "items": {
+      "bridge": {
+        "system": {
+          "name": "System",
+          "description": "Endpoints for access of basic system properties and functionalities",
+          "endpoints": {
+            "info_bridge": {
+              "title": "Read Bridge Info",
+              "description": "Reads information about the bridge from the bridge",
+              "access_level": [
+                "admin",
+                "user",
+                "guest"
+              ],
+              "broadcast_allowed": true,
+              "access_type": "read",
+              "sender": [
+                "web_application"
+              ],
+              "uri": {
+                "value": "info/bridge",
+                "var_name": "info_bridge"
+              },
+              "request": {
+                "comment": "No request payload needed",
+                "schema": "api_empty_request.json"
+              },
+              "response": {
+                "comment": "Every bit of relevant meta information about the bridge",
+                "schema": "api_get_info_response.json"
+              }
             },
-            "request": {
-              "comment": "No request payload needed",
-              "schema": "api_empty_request.json"
+            "test_echo": {
+              "title": "Test Echo",
+              "description": "Test endpoint. Responds with the same payload as the request",
+              "access_level": [
+                "admin"
+              ],
+              "broadcast_allowed": true,
+              "access_type": "write",
+              "sender": [],
+              "uri": {
+                "value": "echo",
+                "var_name": "test_echo"
+              },
+              "request": {
+                "comment": "Any payload. Response will mirror the payload sent.",
+                "schema": "api_empty_request.json"
+              },
+              "response": {
+                "comment": "Response payload will be the same as the sent one",
+                "schema": null
+              }
             },
-            "response": {
-              "comment": "Every bit of relevant meta information about the bridge",
-              "schema": "api_get_info_response.json"
+            "bridge_update_check": {
+              "title": "Bridge update check",
+              "description": "Checks whether the bridge has an update available. Responds with bool value for available update and branch information",
+              "access_level": [
+                "admin"
+              ],
+              "broadcast_allowed": true,
+              "access_type": "read",
+              "sender": [
+                "web_application"
+              ],
+              "uri": {
+                "value": "bridge/update/check",
+                "var_name": "bridge_update_check"
+              },
+              "request": {
+                "comment": "Any payload. Response contains information about bridge.",
+                "schema": "api_empty_request.json"
+              },
+              "response": {
+                "comment": "Response payload contains bool value for update_available and branch information (old and new, if not newest).",
+                "schema": "api_bridge_update_check_response.json"
+              }
+            },
+            "bridge_update_execute": {
+              "title": "Bridge update execute",
+              "description": "Execute update on bridge. No Response required, system reboots",
+              "access_level": [
+                "admin"
+              ],
+              "broadcast_allowed": true,
+              "access_type": "write",
+              "sender": [
+                "web_application"
+              ],
+              "uri": {
+                "value": "bridge/update/execute",
+                "var_name": "bridge_update_execute"
+              },
+              "request": {
+                "comment": "Any payload.",
+                "schema": "api_empty_request.json"
+              },
+              "response": {
+                "comment": "Response acknowledging the successful update of the bridge.",
+                "schema": "default_message.json"
+              }
             }
-          },
-          "test_echo": {
-            "title": "Test Echo",
-            "description": "Test endpoint. Responds with the same payload as the request",
-            "access_level": [
-              "admin"
-            ],
-            "broadcast_allowed": true,
-            "access_type": "write",
-            "sender": [],
-            "uri": {
-              "value": "echo",
-              "var_name": "test_echo"
+          }
+        },
+        "gadgets": {
+          "name": "Gadgets",
+          "description": "Endpoints for manipulation of gadgets running on the system",
+          "endpoints": {
+            "info_gadgets": {
+              "title": "Read Gadgets Info",
+              "description": "Reads information about the registered gadgets from the bridge",
+              "access_level": [
+                "admin",
+                "user",
+                "guest"
+              ],
+              "broadcast_allowed": true,
+              "access_type": "read",
+              "sender": [
+                "web_application"
+              ],
+              "uri": {
+                "value": "info/gadgets",
+                "var_name": "info_gadgets"
+              },
+              "request": {
+                "comment": "No request payload needed",
+                "schema": "api_empty_request.json"
+              },
+              "response": {
+                "comment": "Json containing information about all gadgets currently known to the bridge. The attributes of the individual gadgets differ between the gadget classes, see the gadget docs for detailed information.",
+                "schema": "api_get_all_gadgets_response.json"
+              }
             },
-            "request": {
-              "comment": "Any payload. Response will mirror the payload sent.",
-              "schema": "api_empty_request.json"
-            },
-            "response": {
-              "comment": "Response payload will be the same as the sent one",
-              "schema": null
+            "update_gadget": {
+              "title": "Update Gadget",
+              "description": "Updates the mutable characteristics of a gadget",
+              "access_level": [
+                "admin",
+                "user",
+                "mqtt"
+              ],
+              "broadcast_allowed": true,
+              "access_type": "write",
+              "sender": [
+                "client",
+                "web_application"
+              ],
+              "uri": {
+                "value": "update/gadget",
+                "var_name": "update_gadget"
+              },
+              "request": {
+                "comment": "Information to update the gadget with. The updatable attributes of the individual gadgets differ between the gadget classes, see the gadget docs for detailed information.",
+                "schema": "api_gadget_update.json"
+              },
+              "response": {
+                "comment": "No response is expected",
+                "schema": null
+              }
             }
-          },
-          "bridge_update_check": {
-            "title": "Bridge update check",
-            "description": "Checks whether the bridge has an update available. Responds with bool value for available update and branch information",
-            "access_level": [
-              "admin"
-            ],
-            "broadcast_allowed": true,
-            "access_type": "read",
-            "sender": [
-              "web_application"
-            ],
-            "uri": {
-              "value": "bridge/update/check",
-              "var_name": "bridge_update_check"
+          }
+        },
+        "clients": {
+          "name": "Clients",
+          "description": "Endpoints for the management of connected clients",
+          "endpoints": {
+            "write_config": {
+              "title": "Write Complete Config to Client",
+              "description": "Write a complete config to a client connected to the bridge",
+              "access_level": [
+                "admin"
+              ],
+              "broadcast_allowed": false,
+              "access_type": "write",
+              "sender": [
+                "web_application"
+              ],
+              "uri": {
+                "value": "config/write",
+                "var_name": "client_config_write"
+              },
+              "request": {
+                "comment": "Config to write to the client",
+                "schema": "api_client_write_config.json"
+              },
+              "response": {
+                "comment": "Response acknowledging the successful writing of the Config",
+                "schema": "default_message.json"
+              }
             },
-            "request": {
-              "comment": "Any payload. Response contains information about bridge.",
-              "schema": "api_empty_request.json"
+            "delete_config": {
+              "title": "Delete Config",
+              "description": "Deletes all configuration files from a client",
+              "access_level": [
+                "admin"
+              ],
+              "broadcast_allowed": false,
+              "access_type": "write",
+              "sender": [
+                "web_application"
+              ],
+              "uri": {
+                "value": "config/delete",
+                "var_name": "client_config_delete"
+              },
+              "request": {
+                "comment": "Client ID is only needed when sent to bridge to identify client to delete config from",
+                "schema": "api_client_delete_config.json"
+              },
+              "response": {
+                "comment": "Response acknowledging the successful deleting of the config",
+                "schema": "default_message.json"
+              }
             },
-            "response": {
-              "comment": "Response payload contains bool value for update_available and branch information (old and new, if not newest).",
-              "schema": "api_bridge_update_check_response.json"
+            "client_heartbeat": {
+              "title": "Client Heartbeat",
+              "description": "Heartbeat sent periodically by the client",
+              "access_level": [
+                "admin",
+                "mqtt"
+              ],
+              "broadcast_allowed": true,
+              "access_type": "write",
+              "sender": [
+                "client"
+              ],
+              "uri": {
+                "value": "heartbeat",
+                "var_name": "heartbeat"
+              },
+              "request": {
+                "comment": "Config received by the Client",
+                "schema": "bridge_heartbeat_request.json"
+              },
+              "response": {
+                "comment": "No response is expected",
+                "schema": null
+              }
+            },
+            "info_clients": {
+              "title": "Read Clients Info",
+              "description": "Reads information about the registered clients from the bridge",
+              "access_level": [
+                "admin",
+                "user",
+                "guest"
+              ],
+              "broadcast_allowed": true,
+              "access_type": "read",
+              "sender": [
+                "web_application"
+              ],
+              "uri": {
+                "value": "info/clients",
+                "var_name": "info_clients"
+              },
+              "request": {
+                "comment": "No request payload needed",
+                "schema": "api_empty_request.json"
+              },
+              "response": {
+                "comment": "Json containing information about all clients currently known to the bridge",
+                "schema": "api_get_all_clients_response.json"
+              }
+            },
+            "sync_client": {
+              "title": "Sync Client",
+              "description": "Syncs a client with the bridge",
+              "access_level": [
+                "admin",
+                "mqtt"
+              ],
+              "broadcast_allowed": true,
+              "access_type": "write",
+              "sender": [
+                "client"
+              ],
+              "uri": {
+                "value": "sync/client",
+                "var_name": "sync_client"
+              },
+              "request": {
+                "comment": "Sync information for the client",
+                "schema": "api_client_sync_request.json"
+              },
+              "response": {
+                "comment": "No response is expected",
+                "schema": null
+              }
+            },
+            "reboot_client": {
+              "title": "Reboot Client",
+              "description": "Reboots a client",
+              "access_level": [
+                "admin",
+                "user"
+              ],
+              "broadcast_allowed": false,
+              "access_type": "write",
+              "sender": [
+                "web_application"
+              ],
+              "uri": {
+                "value": "reboot/client",
+                "var_name": "reboot_connected_client"
+              },
+              "request": {
+                "comment": "Client ID is only needed when sent to bridge to identify client to reboot from",
+                "schema": "api_client_delete_config.json"
+              },
+              "response": {
+                "comment": "Response acknowledging the successful initialization of the reboot",
+                "schema": "default_message.json"
+              }
             }
-          },
-          "bridge_update_execute": {
-            "title": "Bridge update execute",
-            "description": "Execute update on bridge. No Response required, system reboots",
-            "access_level": [
-              "admin"
-            ],
-            "broadcast_allowed": true,
-            "access_type": "write",
-            "sender": [
-              "web_application"
-            ],
-            "uri": {
-              "value": "bridge/update/execute",
-              "var_name": "bridge_update_execute"
+          }
+        },
+        "publishers": {
+          "name": "Gadget Publishers",
+          "description": "Endpoints for the management of gadget publishers exposing gadgets on this system",
+          "endpoints": {
+            "info_gadget_publishers": {
+              "title": "Read Gadget Publisher Info",
+              "description": "Reads information about the active gadget publishers from the bridge",
+              "access_level": [
+                "admin",
+                "user"
+              ],
+              "broadcast_allowed": true,
+              "access_type": "read",
+              "sender": [
+                "web_application"
+              ],
+              "uri": {
+                "value": "info/gadget_publishers",
+                "var_name": "info_gadget_publishers"
+              },
+              "request": {
+                "comment": "No request payload needed",
+                "schema": "api_empty_request.json"
+              },
+              "response": {
+                "comment": "Json containing information about all gadget publishers currently running on the bridge",
+                "schema": "api_get_all_gadget_publishers.json"
+              }
+            }
+          }
+        },
+        "configs": {
+          "name": "Config Management",
+          "description": "Endpoints for accessing the integrated client config storage",
+          "endpoints": {
+            "config_storage_get_all": {
+              "title": "Retrieve all stored configs",
+              "description": "Retrieve all stored Configs, currently stored on the Bridge",
+              "access_level": [
+                "admin",
+                "user"
+              ],
+              "broadcast_allowed": false,
+              "access_type": "read",
+              "sender": [
+                "web_application"
+              ],
+              "uri": {
+                "value": "config/storage/get_all",
+                "var_name": "config_storage_get_all"
+              },
+              "request": {
+                "comment": "No data required for request",
+                "schema": "api_empty_request.json"
+              },
+              "response": {
+                "comment": "Response that contains the names and descriptions of all configs",
+                "schema": "api_config_get_all_response.json"
+              }
             },
-            "request": {
-              "comment": "Any payload.",
-              "schema": "api_empty_request.json"
+            "config_storage_get": {
+              "title": "Retrieve stored config",
+              "description": "Retrieve the requested config, from the Bridge",
+              "access_level": [
+                "admin",
+                "user"
+              ],
+              "broadcast_allowed": false,
+              "access_type": "read",
+              "sender": [
+                "web_application"
+              ],
+              "uri": {
+                "value": "config/storage/get",
+                "var_name": "config_storage_get"
+              },
+              "request": {
+                "comment": "Name of the config to be retrieved",
+                "schema": "api_config_delete_get.json"
+              },
+              "response": {
+                "comment": "Response that contains the requested config",
+                "schema": "api_config_get_response.json"
+              }
             },
-            "response": {
-              "comment": "Response acknowledging the successful update of the bridge.",
-              "schema": "default_message.json"
+            "config_storage_save": {
+              "title": "Save config",
+              "description": "Save a config, received via request, on the Bridge",
+              "access_level": [
+                "admin"
+              ],
+              "broadcast_allowed": false,
+              "access_type": "write",
+              "sender": [
+                "web_application"
+              ],
+              "uri": {
+                "value": "config/storage/save",
+                "var_name": "config_storage_save"
+              },
+              "request": {
+                "comment": "Config received by the Bridge",
+                "schema": "api_config_save.json"
+              },
+              "response": {
+                "comment": "Response acknowledging the successful saving of the config",
+                "schema": "default_message.json"
+              }
+            },
+            "config_storage_delete": {
+              "title": "Delete Config",
+              "description": "Deletes a config from the Bridge",
+              "access_level": [
+                "admin"
+              ],
+              "broadcast_allowed": false,
+              "access_type": "write",
+              "sender": [
+                "web_application"
+              ],
+              "uri": {
+                "value": "config/storage/delete",
+                "var_name": "config_storage_delete"
+              },
+              "request": {
+                "comment": "Name, of config to be deleted, received by the Bridge",
+                "schema": "api_config_delete_get.json"
+              },
+              "response": {
+                "comment": "Response acknowledging the successful deletion of the config",
+                "schema": "default_message.json"
+              }
             }
           }
         }
       },
-      "gadgets": {
-        "name": "Gadgets",
-        "description": "Endpoints for manipulation of gadgets running on the system",
-        "endpoints": {
-          "info_gadgets": {
-            "title": "Read Gadgets Info",
-            "description": "Reads information about the registered gadgets from the bridge",
-            "access_level": [
-              "admin",
-              "user",
-              "guest"
-            ],
-            "broadcast_allowed": true,
-            "access_type": "read",
-            "sender": [
-              "web_application"
-            ],
-            "uri": {
-              "value": "info/gadgets",
-              "var_name": "info_gadgets"
-            },
-            "request": {
-              "comment": "No request payload needed",
-              "schema": "api_empty_request.json"
-            },
-            "response": {
-              "comment": "Json containing information about all gadgets currently known to the bridge. The attributes of the individual gadgets differ between the gadget classes, see the gadget docs for detailed information.",
-              "schema": "api_get_all_gadgets_response.json"
-            }
+      "client": {
+        "write_system_config": {
+          "title": "Write System Config",
+          "description": "Write a system config to the client",
+          "broadcast_allowed": false,
+          "sender": [
+            "bridge"
+          ],
+          "uri": {
+            "value": "config/system/write",
+            "var_name": "client_system_config_write"
           },
-          "update_gadget": {
-            "title": "Update Gadget",
-            "description": "Updates the mutable characteristics of a gadget",
-            "access_level": [
-              "admin",
-              "user",
-              "mqtt"
-            ],
-            "broadcast_allowed": true,
-            "access_type": "write",
-            "sender": [
-              "client",
-              "web_application"
-            ],
-            "uri": {
-              "value": "update/gadget",
-              "var_name": "update_gadget"
-            },
-            "request": {
-              "comment": "Information to update the gadget with. The updatable attributes of the individual gadgets differ between the gadget classes, see the gadget docs for detailed information.",
-              "schema": "api_gadget_update.json"
-            },
-            "response": {
-              "comment": "No response is expected",
-              "schema": null
-            }
+          "request": {
+            "comment": "Config received by the Client",
+            "schema": "api_client_write_system_config.json"
+          },
+          "response": {
+            "comment": "Response acknowledging the successful writing of the Config",
+            "schema": "default_message.json"
           }
-        }
-      },
-      "clients": {
-        "name": "Clients",
-        "description": "Endpoints for the management of connected clients",
-        "endpoints": {
-          "write_config": {
-            "title": "Write Complete Config to Client",
-            "description": "Write a complete config to a client connected to the bridge",
-            "access_level": [
-              "admin"
-            ],
-            "broadcast_allowed": false,
-            "access_type": "write",
-            "sender": [
-              "web_application"
-            ],
-            "uri": {
-              "value": "config/write",
-              "var_name": "client_config_write"
-            },
-            "request": {
-              "comment": "Config to write to the client",
-              "schema": "api_client_write_config.json"
-            },
-            "response": {
-              "comment": "Response acknowledging the successful writing of the Config",
-              "schema": "default_message.json"
-            }
+        },
+        "write_event_config": {
+          "title": "Write Event Config",
+          "description": "Write an event config to the client",
+          "broadcast_allowed": false,
+          "sender": [
+            "bridge"
+          ],
+          "uri": {
+            "value": "config/event/write",
+            "var_name": "client_event_config_write"
           },
-          "delete_config": {
-            "title": "Delete Config",
-            "description": "Deletes all configuration files from a client",
-            "access_level": [
-              "admin"
-            ],
-            "broadcast_allowed": false,
-            "access_type": "write",
-            "sender": [
-              "web_application"
-            ],
-            "uri": {
-              "value": "config/delete",
-              "var_name": "client_config_delete"
-            },
-            "request": {
-              "comment": "Client ID is only needed when sent to bridge to identify client to delete config from",
-              "schema": "api_client_delete_config.json"
-            },
-            "response": {
-              "comment": "Response acknowledging the successful deleting of the config",
-              "schema": "default_message.json"
-            }
+          "request": {
+            "comment": "Config received by the Client",
+            "schema": "api_client_write_event_config.json"
           },
-          "client_heartbeat": {
-            "title": "Client Heartbeat",
-            "description": "Heartbeat sent periodically by the client",
-            "access_level": [
-              "admin",
-              "mqtt"
-            ],
-            "broadcast_allowed": true,
-            "access_type": "write",
-            "sender": [
-              "client"
-            ],
-            "uri": {
-              "value": "heartbeat",
-              "var_name": "heartbeat"
-            },
-            "request": {
-              "comment": "Config received by the Client",
-              "schema": "bridge_heartbeat_request.json"
-            },
-            "response": {
-              "comment": "No response is expected",
-              "schema": null
-            }
-          },
-          "info_clients": {
-            "title": "Read Clients Info",
-            "description": "Reads information about the registered clients from the bridge",
-            "access_level": [
-              "admin",
-              "user",
-              "guest"
-            ],
-            "broadcast_allowed": true,
-            "access_type": "read",
-            "sender": [
-              "web_application"
-            ],
-            "uri": {
-              "value": "info/clients",
-              "var_name": "info_clients"
-            },
-            "request": {
-              "comment": "No request payload needed",
-              "schema": "api_empty_request.json"
-            },
-            "response": {
-              "comment": "Json containing information about all clients currently known to the bridge",
-              "schema": "api_get_all_clients_response.json"
-            }
-          },
-          "sync_client": {
-            "title": "Sync Client",
-            "description": "Syncs a client with the bridge",
-            "access_level": [
-              "admin",
-              "mqtt"
-            ],
-            "broadcast_allowed": true,
-            "access_type": "write",
-            "sender": [
-              "client"
-            ],
-            "uri": {
-              "value": "sync/client",
-              "var_name": "sync_client"
-            },
-            "request": {
-              "comment": "Sync information for the client",
-              "schema": "api_client_sync_request.json"
-            },
-            "response": {
-              "comment": "No response is expected",
-              "schema": null
-            }
-          },
-          "reboot_client": {
-            "title": "Reboot Client",
-            "description": "Reboots a client",
-            "access_level": [
-              "admin",
-              "user"
-            ],
-            "broadcast_allowed": false,
-            "access_type": "write",
-            "sender": [
-              "web_application"
-            ],
-            "uri": {
-              "value": "reboot/client",
-              "var_name": "reboot_connected_client"
-            },
-            "request": {
-              "comment": "Client ID is only needed when sent to bridge to identify client to reboot from",
-              "schema": "api_client_delete_config.json"
-            },
-            "response": {
-              "comment": "Response acknowledging the successful initialization of the reboot",
-              "schema": "default_message.json"
-            }
+          "response": {
+            "comment": "Response acknowledging the successful writing of the Config",
+            "schema": "default_message.json"
           }
-        }
-      },
-      "publishers": {
-        "name": "Gadget Publishers",
-        "description": "Endpoints for the management of gadget publishers exposing gadgets on this system",
-        "endpoints": {
-          "info_gadget_publishers": {
-            "title": "Read Gadget Publisher Info",
-            "description": "Reads information about the active gadget publishers from the bridge",
-            "access_level": [
-              "admin",
-              "user"
-            ],
-            "broadcast_allowed": true,
-            "access_type": "read",
-            "sender": [
-              "web_application"
-            ],
-            "uri": {
-              "value": "info/gadget_publishers",
-              "var_name": "info_gadget_publishers"
-            },
-            "request": {
-              "comment": "No request payload needed",
-              "schema": "api_empty_request.json"
-            },
-            "response": {
-              "comment": "Json containing information about all gadget publishers currently running on the bridge",
-              "schema": "api_get_all_gadget_publishers.json"
-            }
+        },
+        "write_gadget_config": {
+          "title": "Write Gadget Config",
+          "description": "Write a gadget config to the client",
+          "broadcast_allowed": false,
+          "sender": [
+            "bridge"
+          ],
+          "uri": {
+            "value": "config/gadget/write",
+            "var_name": "client_gadget_config_write"
+          },
+          "request": {
+            "comment": "Config received by the Client",
+            "schema": "api_client_write_gadget_config.json"
+          },
+          "response": {
+            "comment": "Response acknowledging the successful writing of the Config",
+            "schema": "default_message.json"
           }
-        }
-      },
-      "configs": {
-        "name": "Config Management",
-        "description": "Endpoints for accessing the integrated client config storage",
-        "endpoints": {
-          "config_storage_get_all": {
-            "title": "Retrieve all stored configs",
-            "description": "Retrieve all stored Configs, currently stored on the Bridge",
-            "access_level": [
-              "admin",
-              "user"
-            ],
-            "broadcast_allowed": false,
-            "access_type": "read",
-            "sender": [
-              "web_application"
-            ],
-            "uri": {
-              "value": "config/storage/get_all",
-              "var_name": "config_storage_get_all"
-            },
-            "request": {
-              "comment": "No data required for request",
-              "schema": "api_empty_request.json"
-            },
-            "response": {
-              "comment": "Response that contains the names and descriptions of all configs",
-              "schema": "api_config_get_all_response.json"
-            }
+        },
+        "delete_config": {
+          "title": "Delete Config",
+          "description": "Deletes all configuration files from a client",
+          "broadcast_allowed": false,
+          "sender": [
+            "web_application"
+          ],
+          "uri": {
+            "value": "config/delete",
+            "var_name": "client_config_delete"
           },
-          "config_storage_get": {
-            "title": "Retrieve stored config",
-            "description": "Retrieve the requested config, from the Bridge",
-            "access_level": [
-              "admin",
-              "user"
-            ],
-            "broadcast_allowed": false,
-            "access_type": "read",
-            "sender": [
-              "web_application"
-            ],
-            "uri": {
-              "value": "config/storage/get",
-              "var_name": "config_storage_get"
-            },
-            "request": {
-              "comment": "Name of the config to be retrieved",
-              "schema": "api_config_delete_get.json"
-            },
-            "response": {
-              "comment": "Response that contains the requested config",
-              "schema": "api_config_get_response.json"
-            }
+          "request": {
+            "comment": "Client ID is only needed when sent to bridge to identify client to delete config from",
+            "schema": "api_client_delete_config.json"
           },
-          "config_storage_save": {
-            "title": "Save config",
-            "description": "Save a config, received via request, on the Bridge",
-            "access_level": [
-              "admin"
-            ],
-            "broadcast_allowed": false,
-            "access_type": "write",
-            "sender": [
-              "web_application"
-            ],
-            "uri": {
-              "value": "config/storage/save",
-              "var_name": "config_storage_save"
-            },
-            "request": {
-              "comment": "Config received by the Bridge",
-              "schema": "api_config_save.json"
-            },
-            "response": {
-              "comment": "Response acknowledging the successful saving of the config",
-              "schema": "default_message.json"
-            }
-          },
-          "config_storage_delete": {
-            "title": "Delete Config",
-            "description": "Deletes a config from the Bridge",
-            "access_level": [
-              "admin"
-            ],
-            "broadcast_allowed": false,
-            "access_type": "write",
-            "sender": [
-              "web_application"
-            ],
-            "uri": {
-              "value": "config/storage/delete",
-              "var_name": "config_storage_delete"
-            },
-            "request": {
-              "comment": "Name, of config to be deleted, received by the Bridge",
-              "schema": "api_config_delete_get.json"
-            },
-            "response": {
-              "comment": "Response acknowledging the successful deletion of the config",
-              "schema": "default_message.json"
-            }
+          "response": {
+            "comment": "Response acknowledging the successful deleting of the config",
+            "schema": "default_message.json"
           }
-        }
-      }
-    },
-    "client": {
-      "write_system_config": {
-        "title": "Write System Config",
-        "description": "Write a system config to the client",
-        "broadcast_allowed": false,
-        "sender": [
-          "bridge"
-        ],
-        "uri": {
-          "value": "config/system/write",
-          "var_name": "client_system_config_write"
         },
-        "request": {
-          "comment": "Config received by the Client",
-          "schema": "api_client_write_system_config.json"
+        "update_gadget": {
+          "title": "Update Gadget",
+          "description": "Updates the mutable characteristics of a gadget",
+          "broadcast_allowed": true,
+          "sender": [
+            "client",
+            "web_application"
+          ],
+          "uri": {
+            "value": "update/gadget",
+            "var_name": "client_update_gadget"
+          },
+          "request": {
+            "comment": "Information to update the gadget with",
+            "schema": "api_gadget_update.json"
+          },
+          "response": {
+            "comment": "No response is expected",
+            "schema": null
+          }
         },
-        "response": {
-          "comment": "Response acknowledging the successful writing of the Config",
-          "schema": "default_message.json"
-        }
-      },
-      "write_event_config": {
-        "title": "Write Event Config",
-        "description": "Write an event config to the client",
-        "broadcast_allowed": false,
-        "sender": [
-          "bridge"
-        ],
-        "uri": {
-          "value": "config/event/write",
-          "var_name": "client_event_config_write"
+        "reboot_client": {
+          "title": "Reboot Client",
+          "description": "Reboots a client",
+          "broadcast_allowed": false,
+          "sender": [
+            "bridge",
+            "web_application"
+          ],
+          "uri": {
+            "value": "reboot/client",
+            "var_name": "client_reboot"
+          },
+          "request": {
+            "comment": "Client ID is only needed when sent to bridge to identify client to reboot from",
+            "schema": "api_client_delete_config.json"
+          },
+          "response": {
+            "comment": "Response acknowledging the successful initialization of the reboot",
+            "schema": "default_message.json"
+          }
         },
-        "request": {
-          "comment": "Config received by the Client",
-          "schema": "api_client_write_event_config.json"
+        "sync_request": {
+          "title": "Client Sync Request",
+          "description": "Asks a client for sync information",
+          "broadcast_allowed": true,
+          "sender": [
+            "bridge"
+          ],
+          "uri": {
+            "value": "sync",
+            "var_name": "sync_request"
+          },
+          "request": {
+            "comment": "No request payload needed",
+            "schema": "api_empty_request.json"
+          },
+          "response": {
+            "comment": "No response is expected, the client sends a separate sync broadcast afterwards",
+            "schema": null
+          }
         },
-        "response": {
-          "comment": "Response acknowledging the successful writing of the Config",
-          "schema": "default_message.json"
-        }
-      },
-      "write_gadget_config": {
-        "title": "Write Gadget Config",
-        "description": "Write a gadget config to the client",
-        "broadcast_allowed": false,
-        "sender": [
-          "bridge"
-        ],
-        "uri": {
-          "value": "config/gadget/write",
-          "var_name": "client_gadget_config_write"
+        "sync_event": {
+          "title": "Sync Event",
+          "description": "Syncs an event received by the bridge with other clients",
+          "broadcast_allowed": true,
+          "sender": [
+            "bridge"
+          ],
+          "uri": {
+            "value": "sync/event",
+            "var_name": "client_sync_event"
+          },
+          "request": {
+            "comment": "Event information for the Bridge",
+            "schema": "api_event_sync_request.json"
+          },
+          "response": {
+            "comment": "No response is expected",
+            "schema": null
+          }
         },
-        "request": {
-          "comment": "Config received by the Client",
-          "schema": "api_client_write_gadget_config.json"
-        },
-        "response": {
-          "comment": "Response acknowledging the successful writing of the Config",
-          "schema": "default_message.json"
-        }
-      },
-      "delete_config": {
-        "title": "Delete Config",
-        "description": "Deletes all configuration files from a client",
-        "broadcast_allowed": false,
-        "sender": [
-          "web_application"
-        ],
-        "uri": {
-          "value": "config/delete",
-          "var_name": "client_config_delete"
-        },
-        "request": {
-          "comment": "Client ID is only needed when sent to bridge to identify client to delete config from",
-          "schema": "api_client_delete_config.json"
-        },
-        "response": {
-          "comment": "Response acknowledging the successful deleting of the config",
-          "schema": "default_message.json"
-        }
-      },
-      "update_gadget": {
-        "title": "Update Gadget",
-        "description": "Updates the mutable characteristics of a gadget",
-        "broadcast_allowed": true,
-        "sender": [
-          "client",
-          "web_application"
-        ],
-        "uri": {
-          "value": "update/gadget",
-          "var_name": "client_update_gadget"
-        },
-        "request": {
-          "comment": "Information to update the gadget with",
-          "schema": "api_gadget_update.json"
-        },
-        "response": {
-          "comment": "No response is expected",
-          "schema": null
-        }
-      },
-      "reboot_client": {
-        "title": "Reboot Client",
-        "description": "Reboots a client",
-        "broadcast_allowed": false,
-        "sender": [
-          "bridge",
-          "web_application"
-        ],
-        "uri": {
-          "value": "reboot/client",
-          "var_name": "client_reboot"
-        },
-        "request": {
-          "comment": "Client ID is only needed when sent to bridge to identify client to reboot from",
-          "schema": "api_client_delete_config.json"
-        },
-        "response": {
-          "comment": "Response acknowledging the successful initialization of the reboot",
-          "schema": "default_message.json"
-        }
-      },
-      "sync_request": {
-        "title": "Client Sync Request",
-        "description": "Asks a client for sync information",
-        "broadcast_allowed": true,
-        "sender": [
-          "bridge"
-        ],
-        "uri": {
-          "value": "sync",
-          "var_name": "sync_request"
-        },
-        "request": {
-          "comment": "No request payload needed",
-          "schema": "api_empty_request.json"
-        },
-        "response": {
-          "comment": "No response is expected, the client sends a separate sync broadcast afterwards",
-          "schema": null
-        }
-      },
-      "sync_event": {
-        "title": "Sync Event",
-        "description": "Syncs an event received by the bridge with other clients",
-        "broadcast_allowed": true,
-        "sender": [
-          "bridge"
-        ],
-        "uri": {
-          "value": "sync/event",
-          "var_name": "client_sync_event"
-        },
-        "request": {
-          "comment": "Event information for the Bridge",
-          "schema": "api_event_sync_request.json"
-        },
-        "response": {
-          "comment": "No response is expected",
-          "schema": null
-        }
-      },
-      "test_echo": {
-        "title": "Test Echo",
-        "description": "Test endpoint. Responds with the same payload as the request",
-        "broadcast_allowed": true,
-        "sender": [],
-        "uri": {
-          "value": "echo",
-          "var_name": "test_echo"
-        },
-        "request": {
-          "comment": "Any payload. Response will mirror the payload sent.",
-          "schema": "api_empty_request.json"
-        },
-        "response": {
-          "comment": "Response payload will be the same as the sent one",
-          "schema": null
+        "test_echo": {
+          "title": "Test Echo",
+          "description": "Test endpoint. Responds with the same payload as the request",
+          "broadcast_allowed": true,
+          "sender": [],
+          "uri": {
+            "value": "echo",
+            "var_name": "test_echo"
+          },
+          "request": {
+            "comment": "Any payload. Response will mirror the payload sent.",
+            "schema": "api_empty_request.json"
+          },
+          "response": {
+            "comment": "Response payload will be the same as the sent one",
+            "schema": null
+          }
         }
       }
     }
   },
-  "access_level": {
-    "admin": {
-      "description": "GIGA CHAD DESTROYER OF SLEEP",
-      "name": "Admin",
-      "id": 7,
-      "var_name": "admin"
-    },
-    "mqtt": {
-      "description": "MQTT access level",
-      "name": "MQTT",
-      "id": 6,
-      "var_name": "mqtt"
-    },
-    "user": {
-      "description": "Regular user access level",
-      "name": "User",
-      "id": 5,
-      "var_name": "user"
-    },
-    "guest": {
-      "description": "Guest access level, aka. not real friends",
-      "name": "Guest",
-      "id": 4,
-      "var_name": "guest"
+  "access_levels": {
+    "title": "API Access Levels",
+    "description": "Documentation for all API Access levels",
+    "items": {
+      "admin": {
+        "description": "GIGA CHAD DESTROYER OF SLEEP",
+        "name": "Admin",
+        "id": 7,
+        "var_name": "admin"
+      },
+      "mqtt": {
+        "description": "MQTT access level",
+        "name": "MQTT",
+        "id": 6,
+        "var_name": "mqtt"
+      },
+      "user": {
+        "description": "Regular user access level",
+        "name": "User",
+        "id": 5,
+        "var_name": "user"
+      },
+      "guest": {
+        "description": "Guest access level, aka. not real friends",
+        "name": "Guest",
+        "id": 4,
+        "var_name": "guest"
+      }
     }
   }
 }

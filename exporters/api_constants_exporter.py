@@ -70,7 +70,7 @@ class ApiConstantsExporter(ConstantsExporter):
         lines.append(f"    \"\"\"Container for all API access levels\"\"\"")
         lines.append("")
 
-        access_level_data = self._definitions["access_level"]
+        access_level_data = self._definitions["access_levels"]["items"]
         for mapping, data in access_level_data.items():
             lines.append(f"    {data['var_name']} = {data['id']}  # {data['name']}")
 
@@ -81,7 +81,7 @@ class ApiConstantsExporter(ConstantsExporter):
         lines.append(f"    \"\"\"Container for all API endpoint types\"\"\"")
         lines.append("")
 
-        for index, (endpoint_id, data) in enumerate(self._definitions["mappings"]["bridge"].items()):
+        for index, (endpoint_id, data) in enumerate(self._definitions["endpoints"]["items"]["bridge"].items()):
             lines.append(f"    {endpoint_id.capitalize()} = {index}  # {data['name']}")
 
         lines.append("")
@@ -91,14 +91,14 @@ class ApiConstantsExporter(ConstantsExporter):
         lines.append(f"    \"\"\"Container for all API URIs\"\"\"")
         lines.append("")
         lines.append("    # URIs exposed by the bridge")
-        for category, definitions in self._definitions["mappings"]["bridge"].items():
+        for category, definitions in self._definitions["endpoints"]["items"]["bridge"].items():
             cat_value = category.capitalize()
             for _, data in definitions["endpoints"].items():
                 lines += self._export_definition(data, access_level_data, True, False, cat_value)
 
         lines.append("")
         lines.append("    # URIs exposed by the client")
-        for _, data in self._definitions["mappings"]["client"].items():
+        for _, data in self._definitions["endpoints"]["items"]["client"].items():
             if "bridge" in data["sender"]:
                 lines += self._export_definition(data, access_level_data, False, True, None)
 
@@ -109,12 +109,12 @@ class ApiConstantsExporter(ConstantsExporter):
 
         # Filter data to only export api constants relevant to the client
         filtered_data = []
-        for category, cat_data in self._definitions["mappings"]["bridge"].items():
+        for category, cat_data in self._definitions["endpoints"]["items"]["bridge"].items():
             for key, data in cat_data["endpoints"].items():
                 if "client" in data["sender"]:
                     data["receiver"] = "bridge"
                     filtered_data.append(data)
-        for key, data in self._definitions["mappings"]["client"].items():
+        for key, data in self._definitions["endpoints"]["items"]["client"].items():
             data["receiver"] = "client"
             filtered_data.append(data)
 
@@ -158,7 +158,7 @@ class ApiConstantsExporter(ConstantsExporter):
 
         # Filter data to only export api constants relevant to the web interface
         filtered_data = []
-        for category, cat_data in self._definitions["mappings"]["bridge"].items():
+        for category, cat_data in self._definitions["endpoints"]["items"]["bridge"].items():
             for key, data in cat_data["endpoints"].items():
                 if "web_application" in data["sender"]:
                     data["receiver"] = "bridge"
@@ -200,7 +200,7 @@ class ApiConstantsExporter(ConstantsExporter):
     def export_swift(self, out_file: str):
         # Filter data to only export api constants relevant to the web interface
         filtered_data = []
-        for category, cat_data in self._definitions["mappings"]["bridge"].items():
+        for category, cat_data in self._definitions["endpoints"]["items"]["bridge"].items():
             for key, data in cat_data["endpoints"].items():
                 if "web_application" in data["sender"]:
                     data["receiver"] = "bridge"

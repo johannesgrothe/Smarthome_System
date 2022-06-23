@@ -6,9 +6,15 @@ from exporters.gadget_doc_exporter import GadgetDocExporter
 from exporters.script_params import *
 from exporters.temp_dir_manager import TempDirManager
 from exporters.api_constants_exporter import ApiConstantsExporter
-from exporters.api_doc_exporter import ApiDocExporter
 from exporters.gadget_constants_exporter import GadgetConstantsExporter
+from system.exporters.def_filenames import *
 from system.exporters.gadget_api_doc_exporter import GadgetApiDocExporter
+from system.exporters.wiki_export_gadget_classes import WikiExporterGadgetClasses
+from system.exporters.wiki_export_gadgets_local import WikiExporterGadgetsLocal
+from system.exporters.wiki_export_gadgets_remote import WikiExporterGadgetsRemote
+from system.exporters.wiki_exporter_api_access_levels import WikiExporterApiAccessLevels
+from system.exporters.wiki_exporter_api_endpoints_bridge import WikiExporterApiEndpointsBridge
+from system.exporters.wiki_exporter_api_endpoints_client import WikiExporterApiEndpointsClient
 
 
 def export_api_constants():
@@ -19,9 +25,14 @@ def export_api_constants():
     exporter.export_swift(f"{PATH_FILE_API_CONSTANTS}.swift")
 
 
-def export_api_docs():
-    exporter = ApiDocExporter(PATH_API_SPECS, PATH_JSON_SCHEMAS)
-    exporter.export_docs(os.path.join(PATH_TEMP_DIR, NAME_FILE_API_DOCS))
+def export_wiki():
+    WikiExporterApiAccessLevels().export(os.path.join(PATH_TEMP_DIR, FILE_API_ACCESS_LEVELS))
+    WikiExporterApiEndpointsBridge().export(os.path.join(PATH_TEMP_DIR, FILE_API_BRIDGE))
+    WikiExporterApiEndpointsClient().export(os.path.join(PATH_TEMP_DIR, FILE_API_CLIENT))
+
+    WikiExporterGadgetClasses().export(os.path.join(PATH_TEMP_DIR, FILE_GADGET_CLASSES))
+    WikiExporterGadgetsLocal().export(os.path.join(PATH_TEMP_DIR, FILE_GADGETS_BRIDGE))
+    WikiExporterGadgetsRemote().export(os.path.join(PATH_TEMP_DIR, FILE_GADGETS_CLIENT))
 
 
 def export_gadget_constants():
@@ -29,14 +40,6 @@ def export_gadget_constants():
     exporter.export_python(f"{PATH_FILE_GADGET_CONSTANTS}.py")
     exporter.export_cpp(f"{PATH_FILE_GADGET_CONSTANTS}.h")
     exporter.export_js(f"{PATH_FILE_GADGET_CONSTANTS}.js")
-
-
-def export_gadget_docs():
-    exporter = GadgetDocExporter(PATH_GADGET_SPECS)
-    exporter.export_docs(os.path.join(PATH_TEMP_DIR, NAME_FILE_GADGET_DOCS))
-
-    exporter = GadgetApiDocExporter(PATH_GADGET_SPECS, PATH_JSON_SCHEMAS)
-    exporter.export_docs(os.path.join(PATH_TEMP_DIR, NAME_FILE_GADGET_CLASS_DOCS))
 
 
 def parse_args() -> argparse.Namespace:
@@ -59,8 +62,7 @@ def main():
         TempDirManager(PATH_TEMP_DIR).assert_temp()
         if args.clean_temp:
             TempDirManager(PATH_TEMP_DIR).clean_temp()
-        export_api_docs()
-        export_gadget_docs()
+        export_wiki()
 
     if args.export_constants:
         export_api_constants()

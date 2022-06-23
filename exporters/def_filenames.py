@@ -1,0 +1,6 @@
+FILE_API_ACCESS_LEVELS = "api_access_levels.md"
+FILE_API_BRIDGE = "api_endpoints_bridge.md"
+FILE_API_CLIENT = "api_endpoints_client.md"
+FILE_GADGET_CLASSES = "gadget_classes.md"
+FILE_GADGETS_BRIDGE = "gadgets_local.md"
+FILE_GADGETS_CLIENT = "gadgets_remote.md"

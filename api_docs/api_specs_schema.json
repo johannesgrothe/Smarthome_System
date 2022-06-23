@@ -95,169 +95,196 @@
   },
   "type": "object",
   "required": [
-    "title",
-    "description",
     "version",
-    "mappings",
-    "access_level"
+    "endpoints",
+    "access_levels"
   ],
   "properties": {
-    "title": {
-      "type": "string",
-      "minLength": 10
-    },
-    "description": {
-      "type": "string",
-      "minLength": 10
-    },
     "version": {
       "type": "string",
       "pattern": "^[0-9]+.[0-9]+.[0-9]+$"
     },
-    "mappings": {
+    "endpoints": {
       "type": "object",
       "required": [
-        "bridge",
-        "client"
+        "title",
+        "description",
+        "items"
       ],
-      "additionalProperties": false,
       "properties": {
-        "bridge": {
-          "type": "object",
-          "additionalProperties": {
-            "type": "object",
-            "properties": {
-              "name": {
-                "type": "string",
-                "minLength": 5
-              },
-              "description": {
-                "type": "string",
-                "minLength": 10
-              },
-              "endpoints": {
-                "type": "object",
-                "additionalProperties": {
-                  "type": "object",
-                  "required": [
-                    "title",
-                    "description",
-                    "access_level",
-                    "broadcast_allowed",
-                    "sender",
-                    "access_type",
-                    "uri",
-                    "request",
-                    "response"
-                  ],
-                  "properties": {
-                    "title": {
-                      "$ref": "#/definitions/req_title"
-                    },
-                    "description": {
-                      "$ref": "#/definitions/req_title"
-                    },
-                    "access_level": {
-                      "type": "array",
-                      "items": {
-                        "type": "string"
-                      }
-                    },
-                    "sender": {
-                      "$ref": "#/definitions/req_sender"
-                    },
-                    "broadcast_allowed": {
-                      "$ref": "#/definitions/req_broadcast_allowed"
-                    },
-                    "access_type": {
-                      "$ref": "#/definitions/req_access_type"
-                    },
-                    "uri": {
-                      "$ref": "#/definitions/req_uri"
-                    },
-                    "request": {
-                      "$ref": "#/definitions/req_request"
-                    },
-                    "response": {
-                      "$ref": "#/definitions/req_response"
-                    }
-                  },
-                  "additionalProperties": false
-                }
-              }
-            },
-            "additionalProperties": false
-          }
+        "title": {
+          "type": "string",
+          "minLength": 10
         },
-        "client": {
+        "description": {
+          "type": "string",
+          "minLength": 10
+        },
+        "items": {
           "type": "object",
-          "additionalProperties": {
-            "type": "object",
-            "required": [
-              "title",
-              "description",
-              "broadcast_allowed",
-              "sender",
-              "uri",
-              "request",
-              "response"
-            ],
-            "properties": {
-              "title": {
-                "$ref": "#/definitions/req_title"
-              },
-              "description": {
-                "$ref": "#/definitions/req_title"
-              },
-              "sender": {
-                "$ref": "#/definitions/req_sender"
-              },
-              "broadcast_allowed": {
-                "$ref": "#/definitions/req_broadcast_allowed"
-              },
-              "uri": {
-                "$ref": "#/definitions/req_uri"
-              },
-              "request": {
-                "$ref": "#/definitions/req_request"
-              },
-              "response": {
-                "$ref": "#/definitions/req_response"
+          "required": [
+            "bridge",
+            "client"
+          ],
+          "additionalProperties": false,
+          "properties": {
+            "bridge": {
+              "type": "object",
+              "additionalProperties": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "minLength": 5
+                  },
+                  "description": {
+                    "type": "string",
+                    "minLength": 10
+                  },
+                  "endpoints": {
+                    "type": "object",
+                    "additionalProperties": {
+                      "type": "object",
+                      "required": [
+                        "title",
+                        "description",
+                        "access_level",
+                        "broadcast_allowed",
+                        "sender",
+                        "access_type",
+                        "uri",
+                        "request",
+                        "response"
+                      ],
+                      "properties": {
+                        "title": {
+                          "$ref": "#/definitions/req_title"
+                        },
+                        "description": {
+                          "$ref": "#/definitions/req_title"
+                        },
+                        "access_level": {
+                          "type": "array",
+                          "items": {
+                            "type": "string"
+                          }
+                        },
+                        "sender": {
+                          "$ref": "#/definitions/req_sender"
+                        },
+                        "broadcast_allowed": {
+                          "$ref": "#/definitions/req_broadcast_allowed"
+                        },
+                        "access_type": {
+                          "$ref": "#/definitions/req_access_type"
+                        },
+                        "uri": {
+                          "$ref": "#/definitions/req_uri"
+                        },
+                        "request": {
+                          "$ref": "#/definitions/req_request"
+                        },
+                        "response": {
+                          "$ref": "#/definitions/req_response"
+                        }
+                      },
+                      "additionalProperties": false
+                    }
+                  }
+                },
+                "additionalProperties": false
               }
             },
-            "additionalProperties": false
+            "client": {
+              "type": "object",
+              "additionalProperties": {
+                "type": "object",
+                "required": [
+                  "title",
+                  "description",
+                  "broadcast_allowed",
+                  "sender",
+                  "uri",
+                  "request",
+                  "response"
+                ],
+                "properties": {
+                  "title": {
+                    "$ref": "#/definitions/req_title"
+                  },
+                  "description": {
+                    "$ref": "#/definitions/req_title"
+                  },
+                  "sender": {
+                    "$ref": "#/definitions/req_sender"
+                  },
+                  "broadcast_allowed": {
+                    "$ref": "#/definitions/req_broadcast_allowed"
+                  },
+                  "uri": {
+                    "$ref": "#/definitions/req_uri"
+                  },
+                  "request": {
+                    "$ref": "#/definitions/req_request"
+                  },
+                  "response": {
+                    "$ref": "#/definitions/req_response"
+                  }
+                },
+                "additionalProperties": false
+              }
+            }
           }
         }
       }
     },
-    "access_level": {
+    "access_levels": {
       "type": "object",
-      "additionalProperties": {
-        "type": "object",
-        "required": [
-          "description",
-          "name",
-          "id",
-          "var_name"
-        ],
-        "additionalProperties": false,
-        "properties": {
-          "description": {
-            "type": "string",
-            "minLength": 15
-          },
-          "name": {
-            "type": "string",
-            "minLength": 1
-          },
-          "id": {
-            "type": "integer",
-            "minimum": 0
-          },
-          "var_name": {
-            "type": "string",
-            "minLength": 3,
-            "pattern": "^[a-z_]+$"
+      "required": [
+        "title",
+        "description",
+        "items"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "title": {
+          "type": "string",
+          "minLength": 10
+        },
+        "description": {
+          "type": "string",
+          "minLength": 10
+        },
+        "items": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "object",
+            "required": [
+              "description",
+              "name",
+              "id",
+              "var_name"
+            ],
+            "additionalProperties": false,
+            "properties": {
+              "description": {
+                "type": "string",
+                "minLength": 15
+              },
+              "name": {
+                "type": "string",
+                "minLength": 1
+              },
+              "id": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "var_name": {
+                "type": "string",
+                "minLength": 3,
+                "pattern": "^[a-z_]+$"
+              }
+            }
           }
         }
       }
