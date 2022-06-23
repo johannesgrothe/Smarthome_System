@@ -7,7 +7,7 @@ class WikiExporterApiAccessLevels(WikiExporter):
         file = MarkdownFile()
         file.add(MarkdownHeader(self._api_access_level_def["title"], 1))
         file.add(MarkdownText(self._api_access_level_def["description"]))
-        file.add(MarkdownText("Latest Api Version: " + self._api_version))
+        file.add(MarkdownText("Latest Api Version: " + str(self._api_version)))
 
         for _, data in self._api_access_level_def["items"].items():
             file.add(MarkdownHeader(data["name"], 2))

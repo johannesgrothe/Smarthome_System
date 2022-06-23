@@ -2,13 +2,13 @@ import argparse
 import logging
 import sys
 
-from exporters.gadget_doc_exporter import GadgetDocExporter
-from exporters.script_params import *
-from exporters.temp_dir_manager import TempDirManager
-from exporters.api_constants_exporter import ApiConstantsExporter
-from exporters.gadget_constants_exporter import GadgetConstantsExporter
+from system.utils.temp_dir_manager import TempDirManager
+from system.exporters.constants_exporter_api_cpp import ConstantExporterApiCpp
+from system.exporters.constants_exporter_api_js import ConstantExporterApiJavaScript
+from system.exporters.constants_exporter_api_python import ConstantExporterApiPython
+from system.exporters.constants_exporter_api_swift import ConstantExporterApiSwift
 from system.exporters.def_filenames import *
-from system.exporters.gadget_api_doc_exporter import GadgetApiDocExporter
+from system.exporters.def_params import PATH_TEMP_DIR
 from system.exporters.wiki_export_gadget_classes import WikiExporterGadgetClasses
 from system.exporters.wiki_export_gadgets_local import WikiExporterGadgetsLocal
 from system.exporters.wiki_export_gadgets_remote import WikiExporterGadgetsRemote
@@ -17,12 +17,19 @@ from system.exporters.wiki_exporter_api_endpoints_bridge import WikiExporterApiE
 from system.exporters.wiki_exporter_api_endpoints_client import WikiExporterApiEndpointsClient
 
 
-def export_api_constants():
-    exporter = ApiConstantsExporter(PATH_API_SPECS)
-    exporter.export_python(f"{PATH_FILE_API_CONSTANTS}.py")
-    exporter.export_cpp(f"{PATH_FILE_API_CONSTANTS}.h")
-    exporter.export_js(f"{PATH_FILE_API_CONSTANTS}.js")
-    exporter.export_swift(f"{PATH_FILE_API_CONSTANTS}.swift")
+# def export_api_constants():
+#     exporter = ApiConstantsExporter(PATH_API_SPECS)
+#     exporter.export_python(FILE_API_CONSTANTS_PY)
+#     exporter.export_cpp(FILE_API_CONSTANTS_CPP)
+#     exporter.export_js(FILE_API_CONSTANTS_JS)
+#     exporter.export_swift(FILE_API_CONSTANTS_SWIFT)
+
+
+def export_constants():
+    ConstantExporterApiPython().export(FILE_API_CONSTANTS_PY)
+    ConstantExporterApiJavaScript().export(FILE_API_CONSTANTS_JS)
+    ConstantExporterApiCpp().export(FILE_API_CONSTANTS_CPP)
+    ConstantExporterApiSwift().export(FILE_API_CONSTANTS_SWIFT)
 
 
 def export_wiki():
@@ -35,11 +42,11 @@ def export_wiki():
     WikiExporterGadgetsRemote().export(os.path.join(PATH_TEMP_DIR, FILE_GADGETS_CLIENT))
 
 
-def export_gadget_constants():
-    exporter = GadgetConstantsExporter(PATH_GADGET_SPECS)
-    exporter.export_python(f"{PATH_FILE_GADGET_CONSTANTS}.py")
-    exporter.export_cpp(f"{PATH_FILE_GADGET_CONSTANTS}.h")
-    exporter.export_js(f"{PATH_FILE_GADGET_CONSTANTS}.js")
+# def export_gadget_constants():
+#     exporter = GadgetConstantsExporter(PATH_GADGET_SPECS)
+#     exporter.export_python(f"{PATH_FILE_GADGET_CONSTANTS}.py")
+#     exporter.export_cpp(f"{PATH_FILE_GADGET_CONSTANTS}.h")
+#     exporter.export_js(f"{PATH_FILE_GADGET_CONSTANTS}.js")
 
 
 def parse_args() -> argparse.Namespace:
@@ -65,8 +72,7 @@ def main():
         export_wiki()
 
     if args.export_constants:
-        export_api_constants()
-        export_gadget_constants()
+        export_constants()
 
 
 if __name__ == "__main__":

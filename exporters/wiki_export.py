@@ -1,8 +1,5 @@
-import logging
-import os
-
-from system.exporters.definitions_loader import DefinitionsLoader
-from system.exporters.script_params import GITHUB_BASE_FILE_URI, PATH_FILE_API_CONSTANTS
+from system.exporters.def_params import GITHUB_BASE_FILE_URI
+from system.exporters.exporter import Exporter
 from system.utils.json_schema_formatter import JsonSchemaFormatter
 from system.utils.markdown_file import *
 
@@ -11,36 +8,8 @@ from system.utils.schema_loader import SchemaLoader
 
 _schema_link_base_path = "https://github.com/johannesgrothe/Smarthome_System/blob/master/json_schemas/"
 
-_api_specs_file = os.path.join("api_docs", "api_specs.json")
-_gadget_specs_file = os.path.join("gadget_docs", "gadget_specs.json")
-_schema_folder = "json_schemas"
 
-
-class WikiExporter:
-    _gadget_class_def: dict
-    _gadgets_local: dict
-    _gadgets_remote: dict
-
-    _api_access_level_def: dict
-    _api_endpoint_def: dict
-    _api_version: str
-    _schema_data: dict
-
-    def __init__(self):
-        super().__init__()
-        self._logger = logging.getLogger(self.__class__.__name__)
-
-        gadget_def = DefinitionsLoader(_gadget_specs_file).get_definitions()
-        self._gadget_class_def = gadget_def["gadget_classes"]
-        self._gadgets_local = gadget_def["gadget_definitions"]["bridge_gadgets"]
-        self._gadgets_remote = gadget_def["gadget_definitions"]["client_gadgets"]
-
-        api_def = DefinitionsLoader(_api_specs_file).get_definitions()
-        self._api_endpoint_def = api_def["endpoints"]
-        self._api_access_level_def = api_def["access_levels"]
-        self._api_version = api_def["version"]
-
-        self._schema_data = SchemaLoader(_schema_folder).load_schemas()
+class WikiExporter(Exporter, ABC):
 
     @staticmethod
     def _add_exported_libraries(base_filename: str, file: MarkdownFile):
@@ -80,10 +49,6 @@ class WikiExporter:
             "web_application": "Web Application"
         }
         return switcher.get(sender)
-
-    @abstractmethod
-    def export(self, filename: str):
-        pass
 
 
 class WikiExporterApiEndpoints(WikiExporter, ABC):
