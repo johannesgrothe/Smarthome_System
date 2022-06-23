@@ -3,9 +3,6 @@ from system.exporters.exporter import Exporter
 from system.utils.json_schema_formatter import JsonSchemaFormatter
 from system.utils.markdown_file import *
 
-# Base path for the links to the actual json schema files
-from system.utils.schema_loader import SchemaLoader
-
 _schema_link_base_path = "https://github.com/johannesgrothe/Smarthome_System/blob/master/json_schemas/"
 
 

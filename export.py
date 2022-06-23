@@ -2,7 +2,10 @@ import argparse
 import logging
 import sys
 
+from system.exporters.constants_exporter_gadgets_cpp import ConstantExporterGadgetsCpp
+from system.exporters.constants_exporter_gadgets_js import ConstantExporterGadgetsJavaScript
 from system.exporters.constants_exporter_gadgets_python import ConstantExporterGadgetsPython
+from system.exporters.constants_exporter_gadgets_swift import ConstantExporterGadgetsSwift
 from system.utils.temp_dir_manager import TempDirManager
 from system.exporters.constants_exporter_api_cpp import ConstantExporterApiCpp
 from system.exporters.constants_exporter_api_js import ConstantExporterApiJavaScript
@@ -33,6 +36,9 @@ def export_constants():
     ConstantExporterApiSwift().export(FILE_API_CONSTANTS_SWIFT)
 
     ConstantExporterGadgetsPython().export(FILE_GADGET_CONSTANTS_PY)
+    ConstantExporterGadgetsCpp().export(FILE_GADGET_CONSTANTS_CPP)
+    ConstantExporterGadgetsJavaScript().export(FILE_GADGET_CONSTANTS_JS)
+    ConstantExporterGadgetsSwift().export(FILE_GADGET_CONSTANTS_SWIFT)
 
 
 def export_wiki():

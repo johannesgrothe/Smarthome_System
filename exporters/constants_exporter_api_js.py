@@ -2,7 +2,6 @@ from system.exporters.constants_export import ConstantsExporterJavaScript
 from system.exporters.def_code_type_names import JS_CLASSNAME_API
 from system.exporters.def_docstrings import DOCSTR_API_CONSTANTS
 from system.utils.js_file import *
-from system.utils.software_version import SoftwareVersion
 
 
 class ConstantExporterApiJavaScript(ConstantsExporterJavaScript):
