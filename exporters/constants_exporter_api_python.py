@@ -5,7 +5,6 @@ from system.exporters.def_code_type_names import PY_CLASSNAME_API_DEFINITION_CON
     PY_CLASSNAME_ACCESS_TYPE_SUPER, PY_CLASSNAME_URIS_SUPER, PY_CLASSNAME_ENDPOINT_TYPE_SUPER, PY_VARNAME_API_VERSION, \
     PY_CLASSNAME_ACCESS_LEVEL, PY_CLASSNAME_ENDPOINT_TYPE, PY_CLASSNAME_URIS
 from system.exporters.def_docstrings import DOCSTR_API_CONSTANTS
-from system.utils.software_version import SoftwareVersion
 
 
 class ConstantExporterApiPython(ConstantsExporterPython):
