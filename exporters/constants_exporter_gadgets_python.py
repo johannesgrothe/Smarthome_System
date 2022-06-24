@@ -1,6 +1,6 @@
-from system.exporters.constants_export import ConstantsExporterPython
-from system.exporters.def_code_type_names import *
-from system.exporters.def_docstrings import DOCSTR_GADGET_CONSTANTS
+from exporters.constants_export import ConstantsExporterPython
+from exporters.def_code_type_names import *
+from exporters.def_docstrings import DOCSTR_GADGET_CONSTANTS
 
 
 class ConstantExporterGadgetsPython(ConstantsExporterPython):

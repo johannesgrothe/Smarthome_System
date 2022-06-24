@@ -1,5 +1,5 @@
-from system.exporters.constants_export import ConstantsExporterSwift
-from system.exporters.def_docstrings import DOCSTR_GADGET_CONSTANTS
+from exporters.constants_export import ConstantsExporterSwift
+from exporters.def_docstrings import DOCSTR_GADGET_CONSTANTS
 
 
 class ConstantExporterGadgetsSwift(ConstantsExporterSwift):

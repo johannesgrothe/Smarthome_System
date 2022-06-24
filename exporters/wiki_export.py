@@ -1,7 +1,7 @@
-from system.exporters.def_params import GITHUB_BASE_FILE_URI
-from system.exporters.exporter import Exporter
-from system.utils.json_schema_formatter import JsonSchemaFormatter
-from system.utils.markdown_file import *
+from exporters.def_params import GITHUB_BASE_FILE_URI
+from exporters.exporter import Exporter
+from utils.json_schema_formatter import JsonSchemaFormatter
+from utils.markdown_file import *
 
 _schema_link_base_path = "https://github.com/johannesgrothe/Smarthome_System/blob/master/json_schemas/"
 

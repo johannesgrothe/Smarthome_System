@@ -1,6 +1,6 @@
 import os
-from system.exporters.wiki_export import WikiExporterApiEndpoints
-from system.utils.markdown_file import *
+from exporters.wiki_export import WikiExporterApiEndpoints
+from utils.markdown_file import *
 
 _api_specs_file = os.path.join("api_docs", "api_specs.json")
 _gadget_specs_file = os.path.join("gadget_docs", "gadget_specs.json")

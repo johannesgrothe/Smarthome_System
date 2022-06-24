@@ -1,7 +1,7 @@
-from system.exporters.constants_export import ConstantsExporterCpp
-from system.exporters.def_code_type_names import *
-from system.exporters.def_docstrings import DOCSTR_GADGET_CONSTANTS
-from system.utils.cpp_file import *
+from exporters.constants_export import ConstantsExporterCpp
+from exporters.def_code_type_names import *
+from exporters.def_docstrings import DOCSTR_GADGET_CONSTANTS
+from utils.cpp_file import *
 
 
 class ConstantExporterGadgetsCpp(ConstantsExporterCpp):

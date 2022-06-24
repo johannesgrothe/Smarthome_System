@@ -1,5 +1,5 @@
-from system.exporters.wiki_export import WikiExporter
-from system.utils.markdown_file import *
+from exporters.wiki_export import WikiExporter
+from utils.markdown_file import *
 
 
 class WikiExporterGadgetClasses(WikiExporter):

@@ -66,7 +66,7 @@ def compare_api_definitions(current_file: str, last_file: str, current_schema_pa
 
 
 @pytest.mark.pr_only
-def test_api_version_incrementation(temp_exists):
+def test_api_version_incrementation(assert_temp):
     current_version = load_api_version(os.path.join("api_docs", "api_specs.json"))
     source_dir = os.path.join(os.getcwd(), "temp", "repo", ".git")
     base_dir = os.path.join(os.getcwd(), ".git")

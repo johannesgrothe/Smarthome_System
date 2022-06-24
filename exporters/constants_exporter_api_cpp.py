@@ -1,9 +1,9 @@
-from system.exporters.constants_export import ConstantsExporterCpp
-from system.exporters.def_code_type_names import CPP_NAMESPACE_API_DOCS, CPP_NAMESPACE_API_VERSION, \
+from exporters.constants_export import ConstantsExporterCpp
+from exporters.def_code_type_names import CPP_NAMESPACE_API_DOCS, CPP_NAMESPACE_API_VERSION, \
     CPP_NAMESPACE_API_URIS
-from system.exporters.def_docstrings import DOCSTR_API_CONSTANTS
-from system.utils.cpp_file import *
-from system.utils.software_version import SoftwareVersion
+from exporters.def_docstrings import DOCSTR_API_CONSTANTS
+from utils.cpp_file import *
+from utils.software_version import SoftwareVersion
 
 
 class ConstantExporterApiCpp(ConstantsExporterCpp):

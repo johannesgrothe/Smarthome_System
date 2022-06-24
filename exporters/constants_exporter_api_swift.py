@@ -1,7 +1,7 @@
-from system.exporters.constants_export import ConstantsExporterSwift
-from system.exporters.def_code_type_names import SWIFT_VARNAME_API_VERSION, SWIFT_CLASSNAME_API_VERSION, \
+from exporters.constants_export import ConstantsExporterSwift
+from exporters.def_code_type_names import SWIFT_VARNAME_API_VERSION, SWIFT_CLASSNAME_API_VERSION, \
     SWIFT_CLASSNAME_URIS
-from system.exporters.def_docstrings import DOCSTR_API_CONSTANTS
+from exporters.def_docstrings import DOCSTR_API_CONSTANTS
 
 
 class ConstantExporterApiSwift(ConstantsExporterSwift):

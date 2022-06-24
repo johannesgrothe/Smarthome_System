@@ -1,7 +1,7 @@
 import json
 
-from system.exporters.wiki_export import WikiExporterGadgets
-from system.utils.markdown_file import *
+from exporters.wiki_export import WikiExporterGadgets
+from utils.markdown_file import *
 
 
 class WikiExporterGadgetsLocal(WikiExporterGadgets):

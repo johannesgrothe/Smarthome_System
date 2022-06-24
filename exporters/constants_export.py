@@ -1,9 +1,9 @@
 from abc import ABC
 
-from system.exporters.def_filenames import FILE_API_SPECS, FILE_GADGET_SPECS
-from system.exporters.exporter import Exporter
-from system.utils.cpp_file import CppPragma, CppComment, CppBlankLine, CppFile
-from system.utils.js_file import JSComment, JSBlankLine, JSFile
+from exporters.def_filenames import FILE_API_SPECS, FILE_GADGET_SPECS
+from exporters.exporter import Exporter
+from utils.cpp_file import CppPragma, CppComment, CppBlankLine, CppFile
+from utils.js_file import JSComment, JSBlankLine, JSFile
 
 
 class ConstantsExporter(Exporter, ABC):

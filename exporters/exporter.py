@@ -2,10 +2,10 @@ import logging
 import os
 from abc import abstractmethod, ABCMeta
 
-from system.exporters.def_filenames import FILE_API_SPECS, FILE_GADGET_SPECS
-from system.exporters.definitions_loader import DefinitionsLoader
-from system.utils.schema_loader import SchemaLoader
-from system.utils.software_version import SoftwareVersion
+from exporters.def_filenames import FILE_API_SPECS, FILE_GADGET_SPECS
+from exporters.definitions_loader import DefinitionsLoader
+from utils.schema_loader import SchemaLoader
+from utils.software_version import SoftwareVersion
 
 _api_specs_file = os.path.join("api_docs", "api_specs.json")
 _gadget_specs_file = os.path.join("gadget_docs", "gadget_specs.json")
