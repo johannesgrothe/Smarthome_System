@@ -7,12 +7,13 @@
 import enum
 
 try:
-    from utils.api_endpoint_definition import ApiEndpointDefinition, ApiAccessType, ApiAccessLevelSuper, ApiURIsSuper, ApiEndpointCategorySuper
+    from utils.api_endpoint_definition import ApiEndpointDefinition, ApiAccessType, ApiAccessLevelSuper, ApiURIsSuper, \
+        ApiEndpointCategorySuper
     from utils.software_version import SoftwareVersion
 except ModuleNotFoundError:
-    from .utils.api_endpoint_definition import ApiEndpointDefinition, ApiAccessType, ApiAccessLevelSuper, ApiURIsSuper, ApiEndpointCategorySuper
+    from .utils.api_endpoint_definition import ApiEndpointDefinition, ApiAccessType, ApiAccessLevelSuper, ApiURIsSuper, \
+        ApiEndpointCategorySuper
     from .utils.software_version import SoftwareVersion
-
 
 # API Version
 api_version = SoftwareVersion(1, 1, 3)

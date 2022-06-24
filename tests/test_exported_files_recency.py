@@ -1,45 +1,67 @@
+import os
+
 import pytest
 
-from exporters.api_constants_exporter import ApiConstantsExporter
-from exporters.gadget_constants_exporter import GadgetConstantsExporter
-from exporters.script_params import *
+from exporters.def_filenames import *
+
+from exporters.constants_exporter_api_cpp import ConstantExporterApiCpp
+from exporters.constants_exporter_api_python import ConstantExporterApiPython
+from exporters.constants_exporter_api_js import ConstantExporterApiJavaScript
+from exporters.constants_exporter_api_swift import ConstantExporterApiSwift
+from exporters.constants_exporter_gadgets_cpp import ConstantExporterGadgetsCpp
+from exporters.constants_exporter_gadgets_js import ConstantExporterGadgetsJavaScript
+from exporters.constants_exporter_gadgets_python import ConstantExporterGadgetsPython
+from exporters.constants_exporter_gadgets_swift import ConstantExporterGadgetsSwift
 
 
-@pytest.fixture
-def exported_temp_files(temp_exists):
-    print("Creating temporary files")
-    path_temp_api_export = os.path.join(PATH_TEMP_DIR, PATH_FILE_API_CONSTANTS)
-    temp_files = [f"{path_temp_api_export}.py", f"{path_temp_api_export}.h", f"{path_temp_api_export}.js"]
+def compare_files(old: str, new: str):
+    print(f"Checking '{old}' against '{new}'")
 
-    path_temp_gadgets_export = os.path.join(PATH_TEMP_DIR, PATH_FILE_GADGET_CONSTANTS)
-    temp_files += [f"{path_temp_gadgets_export}.py", f"{path_temp_gadgets_export}.h", f"{path_temp_gadgets_export}.js"]
+    with open(old, "r") as file_h:
+        check_lines = file_h.readlines()
 
-    exporter = ApiConstantsExporter(PATH_API_SPECS)
-    exporter.export_python(f"{path_temp_api_export}.py")
-    exporter.export_cpp(f"{path_temp_api_export}.h")
-    exporter.export_js(f"{path_temp_api_export}.js")
+    with open(new, "r") as file_h:
+        exported_lines = file_h.readlines()
 
-    exporter = GadgetConstantsExporter(PATH_GADGET_SPECS)
-    exporter.export_python(f"{path_temp_gadgets_export}.py")
-    exporter.export_cpp(f"{path_temp_gadgets_export}.h")
-    exporter.export_js(f"{path_temp_gadgets_export}.js")
+    assert len(check_lines) == len(exported_lines)
 
-    yield temp_files
+    for check_line, exported_line in zip(check_lines, exported_lines):
+        assert check_line == exported_line
 
 
 @pytest.mark.pr_only
-def test_constant_files(exported_temp_files):
-    for file in exported_temp_files:
-        original_filename = file.split(os.sep)[-1]
-        print(f"Checking '{file}' against '{original_filename}'")
+def test_api_constants(assert_temp: str):
+    new_file = os.path.join(assert_temp, FILE_API_CONSTANTS_PY)
+    ConstantExporterApiPython().export(new_file)
+    compare_files(FILE_API_CONSTANTS_PY, new_file)
 
-        with open(file, "r") as file_h:
-            check_lines = file_h.readlines()
+    new_file = os.path.join(assert_temp, FILE_API_CONSTANTS_JS)
+    ConstantExporterApiJavaScript().export(new_file)
+    compare_files(FILE_API_CONSTANTS_JS, new_file)
 
-        with open(original_filename, "r") as file_h:
-            exported_lines = file_h.readlines()
+    new_file = os.path.join(assert_temp, FILE_API_CONSTANTS_CPP)
+    ConstantExporterApiCpp().export(new_file)
+    compare_files(FILE_API_CONSTANTS_CPP, new_file)
 
-        assert len(check_lines) == len(exported_lines)
+    new_file = os.path.join(assert_temp, FILE_API_CONSTANTS_SWIFT)
+    ConstantExporterApiSwift().export(new_file)
+    compare_files(FILE_API_CONSTANTS_SWIFT, new_file)
 
-        for check_line, exported_line in zip(check_lines, exported_lines):
-            assert check_line == exported_line
+
+@pytest.mark.pr_only
+def test_gadget_constants(assert_temp: str):
+    new_file = os.path.join(assert_temp, FILE_GADGET_CONSTANTS_PY)
+    ConstantExporterGadgetsPython().export(new_file)
+    compare_files(FILE_GADGET_CONSTANTS_PY, new_file)
+
+    new_file = os.path.join(assert_temp, FILE_GADGET_CONSTANTS_CPP)
+    ConstantExporterGadgetsCpp().export(os.path.join(new_file))
+    compare_files(FILE_GADGET_CONSTANTS_CPP, new_file)
+
+    new_file = os.path.join(assert_temp, FILE_GADGET_CONSTANTS_JS)
+    ConstantExporterGadgetsJavaScript().export(os.path.join(new_file))
+    compare_files(FILE_GADGET_CONSTANTS_JS, new_file)
+
+    new_file = os.path.join(assert_temp, FILE_GADGET_CONSTANTS_SWIFT)
+    ConstantExporterGadgetsSwift().export(os.path.join(new_file))
+    compare_files(FILE_GADGET_CONSTANTS_SWIFT, new_file)
