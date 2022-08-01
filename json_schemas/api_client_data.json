@@ -2,18 +2,27 @@
   "$schema": "http://json-schema.org/draft-04/schema#",
   "type": "object",
   "required": [
+    "id",
     "runtime_id",
     "port_mapping",
     "boot_mode",
-    "sw_uploaded",
-    "sw_commit",
-    "sw_branch",
-    "api_version"
+    "software",
+    "api_version",
+    "is_active",
+    "created",
+    "last_connected"
   ],
+  "additionalProperties": false,
   "properties": {
+    "id": {
+      "type": "string"
+    },
     "runtime_id": {
       "type": "integer",
       "minimum": 0
+    },
+    "is_active": {
+      "type": "boolean"
     },
     "port_mapping": {
       "type": "object",
@@ -31,6 +40,11 @@
       "type": [
         "object",
         "null"
+      ],
+      "required": [
+        "uploaded",
+        "commit",
+        "branch"
       ],
       "properties": {
         "uploaded": {
@@ -58,6 +72,14 @@
         "string"
       ],
       "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$"
+    },
+    "created": {
+      "type": "string",
+      "pattern": "[0-9]{4}-[0-9]{2}-[0-9]{2} [0-9]{2}:[0-9]{2}:[0-9]{2}"
+    },
+    "last_connected": {
+      "type": "string",
+      "pattern": "[0-9]{4}-[0-9]{2}-[0-9]{2} [0-9]{2}:[0-9]{2}:[0-9]{2}"
     }
   }
 }

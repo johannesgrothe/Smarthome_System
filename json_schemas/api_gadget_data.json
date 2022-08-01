@@ -3,7 +3,6 @@
   "type": "object",
   "required": [
     "id",
-    "type",
     "class",
     "attributes",
     "is_local"
@@ -11,10 +10,6 @@
   "properties": {
     "id": {
       "type": "string"
-    },
-    "type": {
-      "type": "integer",
-      "minimum": 0
     },
     "class": {
       "type": "integer",
