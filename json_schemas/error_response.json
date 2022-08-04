@@ -1,12 +1,21 @@
 {
   "$schema": "http://json-schema.org/draft-04/schema#",
   "type": "object",
+  "required": [
+    "error_type",
+    "ack",
+    "message"
+  ],
+  "additionalProperties": false,
   "properties": {
     "error_type": {
       "type": "string"
     },
     "ack": {
       "type": "boolean"
+    },
+    "message": {
+      "type": "string"
     }
   }
 }
