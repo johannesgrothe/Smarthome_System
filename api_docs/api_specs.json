@@ -561,23 +561,23 @@
           }
         },
         "reboot_client": {
-          "title": "Reboot Client",
-          "description": "Reboots a client",
+          "title": "System Control",
+          "description": "Performs a system action on the Client",
           "broadcast_allowed": false,
           "sender": [
             "bridge",
             "web_application"
           ],
           "uri": {
-            "value": "reboot/client",
-            "var_name": "client_reboot"
+            "value": "system",
+            "var_name": "system_ctrl"
           },
           "request": {
-            "comment": "Client ID is only needed when sent to bridge to identify client to reboot from",
-            "schema": "api_client_delete_config.json"
+            "comment": "The 'subject'-field needs to be set to 'reboot' to perform a reboot (currently the only option)",
+            "schema": "client_api_system_request.json"
           },
           "response": {
-            "comment": "Response acknowledging the successful initialization of the reboot",
+            "comment": "Response acknowledging the successful execution of the command",
             "schema": "default_message.json"
           }
         },
