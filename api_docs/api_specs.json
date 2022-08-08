@@ -78,6 +78,31 @@
           "schema": null
         }
       },
+      "update_client_info": {
+        "title": "Updates Client info",
+        "description": "Updates client info, such as battery level, on bridge",
+        "access_level": [
+          "admin",
+          "mqtt"
+        ],
+        "broadcast_allowed": true,
+        "access_type": "read",
+        "sender": [
+          "client"
+        ],
+        "uri": {
+          "value": "update/client",
+          "var_name": "update_client_info"
+        },
+        "request": {
+          "comment": "Json containing info about the client",
+          "schema": "api_client_update_info.json"
+        },
+        "response": {
+          "comment": "No response is expected",
+          "schema": null
+        }
+      },
       "info_bridge": {
         "title": "Read Bridge Info",
         "description": "Reads information about the bridge from the bridge",
