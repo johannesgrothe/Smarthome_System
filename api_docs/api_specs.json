@@ -55,7 +55,7 @@
               },
               "response": {
                 "comment": "Response payload will be the same as the sent one",
-                "schema": null
+                "schema": "api_any_request.json"
               }
             },
             "bridge_update_check": {
@@ -636,7 +636,7 @@
           },
           "response": {
             "comment": "Response payload will be the same as the sent one",
-            "schema": null
+            "schema": "api_any_request.json"
           }
         }
       }
