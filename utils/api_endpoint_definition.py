@@ -21,14 +21,16 @@ class ApiEndpointDefinition:
     _category: Optional[ApiEndpointCategorySuper]
     _access_type: Optional[ApiAccessType]
     _outgoing: bool
+    _requires_response: bool
 
     def __init__(self, uri: str, access_levels: list[ApiAccessLevelSuper], category: Optional[ApiEndpointCategorySuper],
-                 access_type: Optional[ApiAccessType], outgoing: bool):
+                 access_type: Optional[ApiAccessType], outgoing: bool, requires_response: bool):
         self._uri = uri
         self._access_levels = access_levels
         self._category = category
         self._access_type = access_type
         self._outgoing = outgoing
+        self._requires_response = requires_response
 
     @property
     def uri(self) -> str:
@@ -49,6 +51,10 @@ class ApiEndpointDefinition:
     @property
     def outgoing(self) -> bool:
         return self._outgoing
+
+    @property
+    def requires_response(self) -> bool:
+        return self._requires_response
 
 
 class ApiURIsSuper:

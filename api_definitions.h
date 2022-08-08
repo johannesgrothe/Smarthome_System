@@ -28,7 +28,7 @@ namespace api_definitions {
         constexpr char client_gadget_config_write [] = "config/gadget/write";  // Write Gadget Config (Bridge -> Client)
         constexpr char client_config_delete [] = "config/delete";  // Delete Config (Bridge -> Client)
         constexpr char client_update_gadget [] = "update/gadget";  // Update Gadget (Client -> Client)
-        constexpr char client_reboot [] = "reboot/client";  // Reboot Client (Bridge -> Client)
+        constexpr char system_ctrl [] = "system";  // System Control (Bridge -> Client)
         constexpr char sync_request [] = "sync";  // Client Sync Request (Bridge -> Client)
         constexpr char client_sync_event [] = "sync/event";  // Sync Event (Bridge -> Client)
         constexpr char test_echo [] = "echo";  // Test Echo (Bridge -> Client)

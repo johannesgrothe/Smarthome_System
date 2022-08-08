@@ -18,6 +18,8 @@ class ConstantExporterApiPython(ConstantsExporterPython):
         else:
             access_levels = "[]"
 
+        requires_response = data["response"]["schema"] is not None
+
         if linebreak:
             indent = "\n" + " " * (len(data['uri']['var_name']) + len(PY_CLASSNAME_API_DEFINITION_CONTAINER) + 8)
         else:
@@ -33,7 +35,7 @@ class ConstantExporterApiPython(ConstantsExporterPython):
 
         lines.append(f"    # {data['title']}")
         lines.append(
-            f"    {data['uri']['var_name']} = {PY_CLASSNAME_API_DEFINITION_CONTAINER}(\"{uri}\",{indent}{access_levels},{indent}{cat_str},{indent}{access_type},{indent}{bridge_is_requester})")
+            f"    {data['uri']['var_name']} = {PY_CLASSNAME_API_DEFINITION_CONTAINER}(\"{uri}\",{indent}{access_levels},{indent}{cat_str},{indent}{access_type},{indent}{bridge_is_requester},{indent}{requires_response})")
         return lines
 
     def export(self, filename: str):
@@ -54,7 +56,8 @@ class ConstantExporterApiPython(ConstantsExporterPython):
 
         lines.append("# API Version")
 
-        lines.append(f"{PY_VARNAME_API_VERSION} = SoftwareVersion({self._api_version.major}, {self._api_version.minor}, {self._api_version.bugfix})")
+        lines.append(
+            f"{PY_VARNAME_API_VERSION} = SoftwareVersion({self._api_version.major}, {self._api_version.minor}, {self._api_version.bugfix})")
 
         lines.append("")
         lines.append("")

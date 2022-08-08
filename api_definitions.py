@@ -47,13 +47,15 @@ class ApiURIs(ApiURIsSuper):
                                         [ApiAccessLevel.admin, ApiAccessLevel.user, ApiAccessLevel.guest],
                                         ApiEndpointCategory.System,
                                         ApiAccessType.read,
-                                        False)
+                                        False,
+                                        True)
 
     # Test Echo
     test_echo = ApiEndpointDefinition("echo",
                                       [ApiAccessLevel.admin],
                                       ApiEndpointCategory.System,
                                       ApiAccessType.write,
+                                      False,
                                       False)
 
     # Bridge update check
@@ -61,27 +63,31 @@ class ApiURIs(ApiURIsSuper):
                                                 [ApiAccessLevel.admin],
                                                 ApiEndpointCategory.System,
                                                 ApiAccessType.read,
-                                                False)
+                                                False,
+                                                True)
 
     # Bridge update execute
     bridge_update_execute = ApiEndpointDefinition("bridge/update/execute",
                                                   [ApiAccessLevel.admin],
                                                   ApiEndpointCategory.System,
                                                   ApiAccessType.write,
-                                                  False)
+                                                  False,
+                                                  True)
 
     # Read Gadgets Info
     info_gadgets = ApiEndpointDefinition("info/gadgets",
                                          [ApiAccessLevel.admin, ApiAccessLevel.user, ApiAccessLevel.guest],
                                          ApiEndpointCategory.Gadgets,
                                          ApiAccessType.read,
-                                         False)
+                                         False,
+                                         True)
 
     # Update Gadget
     update_gadget = ApiEndpointDefinition("update/gadget",
                                           [ApiAccessLevel.admin, ApiAccessLevel.mqtt, ApiAccessLevel.user],
                                           ApiEndpointCategory.Gadgets,
                                           ApiAccessType.write,
+                                          False,
                                           False)
 
     # Write Complete Config to Client
@@ -89,20 +95,23 @@ class ApiURIs(ApiURIsSuper):
                                                 [ApiAccessLevel.admin],
                                                 ApiEndpointCategory.Clients,
                                                 ApiAccessType.write,
-                                                False)
+                                                False,
+                                                True)
 
     # Delete Config
     client_config_delete = ApiEndpointDefinition("config/delete",
                                                  [ApiAccessLevel.admin],
                                                  ApiEndpointCategory.Clients,
                                                  ApiAccessType.write,
-                                                 False)
+                                                 False,
+                                                 True)
 
     # Client Heartbeat
     heartbeat = ApiEndpointDefinition("heartbeat",
                                       [ApiAccessLevel.admin, ApiAccessLevel.mqtt],
                                       ApiEndpointCategory.Clients,
                                       ApiAccessType.write,
+                                      False,
                                       False)
 
     # Read Clients Info
@@ -110,13 +119,15 @@ class ApiURIs(ApiURIsSuper):
                                          [ApiAccessLevel.admin, ApiAccessLevel.user, ApiAccessLevel.guest],
                                          ApiEndpointCategory.Clients,
                                          ApiAccessType.read,
-                                         False)
+                                         False,
+                                         True)
 
     # Sync Client
     sync_client = ApiEndpointDefinition("sync/client",
                                         [ApiAccessLevel.admin, ApiAccessLevel.mqtt],
                                         ApiEndpointCategory.Clients,
                                         ApiAccessType.write,
+                                        False,
                                         False)
 
     # Reboot Client
@@ -124,59 +135,65 @@ class ApiURIs(ApiURIsSuper):
                                                     [ApiAccessLevel.admin, ApiAccessLevel.user],
                                                     ApiEndpointCategory.Clients,
                                                     ApiAccessType.write,
-                                                    False)
+                                                    False,
+                                                    True)
 
     # Read Gadget Publisher Info
     info_gadget_publishers = ApiEndpointDefinition("info/gadget_publishers",
                                                    [ApiAccessLevel.admin, ApiAccessLevel.user],
                                                    ApiEndpointCategory.Publishers,
                                                    ApiAccessType.read,
-                                                   False)
+                                                   False,
+                                                   True)
 
     # Retrieve all stored configs
     config_storage_get_all = ApiEndpointDefinition("config/storage/get_all",
                                                    [ApiAccessLevel.admin, ApiAccessLevel.user],
                                                    ApiEndpointCategory.Configs,
                                                    ApiAccessType.read,
-                                                   False)
+                                                   False,
+                                                   True)
 
     # Retrieve stored config
     config_storage_get = ApiEndpointDefinition("config/storage/get",
                                                [ApiAccessLevel.admin, ApiAccessLevel.user],
                                                ApiEndpointCategory.Configs,
                                                ApiAccessType.read,
-                                               False)
+                                               False,
+                                               True)
 
     # Save config
     config_storage_save = ApiEndpointDefinition("config/storage/save",
                                                 [ApiAccessLevel.admin],
                                                 ApiEndpointCategory.Configs,
                                                 ApiAccessType.write,
-                                                False)
+                                                False,
+                                                True)
 
     # Delete Config
     config_storage_delete = ApiEndpointDefinition("config/storage/delete",
                                                   [ApiAccessLevel.admin],
                                                   ApiEndpointCategory.Configs,
                                                   ApiAccessType.write,
-                                                  False)
+                                                  False,
+                                                  True)
 
     # URIs exposed by the client
 
     # Write System Config
-    client_system_config_write = ApiEndpointDefinition("config/system/write", [], None, None, True)
+    client_system_config_write = ApiEndpointDefinition("config/system/write", [], None, None, True, True)
 
     # Write Event Config
-    client_event_config_write = ApiEndpointDefinition("config/event/write", [], None, None, True)
+    client_event_config_write = ApiEndpointDefinition("config/event/write", [], None, None, True, True)
 
     # Write Gadget Config
-    client_gadget_config_write = ApiEndpointDefinition("config/gadget/write", [], None, None, True)
+    client_gadget_config_write = ApiEndpointDefinition("config/gadget/write", [], None, None, True, True)
 
-    # Reboot Client
-    client_reboot = ApiEndpointDefinition("reboot/client", [], None, None, True)
+    # System Control
+    system_ctrl = ApiEndpointDefinition("system", [], None, None, True, True)
 
     # Client Sync Request
-    sync_request = ApiEndpointDefinition("sync", [], None, None, True)
+    sync_request = ApiEndpointDefinition("sync", [], None, None, True, False)
 
     # Sync Event
-    client_sync_event = ApiEndpointDefinition("sync/event", [], None, None, True)
+    client_sync_event = ApiEndpointDefinition("sync/event", [], None, None, True, False)
