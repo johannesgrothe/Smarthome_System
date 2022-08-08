@@ -50,6 +50,12 @@ class ApiURIs(ApiURIsSuper):
                                       ApiAccessType.write,
                                       False)
 
+    # Updates Client info
+    update_client_info = ApiEndpointDefinition("update/client",
+                                               [ApiAccessLevel.admin, ApiAccessLevel.mqtt],
+                                               ApiAccessType.read,
+                                               False)
+
     # Read Bridge Info
     info_bridge = ApiEndpointDefinition("info/bridge",
                                         [ApiAccessLevel.admin, ApiAccessLevel.user, ApiAccessLevel.guest],

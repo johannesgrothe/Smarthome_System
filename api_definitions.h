@@ -21,6 +21,7 @@ namespace api_definitions {
     // Api URIs
     namespace uris {
         constexpr char heartbeat [] = "heartbeat";  // Client Heartbeat (Client -> Bridge)
+        constexpr char update_client_info [] = "update/client";  // Updates Client info (Client -> Bridge)
         constexpr char update_gadget [] = "update/gadget";  // Update Gadget (Client -> Bridge)
         constexpr char sync_client [] = "sync/client";  // Sync Client (Client -> Bridge)
         constexpr char sync_event [] = "sync/event";  // Sync Event (Client -> Bridge)
