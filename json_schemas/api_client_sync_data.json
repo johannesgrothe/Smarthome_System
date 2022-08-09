@@ -1,0 +1,70 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "type": "object",
+  "required": [
+    "runtime_id",
+    "port_mapping",
+    "boot_mode",
+    "software",
+    "api_version"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "id": {
+      "type": "string"
+    },
+    "runtime_id": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "port_mapping": {
+      "type": "object",
+      "patternProperties": {
+        "[0-9]+": {
+          "type": "integer",
+          "minimum": 0
+        }
+      }
+    },
+    "boot_mode": {
+      "type": "integer"
+    },
+    "software": {
+      "type": [
+        "object",
+        "null"
+      ],
+      "required": [
+        "uploaded",
+        "commit",
+        "branch"
+      ],
+      "properties": {
+        "uploaded": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "commit": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "branch": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      }
+    },
+    "api_version": {
+      "type": [
+        "string"
+      ],
+      "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$"
+    }
+  }
+}
