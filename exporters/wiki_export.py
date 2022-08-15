@@ -1,24 +1,23 @@
-"""Module for the api doc exporter"""
-from exporters.doc_exporter import DocExporter
-from exporters.script_params import PATH_FILE_API_CONSTANTS
-from utils.markdown_file import *
+from exporters.def_params import GITHUB_BASE_FILE_URI
+from exporters.exporter import Exporter
 from utils.json_schema_formatter import JsonSchemaFormatter
-from utils.schema_loader import SchemaLoader
+from utils.markdown_file import *
 
-# Base path for the links to the actual json schema files
 _schema_link_base_path = "https://github.com/johannesgrothe/Smarthome_System/blob/master/json_schemas/"
 
 
-class ApiDocExporter(DocExporter):
-    """Class that handles the api doc exporting process"""
+class WikiExporter(Exporter, ABC):
 
-    _schema_folder: str
-    _schema_data: dict
-
-    def __init__(self, definitions: str, schemas: str):
-        super().__init__(definitions)
-        self._schema_folder = schemas
-        self._schema_data = SchemaLoader(schemas).load_schemas()
+    @staticmethod
+    def _add_exported_libraries(base_filename: str, file: MarkdownFile):
+        language_info = [("C++", "h"), ("Python", "py"), ("JavaScript", "js"), ("Swift", "swift")]
+        file.add(MarkdownHeader("Exported Code Libraries", 2))
+        buf_table = MarkdownTable(["Language", "Link"])
+        for language, ending in language_info:
+            filename = f"{base_filename}.{ending}"
+            link = MarkdownHyperLink(filename, f"{GITHUB_BASE_FILE_URI}{filename}")
+            buf_table.add_line([language, link])
+        file.add(buf_table)
 
     def _read_schema(self, schema: str) -> str:
         if schema.endswith(".json"):
@@ -48,8 +47,11 @@ class ApiDocExporter(DocExporter):
         }
         return switcher.get(sender)
 
-    def _export_mapping(self, map_data: dict, file: MarkdownFile, receiver: str):
-        file.add(MarkdownHeader(map_data["title"], 2))
+
+class WikiExporterApiEndpoints(WikiExporter, ABC):
+
+    def _export_mapping(self, map_data: dict, file: MarkdownFile, receiver: str, title_level: int):
+        file.add(MarkdownHeader(map_data["title"], title_level))
         file.add(MarkdownText(map_data["description"]))
 
         file.add(MarkdownCode(map_data["uri"]["value"], language="json", block=False))
@@ -70,22 +72,22 @@ class ApiDocExporter(DocExporter):
         file.add(status_table)
 
         if "access_level" in map_data:
-            file.add(MarkdownHeader("Access Levels", 3))
+            file.add(MarkdownHeader("Access Levels", title_level + 1))
             file.add(MarkdownText("Access levels required to access this ressource"))
             access_level_list = MarkdownList()
             for access_level in map_data["access_level"]:
-                level_name = self._definitions["access_level"][access_level]["name"]
+                level_name = self._api_access_level_def["items"][access_level]["name"]
                 access_level_list.add_line(MarkdownInternalLinkGithub(level_name, level_name))
             file.add(access_level_list)
 
-        file.add(MarkdownHeader("Request", 3))
+        file.add(MarkdownHeader("Request", title_level + 1))
         req_data = map_data["request"]
         file.add(MarkdownText(req_data["comment"]))
         file.add(MarkdownHyperLink(req_data['schema'], f"{_schema_link_base_path}{req_data['schema']}", "Schema: "))
         req_schema = self._read_schema(req_data["schema"])
         file.add(MarkdownCode(req_schema, language="json"))
 
-        file.add(MarkdownHeader("Response", 3))
+        file.add(MarkdownHeader("Response", title_level + 1))
         res_data = map_data["response"]
         file.add(MarkdownText(res_data["comment"]))
         if res_data["schema"] is not None:
@@ -95,33 +97,21 @@ class ApiDocExporter(DocExporter):
             file.add(MarkdownCode(res_schema, language="json"))
         file.add(MarkdownDivider())
 
-    def export_docs(self, out_file: str):
-        file = MarkdownFile()
-        file.add(MarkdownHeader(self._definitions["title"], 0))
-        file.add(MarkdownText(self._definitions["description"]))
-        file.add(MarkdownText("Latest Api Version: " + self._definitions["version"]))
 
-        file.add(MarkdownDivider())
-        self._add_exported_libraries(PATH_FILE_API_CONSTANTS, file)
-        file.add(MarkdownDivider())
+class WikiExporterGadgets(WikiExporter, ABC):
 
-        file.add(MarkdownHeader("Access Levels", 1))
-        for _, data in self._definitions["access_level"].items():
-            file.add(MarkdownHeader(data["name"], 2))
-            file.add(MarkdownText(data["description"]))
-            status_table = MarkdownTable(["Option", "Value"])
-            status_table.add_line(["Int Identifier", data["id"]])
-            status_table.add_line(["Variable Name", data["var_name"]])
-            file.add(status_table)
+    @staticmethod
+    def _gen_enum_table(data: dict) -> MarkdownTable:
+        overview = {}
+        for key, data in data.items():
+            val = data["enum_value"]
+            if val in overview:
+                raise Exception(f"Double Identifier: {val}")
+            overview[val] = key
+        key_list = [x for x in overview.keys()]
+        key_list.sort()
 
-        file.add(MarkdownDivider())
-
-        file.add(MarkdownHeader("Bridge URIs", 1))
-        for _, map_data in self._definitions["mappings"]["bridge"].items():
-            self._export_mapping(map_data, file, "bridge")
-
-        file.add(MarkdownHeader("Client URIs", 1))
-        for _, map_data in self._definitions["mappings"]["client"].items():
-            self._export_mapping(map_data, file, "client")
-
-        file.save(out_file)
+        status_table = MarkdownTable(["Int Identifier", "String Identifier"])
+        for key in key_list:
+            status_table.add_line([str(key), overview[key]])
+        return status_table

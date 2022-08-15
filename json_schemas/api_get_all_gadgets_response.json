@@ -2,10 +2,16 @@
   "$schema": "http://json-schema.org/draft-04/schema#",
   "type": "object",
   "properties": {
-    "gadgets": {
+    "remote": {
       "type": "array",
       "items": {
         "$ref": "api_gadget_data.json"
+      }
+    },
+    "local": {
+      "type": "array",
+      "items": {
+        "type": "object"
       }
     }
   }

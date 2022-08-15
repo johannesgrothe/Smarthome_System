@@ -1,9 +1,12 @@
 {
   "$schema": "http://json-schema.org/draft-04/schema#",
   "type": "object",
+  "required": [
+    "id"
+  ],
   "properties": {
-    "client_id": {
-      "type": ["string", "null"]
+    "id": {
+      "type": "string"
     }
   }
 }

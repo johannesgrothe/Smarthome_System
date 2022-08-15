@@ -1,0 +1,22 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "type": "object",
+  "properties": {
+    "red": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 255
+    },
+    "green": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 255
+    },
+    "blue": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 255
+    }
+  },
+  "additionalProperties": false
+}

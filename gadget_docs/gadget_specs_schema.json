@@ -5,7 +5,7 @@
     "title",
     "description",
     "gadget_definitions",
-    "characteristic_definitions"
+    "gadget_classes"
   ],
   "properties": {
     "title": {
@@ -23,14 +23,16 @@
         "client_gadgets",
         "bridge_gadgets"
       ],
-      "patternProperties": {
-        "^[a-z:]+$": {
+      "additionalProperties": false,
+      "properties": {
+        "client_gadgets": {
           "type": "object",
           "required": [
             "title",
             "description",
             "items"
           ],
+          "additionalProperties": false,
           "properties": {
             "title": {
               "type": "string",
@@ -43,19 +45,21 @@
             "items": {
               "type": "object",
               "description": "Gadgets available to this specific domain",
+              "additionalProperties": false,
               "patternProperties": {
-                "^[a-z:]+$": {
+                "^[a-z0-9_]+$": {
                   "type": "object",
                   "required": [
                     "name",
                     "description",
+                    "class",
                     "enum_value",
                     "ir_required",
                     "radio_required",
-                    "characteristics",
                     "ports",
                     "config"
                   ],
+                  "additionalProperties": false,
                   "properties": {
                     "name": {
                       "type": "string",
@@ -64,6 +68,10 @@
                     "description": {
                       "type": "string",
                       "minLength": 10
+                    },
+                    "class": {
+                      "type": "integer",
+                      "minimum": 0
                     },
                     "enum_value": {
                       "type": "integer",
@@ -75,17 +83,13 @@
                     "radio_required": {
                       "type": "boolean"
                     },
-                    "characteristics": {
-                      "type": "string",
-                      "minLength": 5
-                    },
                     "ports": {
                       "type": "object",
                       "patternProperties": {
                         "^[0-4]$": {
                           "type": "object",
                           "required": [
-                            "properties"
+                            "description"
                           ],
                           "properties": {
                             "description": {
@@ -128,27 +132,143 @@
               }
             }
           }
+        },
+        "bridge_gadgets": {
+          "type": "object",
+          "required": [
+            "title",
+            "description",
+            "items"
+          ],
+          "additionalProperties": false,
+          "properties": {
+            "title": {
+              "type": "string",
+              "minLength": 10
+            },
+            "description": {
+              "type": "string",
+              "minLength": 10
+            },
+            "items": {
+              "type": "object",
+              "description": "Gadgets available to this specific domain",
+              "additionalProperties": false,
+              "patternProperties": {
+                "^[a-z0-9_]+$": {
+                  "type": "object",
+                  "required": [
+                    "name",
+                    "description",
+                    "class",
+                    "enum_value",
+                    "config"
+                  ],
+                  "additionalProperties": false,
+                  "properties": {
+                    "name": {
+                      "type": "string",
+                      "minLength": 10
+                    },
+                    "description": {
+                      "type": "string",
+                      "minLength": 10
+                    },
+                    "class": {
+                      "type": "integer",
+                      "minimum": 0
+                    },
+                    "enum_value": {
+                      "type": "integer",
+                      "minimum": 0
+                    },
+                    "ir_required": {
+                      "type": "boolean"
+                    },
+                    "radio_required": {
+                      "type": "boolean"
+                    },
+                    "config": {
+                      "type": "object",
+                      "patternProperties": {
+                        "^[a-z0-9_]$": {
+                          "type": "object",
+                          "required": [
+                            "type",
+                            "optional"
+                          ],
+                          "properties": {
+                            "type": {
+                              "type": "string",
+                              "enum": [
+                                "int",
+                                "uint",
+                                "string",
+                                "float",
+                                "bool"
+                              ]
+                            },
+                            "optional": {
+                              "type": "boolean"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
         }
       }
     },
-    "characteristic_definitions": {
+    "gadget_classes": {
       "type": "object",
-      "description": "Definitions for all characteristics",
       "required": [
         "title",
         "description",
         "items"
       ],
+      "additionalProperties": false,
       "properties": {
         "title": {
-          "type": "string",
-          "minLength": 10
+          "type": "string"
         },
         "description": {
-          "type": "string",
-          "minLength": 10
+          "type": "string"
         },
         "items": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "object",
+            "required": [
+              "name",
+              "description",
+              "enum_value",
+              "attributes",
+              "sync_attributes"
+            ],
+            "additionalProperties": false,
+            "properties": {
+              "name": {
+                "type": "string"
+              },
+              "description": {
+                "type": "string"
+              },
+              "enum_value": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "attributes": {
+                "type": "string"
+              },
+              "sync_attributes": {
+                "type": "string"
+              }
+            }
+          }
         }
       }
     }

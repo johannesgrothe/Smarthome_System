@@ -1,10 +1,12 @@
 {
   "$schema": "http://json-schema.org/draft-04/schema#",
   "type": "object",
-  "required": ["gadget"],
+  "required": [
+    "name"
+  ],
   "properties": {
-    "gadget": {
-      "$ref": "api_gadget_data.json"
+    "name": {
+      "type": "string"
     }
   }
 }

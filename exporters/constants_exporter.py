@@ -27,6 +27,14 @@ class ConstantsExporter:
                 f"Do not modify this file, modify '{self._definition_file}' and export.",
                 f"Every change made will be overwritten at next export."]
 
+    def _generate_swift_header(self, docstring: str, filename: str) -> list[str]:
+        lines = [f"// {docstring}", ""]
+
+        for line in self._generate_header(filename):
+            lines.append(f"// {line}")
+
+        return lines
+
     def _generate_python_header(self, docstring: str, filename: str) -> list[str]:
         lines = [f"\"\"\"{docstring}\"\"\"", ""]
 
@@ -72,4 +80,8 @@ class ConstantsExporter:
 
     @abstractmethod
     def export_cpp(self, out_file: str):
+        pass
+
+    @abstractmethod
+    def export_swift(self, out_file: str):
         pass
