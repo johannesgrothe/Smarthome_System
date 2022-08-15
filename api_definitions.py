@@ -56,7 +56,7 @@ class ApiURIs(ApiURIsSuper):
                                       ApiEndpointCategory.System,
                                       ApiAccessType.write,
                                       False,
-                                      False)
+                                      True)
 
     # Bridge update check
     bridge_update_check = ApiEndpointDefinition("bridge/update/check",

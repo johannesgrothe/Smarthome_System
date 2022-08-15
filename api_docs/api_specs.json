@@ -188,7 +188,7 @@
               },
               "request": {
                 "comment": "Config to write to the client",
-                "schema": "api_client_write_config.json"
+                "schema": "api_empty_request.json"
               },
               "response": {
                 "comment": "Response acknowledging the successful writing of the Config",
@@ -313,7 +313,7 @@
               },
               "request": {
                 "comment": "Client ID is only needed when sent to bridge to identify client to reboot from",
-                "schema": "api_client_delete_config.json"
+                "schema": "api_client_reboot_request.json"
               },
               "response": {
                 "comment": "Response acknowledging the successful initialization of the reboot",
