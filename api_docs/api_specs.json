@@ -116,7 +116,8 @@
                 "web_application"
               ],
               "uri": {
-
+                "value": "bridge/add_user",
+                "var_name": "bridge_add_user"
               },
               "request": {
                 "comment": "Payload containing user credentials, access level, persistent?",
