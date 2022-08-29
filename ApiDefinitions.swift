@@ -14,6 +14,7 @@ enum ApiURIs : String {
     case bridge_update_execute = "bridge/update/execute"   // Bridge update execute
     case info_gadgets = "info/gadgets"   // Read Gadgets Info
     case update_gadget = "update/gadget"   // Update Gadget
+    case add_local_gadget = "gadgets/add_local"   // Add Local Gadget
     case client_config_write = "config/write"   // Write Complete Config to Client
     case client_config_delete = "config/delete"   // Delete Config
     case info_clients = "info/clients"   // Read Clients Info

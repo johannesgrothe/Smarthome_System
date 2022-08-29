@@ -164,6 +164,30 @@
                 "comment": "No response is expected",
                 "schema": null
               }
+            },
+            "add_local_gadget": {
+              "title": "Add Local Gadget",
+              "description": "Adds a persistent local gadget to the bridge",
+              "access_level": [
+                "admin"
+              ],
+              "broadcast_allowed": false,
+              "access_type": "write",
+              "sender": [
+                "web_application"
+              ],
+              "uri": {
+                "value": "gadgets/add_local",
+                "var_name": "add_local_gadget"
+              },
+              "request": {
+                "comment": "Information to create the local gadget from. See gadget docs for required information",
+                "schema": "api_gadget_local_add.json"
+              },
+              "response": {
+                "comment": "Acknowledgement of the successful creation of the new gadget",
+                "schema": "default_message.json"
+              }
             }
           }
         },

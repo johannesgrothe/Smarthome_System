@@ -90,6 +90,14 @@ class ApiURIs(ApiURIsSuper):
                                           False,
                                           False)
 
+    # Add Local Gadget
+    add_local_gadget = ApiEndpointDefinition("gadgets/add_local",
+                                             [ApiAccessLevel.admin],
+                                             ApiEndpointCategory.Gadgets,
+                                             ApiAccessType.write,
+                                             False,
+                                             True)
+
     # Write Complete Config to Client
     client_config_write = ApiEndpointDefinition("config/write",
                                                 [ApiAccessLevel.admin],
