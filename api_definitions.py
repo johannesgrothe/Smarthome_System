@@ -74,6 +74,14 @@ class ApiURIs(ApiURIsSuper):
                                                   False,
                                                   True)
 
+    # Add user to Bridge
+    bridge_add_user = ApiEndpointDefinition("bridge/add_user",
+                                            [ApiAccessLevel.admin],
+                                            ApiEndpointCategory.System,
+                                            ApiAccessType.write,
+                                            False,
+                                            True)
+
     # Read Gadgets Info
     info_gadgets = ApiEndpointDefinition("info/gadgets",
                                          [ApiAccessLevel.admin, ApiAccessLevel.user, ApiAccessLevel.guest],
