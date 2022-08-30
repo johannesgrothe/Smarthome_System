@@ -10,7 +10,7 @@ export default class ApiConstants {
 
     // API Version
     static version_major = 1;
-    static version_minor = 1;
+    static version_minor = 2;
     static version_bugfix = 3;
 
     // API URIs
