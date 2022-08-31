@@ -10,8 +10,8 @@ export default class ApiConstants {
 
     // API Version
     static version_major = 1;
-    static version_minor = 2;
-    static version_bugfix = 3;
+    static version_minor = 1;
+    static version_bugfix = 4;
 
     // API URIs
     static uri_info_bridge = "info/bridge";  // Read Bridge Info (Web Application -> Bridge)
