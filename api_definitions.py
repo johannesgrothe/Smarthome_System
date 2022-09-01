@@ -15,7 +15,7 @@ except ModuleNotFoundError:
 
 
 # API Version
-api_version = SoftwareVersion(1, 1, 3)
+api_version = SoftwareVersion(1, 1, 4)
 
 
 class ApiAccessLevel(ApiAccessLevelSuper, enum.IntEnum):
@@ -73,6 +73,14 @@ class ApiURIs(ApiURIsSuper):
                                                   ApiAccessType.write,
                                                   False,
                                                   True)
+
+    # Add user to Bridge
+    bridge_add_user = ApiEndpointDefinition("bridge/add_user",
+                                            [ApiAccessLevel.admin],
+                                            ApiEndpointCategory.System,
+                                            ApiAccessType.write,
+                                            False,
+                                            True)
 
     # Read Gadgets Info
     info_gadgets = ApiEndpointDefinition("info/gadgets",
