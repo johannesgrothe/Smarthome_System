@@ -1,0 +1,26 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "type": "object",
+  "required": [
+    "username",
+    "access_level",
+    "user_to_delete"
+  ],
+  "properties": {
+    "username": {
+      "type": "string",
+      "minLength": 3,
+      "maxLength": 100
+    },
+    "access_level": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 9
+    },
+    "user_to_delete": {
+      "type": "string",
+      "minLength": 3,
+      "maxLength": 100
+    }
+  }
+}
