@@ -5,7 +5,7 @@
 // Every change made will be overwritten at next export.
 
 
-let api_version = SoftwareVersion(major=1, minor=1, bugfix=4)
+let api_version = SoftwareVersion(major=1, minor=1, bugfix=5)
 
 
 enum ApiURIs : String {
