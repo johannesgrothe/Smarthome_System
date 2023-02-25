@@ -1,6 +1,6 @@
 {
   "$schema": "api_specs_schema.json",
-  "version": "1.1.4",
+  "version": "1.1.5",
   "endpoints": {
     "title": "API Endpoints",
     "description": "Definition of all API endpoints of the system",
