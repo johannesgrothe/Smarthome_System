@@ -174,15 +174,13 @@ class MarkdownTable(MarkdownElement):
             return str(elem)
 
     @classmethod
-    def _format_line(cls, data: list[str], max_length) -> str:
-        return "|" + "|".join([" " + cls._format_str(x, max_length) for x in data]) + "|"
+    def _format_line(cls, data: list[str], lengths: list[int]) -> str:
+        return "|" + "|".join([" " + cls._format_str(x, l) for x, l in zip(data, lengths)]) + "|"
 
-    def _get_max_elem_length(self) -> int:
-        line_lengths = [self._max_str_length(x)
-                        for x
-                        in self._lines]
-        line_lengths.append(self._max_str_length(self._header))
-        return max(line_lengths)
+    def _get_max_column_length(self, index: int):
+        column_elems = [self._header[index]] + [x[index] for x in self._lines]
+        elem_lengths = [len(x) for x in column_elems]
+        return max(elem_lengths)
 
     def add_line(self, line: list[Union[int, str, MarkdownText, MarkdownLink]]):
         if len(line) != len(self._header):
@@ -191,13 +189,13 @@ class MarkdownTable(MarkdownElement):
         self._lines.append([self._format_table_element(x) for x in line])
 
     def render_content(self) -> list[str]:
-        lines = []
-        max_len = self._get_max_elem_length() + 1
+        column_lengths = [self._get_max_column_length(x) + 1 for x in range(len(self._header))]
 
-        lines.append(self._format_line(self._header, max_len))
-        lines.append(self._format_line(["-" * max_len for _ in self._header], max_len).replace(" -", "--"))
+        lines = [self._format_line(self._header, column_lengths),
+                 self._format_line(["-" * l for l in column_lengths], column_lengths).replace(" -", "--")]
+
         for line in self._lines:
-            lines.append(self._format_line(line, max_len))
+            lines.append(self._format_line(line, column_lengths))
         return lines
 
 
