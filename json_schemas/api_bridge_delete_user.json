@@ -1,0 +1,20 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "type": "object",
+  "required": [
+    "username",
+    "user_to_delete"
+  ],
+  "properties": {
+    "username": {
+      "type": "string",
+      "minLength": 3,
+      "maxLength": 100
+    },
+    "user_to_delete": {
+      "type": "string",
+      "minLength": 3,
+      "maxLength": 100
+    }
+  }
+}

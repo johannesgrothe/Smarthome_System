@@ -82,6 +82,14 @@ class ApiURIs(ApiURIsSuper):
                                             False,
                                             True)
 
+    # Delete a user from Bridge
+    bridge_delete_user = ApiEndpointDefinition("bridge/delete_user",
+                                               [ApiAccessLevel.admin, ApiAccessLevel.user],
+                                               ApiEndpointCategory.System,
+                                               ApiAccessType.write,
+                                               False,
+                                               True)
+
     # Read Gadgets Info
     info_gadgets = ApiEndpointDefinition("info/gadgets",
                                          [ApiAccessLevel.admin, ApiAccessLevel.user, ApiAccessLevel.guest],

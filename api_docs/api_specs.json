@@ -127,6 +127,28 @@
                 "comment": "Response acknowledging the successful addition of the user",
                 "schema": "default_message.json"
               }
+            },
+            "bridge_delete_user": {
+              "title": "Delete a user from Bridge",
+              "description": "Deletes an user from the Bridge",
+              "access_level": ["admin", "user"],
+              "broadcast_allowed": false,
+              "access_type": "write",
+              "sender": [
+                "web_application"
+              ],
+              "uri": {
+                "value": "bridge/delete_user",
+                "var_name": "bridge_delete_user"
+              },
+              "request": {
+                "comment": "Payload containing username, access_level and user to delete (username)",
+                "schema": "api_bridge_add_user.json"
+              },
+              "response": {
+                "comment": "Response acknowledging the successful deletion of the user",
+                "schema": "default_message.json"
+              }
             }
           }
         },

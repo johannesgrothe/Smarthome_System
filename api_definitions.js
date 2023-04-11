@@ -18,6 +18,7 @@ export default class ApiConstants {
     static uri_bridge_update_check = "bridge/update/check";  // Bridge update check (Web Application -> Bridge)
     static uri_bridge_update_execute = "bridge/update/execute";  // Bridge update execute (Web Application -> Bridge)
     static uri_bridge_add_user = "bridge/add_user";  // Add user to Bridge (Web Application -> Bridge)
+    static uri_bridge_delete_user = "bridge/delete_user";  // Delete a user from Bridge (Web Application -> Bridge)
     static uri_info_gadgets = "info/gadgets";  // Read Gadgets Info (Web Application -> Bridge)
     static uri_update_gadget = "update/gadget";  // Update Gadget (Web Application -> Bridge)
     static uri_client_config_write = "config/write";  // Write Complete Config to Client (Web Application -> Bridge)
