@@ -52,11 +52,10 @@
                   "required": [
                     "name",
                     "description",
-                    "class",
                     "enum_value",
                     "ir_required",
                     "radio_required",
-                    "ports",
+                    "class",
                     "config"
                   ],
                   "additionalProperties": false,
@@ -69,10 +68,6 @@
                       "type": "string",
                       "minLength": 10
                     },
-                    "class": {
-                      "type": "integer",
-                      "minimum": 0
-                    },
                     "enum_value": {
                       "type": "integer",
                       "minimum": 0
@@ -83,22 +78,9 @@
                     "radio_required": {
                       "type": "boolean"
                     },
-                    "ports": {
-                      "type": "object",
-                      "patternProperties": {
-                        "^[0-4]$": {
-                          "type": "object",
-                          "required": [
-                            "description"
-                          ],
-                          "properties": {
-                            "description": {
-                              "type": "string",
-                              "minLength": 10
-                            }
-                          }
-                        }
-                      }
+                    "class": {
+                      "type": "integer",
+                      "minimum": 0
                     },
                     "config": {
                       "type": "object",

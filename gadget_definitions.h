@@ -11,17 +11,19 @@
 namespace gadget_definitions {
 
     // Count of the different gadget identifiers
-    constexpr uint8_t GadgetIdentifierCount = 8;
+    constexpr uint8_t GadgetIdentifierCount = 10;
 
     // Gadgets running on the ESP clients (remote gadgets)
     enum class GadgetIdentifier {
-        lamp_neopixel_rgb_basic = 0,  // NeoPixel Basic RGB Lamp
-        lamp_basic = 1,  // Basic Lamp
-        fan_westinghouse_ir = 2,  // Westinghouse IR Fan
-        lamp_westinghouse_ir = 3,  // Westinghouse IR Fan Lamp
-        doorbell_basic = 4,  // Doorbell Basic
-        wallswitch_basic = 5,  // Basic Wallswitch
-        sensor_motion_hr501 = 6,  // HR501 Motion Sensor
-        sensor_temperature_dht = 7  // DHT Temperature/Humidity Sensor
+        unknown = 0,  // Unknown Gadget / Error Case
+        custom = 1,  // Custom Gadget
+        lamp_neopixel_rgb_basic = 2,  // NeoPixel Basic RGB Lamp
+        lamp_basic = 3,  // Basic Lamp
+        fan_westinghouse_ir = 4,  // Westinghouse IR Fan
+        lamp_westinghouse_ir = 5,  // Westinghouse IR Fan Lamp
+        doorbell_basic = 6,  // Doorbell Basic
+        wallswitch_basic = 9,  // Basic Wallswitch
+        sensor_motion_hr501 = 10,  // HR501 Motion Sensor
+        sensor_temperature_dht = 11  // DHT Temperature/Humidity Sensor
     };
 }

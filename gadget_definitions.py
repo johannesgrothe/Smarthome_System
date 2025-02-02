@@ -10,14 +10,16 @@ import enum
 class RemoteGadgetIdentifier(enum.IntEnum):
     """Gadgets running on the ESP clients (remote gadgets)"""
 
-    lamp_neopixel_rgb_basic = 0  # NeoPixel Basic RGB Lamp
-    lamp_basic = 1  # Basic Lamp
-    fan_westinghouse_ir = 2  # Westinghouse IR Fan
-    lamp_westinghouse_ir = 3  # Westinghouse IR Fan Lamp
-    doorbell_basic = 4  # Doorbell Basic
-    wallswitch_basic = 5  # Basic Wallswitch
-    sensor_motion_hr501 = 6  # HR501 Motion Sensor
-    sensor_temperature_dht = 7  # DHT Temperature/Humidity Sensor
+    unknown = 0  # Unknown Gadget / Error Case
+    custom = 1  # Custom Gadget
+    lamp_neopixel_rgb_basic = 2  # NeoPixel Basic RGB Lamp
+    lamp_basic = 3  # Basic Lamp
+    fan_westinghouse_ir = 4  # Westinghouse IR Fan
+    lamp_westinghouse_ir = 5  # Westinghouse IR Fan Lamp
+    doorbell_basic = 6  # Doorbell Basic
+    wallswitch_basic = 9  # Basic Wallswitch
+    sensor_motion_hr501 = 10  # HR501 Motion Sensor
+    sensor_temperature_dht = 11  # DHT Temperature/Humidity Sensor
 
 
 class LocalGadgetIdentifier(enum.IntEnum):
@@ -29,33 +31,35 @@ class LocalGadgetIdentifier(enum.IntEnum):
 class GadgetClass(enum.IntEnum):
     """General categories of gadgets. Two gadgets of the same class have the same attributes but may differ in implemetation"""
 
-    lamp = 0  # Lamp
-    lamp_adjustable = 1  # Adjustable Lamp
-    lamp_rgb = 2  # RGB Lamp
-    fan = 3  # Fan
-    tv = 4  # TV
-    media_player = 5  # Media Player
-    hum_sensor = 6  # Humidity Sensor
-    temp_sensor = 7  # Temperature Sensor
-    hum_temp_sensor = 8  # Humidity + Temperature Sensor
-    mov_sensor = 9  # Movement Sensor
-    doorbell = 10  # Doorbell
-    stateless_switch = 11  # Stateless Switch
-    state_switch = 12  # Switch
+    unknown = 0  # Unknown
+    lamp = 1  # Lamp
+    lamp_adjustable = 2  # Adjustable Lamp
+    lamp_rgb = 3  # RGB Lamp
+    fan = 4  # Fan
+    tv = 5  # TV
+    media_player = 6  # Media Player
+    hum_sensor = 7  # Humidity Sensor
+    temp_sensor = 8  # Temperature Sensor
+    hum_temp_sensor = 9  # Humidity + Temperature Sensor
+    mov_sensor = 10  # Movement Sensor
+    doorbell = 11  # Doorbell
+    stateless_switch = 12  # Stateless Switch
+    state_switch = 13  # Switch
 
 
 GadgetClassMapping = {
+    GadgetClass.unknown: [RemoteGadgetIdentifier.unknown, RemoteGadgetIdentifier.custom],
     GadgetClass.lamp: [RemoteGadgetIdentifier.lamp_basic, RemoteGadgetIdentifier.lamp_westinghouse_ir],
     GadgetClass.lamp_adjustable: [],
     GadgetClass.lamp_rgb: [RemoteGadgetIdentifier.lamp_neopixel_rgb_basic],
-    GadgetClass.fan: [RemoteGadgetIdentifier.fan_westinghouse_ir],
-    GadgetClass.tv: [LocalGadgetIdentifier.denon_av_receiver],
+    GadgetClass.fan: [LocalGadgetIdentifier.denon_av_receiver, RemoteGadgetIdentifier.fan_westinghouse_ir],
+    GadgetClass.tv: [],
     GadgetClass.media_player: [],
     GadgetClass.hum_sensor: [],
     GadgetClass.temp_sensor: [],
     GadgetClass.hum_temp_sensor: [RemoteGadgetIdentifier.sensor_temperature_dht],
     GadgetClass.mov_sensor: [RemoteGadgetIdentifier.sensor_motion_hr501],
-    GadgetClass.doorbell: [RemoteGadgetIdentifier.doorbell_basic],
-    GadgetClass.stateless_switch: [RemoteGadgetIdentifier.wallswitch_basic],
+    GadgetClass.doorbell: [RemoteGadgetIdentifier.doorbell_basic, RemoteGadgetIdentifier.wallswitch_basic],
+    GadgetClass.stateless_switch: [],
     GadgetClass.state_switch: []
 }
