@@ -27,7 +27,7 @@ FILE_GADGET_CONSTANTS_JS = "gadget_definitions.js"
 FILE_GADGET_CONSTANTS_SWIFT = "GadgetDefinitions.swift"
 
 # Generated files - Variants
-FILE_VARIANTS_CPP = "variants.cpp"
+FILE_VARIANTS_CPP = "variants.h"
 FILE_VARIANTS_JS = "variants.js"
 FILE_VARIANTS_PY = "variants.py"
 FILE_VARIANTS_SWIFT = "Variants.swift"
