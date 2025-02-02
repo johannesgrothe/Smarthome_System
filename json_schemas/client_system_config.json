@@ -10,10 +10,6 @@
     "mqtt_port",
     "mqtt_user",
     "mqtt_pw",
-    "irrecv_pin",
-    "irsend_pin",
-    "radio_recv_pin",
-    "radio_send_pin",
     "network_mode"
   ],
   "properties": {
@@ -48,34 +44,6 @@
         "string",
         "null"
       ]
-    },
-    "irrecv_pin": {
-      "type": [
-        "integer",
-        "null"
-      ],
-      "minimum": 0
-    },
-    "irsend_pin": {
-      "type": [
-        "integer",
-        "null"
-      ],
-      "minimum": 0
-    },
-    "radio_recv_pin": {
-      "type": [
-        "integer",
-        "null"
-      ],
-      "minimum": 0
-    },
-    "radio_send_pin": {
-      "type": [
-        "integer",
-        "null"
-      ],
-      "minimum": 0
     },
     "network_mode": {
       "type": "integer",

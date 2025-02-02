@@ -1,0 +1,36 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "type": "object",
+  "required": [
+    "description",
+    "variants"
+  ],
+  "properties": {
+    "description": {
+      "type": "string",
+      "minLength": 10
+    },
+    "variants": {
+      "type": "array",
+      "description": "Definitions for all gadgets",
+      "items": {
+        "type": "object",
+        "required": [
+          "name",
+          "description"
+        ],
+        "additionalProperties": false,
+        "properties": {
+          "name": {
+            "type": "string",
+            "minLength": 10
+          },
+          "description": {
+            "type": "string",
+            "minLength": 10
+          }
+        }
+      }
+    }
+  }
+}

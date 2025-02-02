@@ -4,9 +4,8 @@
   "required": [
     "name",
     "description",
-    "system",
-    "gadgets",
-    "events"],
+    "system"
+  ],
   "properties": {
     "name": {
       "type": "string",
@@ -20,12 +19,6 @@
     },
     "system": {
       "$ref": "client_system_config.json"
-    },
-    "gadgets": {
-      "$ref": "client_gadget_config.json"
-    },
-    "events": {
-      "$ref": "client_event_config.json"
     }
   }
 }

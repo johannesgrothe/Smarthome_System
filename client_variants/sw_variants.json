@@ -1,4 +1,5 @@
 {
+  "$schema": "sw_variants_schema.json",
   "description": "Software Variants",
   "variants": [
     {

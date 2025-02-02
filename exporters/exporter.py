@@ -2,7 +2,7 @@ import logging
 import os
 from abc import abstractmethod, ABCMeta
 
-from exporters.def_filenames import FILE_API_SPECS, FILE_GADGET_SPECS
+from exporters.def_filenames import FILE_API_SPECS, FILE_GADGET_SPECS, FILE_HW_VARIANTS, FILE_SW_VARIANTS
 from exporters.definitions_loader import DefinitionsLoader
 from utils.schema_loader import SchemaLoader
 from utils.software_version import SoftwareVersion
@@ -22,6 +22,9 @@ class Exporter(metaclass=ABCMeta):
     _api_version: SoftwareVersion
     _schema_data: dict
 
+    _hw_variant_def: dict
+    _sw_variant_def: dict
+
     def __init__(self):
         super().__init__()
         self._logger = logging.getLogger(self.__class__.__name__)
@@ -37,6 +40,10 @@ class Exporter(metaclass=ABCMeta):
         self._api_version = SoftwareVersion.from_string(api_def["version"])
 
         self._schema_data = SchemaLoader(_schema_folder).load_schemas()
+
+        self._hw_variant_def = DefinitionsLoader(FILE_HW_VARIANTS).get_definitions()
+        self._sw_variant_def = DefinitionsLoader(FILE_SW_VARIANTS).get_definitions()
+        
 
     @abstractmethod
     def export(self, filename: str):

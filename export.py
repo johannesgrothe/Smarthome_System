@@ -6,6 +6,7 @@ from exporters.constants_exporter_gadgets_cpp import ConstantExporterGadgetsCpp
 from exporters.constants_exporter_gadgets_js import ConstantExporterGadgetsJavaScript
 from exporters.constants_exporter_gadgets_python import ConstantExporterGadgetsPython
 from exporters.constants_exporter_gadgets_swift import ConstantExporterGadgetsSwift
+from exporters.constants_exporter_variants_cpp import ConstantExporterVariantsCpp
 from utils.temp_dir_manager import TempDirManager
 from exporters.constants_exporter_api_cpp import ConstantExporterApiCpp
 from exporters.constants_exporter_api_js import ConstantExporterApiJavaScript
@@ -31,6 +32,8 @@ def export_constants():
     ConstantExporterGadgetsCpp().export(FILE_GADGET_CONSTANTS_CPP)
     ConstantExporterGadgetsJavaScript().export(FILE_GADGET_CONSTANTS_JS)
     ConstantExporterGadgetsSwift().export(FILE_GADGET_CONSTANTS_SWIFT)
+
+    ConstantExporterVariantsCpp().export(FILE_VARIANTS_CPP)
 
 
 def export_wiki():

@@ -1,4 +1,5 @@
 {
+  "$schema": "hw_variants_schema.json",
   "description": "Hardware Variants",
   "variants": [
     {
