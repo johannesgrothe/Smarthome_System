@@ -1,0 +1,9 @@
+{
+  "description": "Hardware Variants",
+  "variants": [
+    {
+      "name": "single_port",
+      "description": "Simple controller setup with a single port exposed"
+    }
+  ]
+}

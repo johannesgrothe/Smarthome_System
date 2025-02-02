@@ -1,0 +1,12 @@
+{
+  "description": "Software Variants",
+  "variants": [
+    {
+      "name": "single_neopixel",
+      "description": "Just single neopixel gadget",
+      "compatible_hw_variants": [
+        "single_port"
+      ]
+    }
+  ]
+}
