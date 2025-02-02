@@ -13,8 +13,6 @@ class ConstantExporterVariantsCpp(ConstantsExporterCpp):
         hw_variants_enum = CppEnumClass("HwVariant",
                                         self._hw_variant_def["description"])
 
-        hw_variants_enum.add_element("unknown", 0, "Element representing any error case")
-
         for i, variant_data in enumerate(self._hw_variant_def["variants"]):
             hw_variants_enum.add_element(variant_data["name"], i + 1, variant_data["description"])
 
@@ -22,8 +20,6 @@ class ConstantExporterVariantsCpp(ConstantsExporterCpp):
 
         sw_variants_enum = CppEnumClass("SwVariant",
                                         self._sw_variant_def["description"])
-
-        sw_variants_enum.add_element("unknown", 0, "Element representing any error case")
 
         for i, variant_data in enumerate(self._sw_variant_def["variants"]):
             sw_variants_enum.add_element(variant_data["name"], i + 1, variant_data["description"])

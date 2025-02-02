@@ -3,6 +3,11 @@
   "description": "Software Variants",
   "variants": [
     {
+      "name": "unknown",
+      "description": "Element representing any error case",
+      "compatible_hw_variants": []
+    },
+    {
       "name": "single_neopixel",
       "description": "Just single neopixel gadget",
       "compatible_hw_variants": [

@@ -23,7 +23,7 @@
         "properties": {
           "name": {
             "type": "string",
-            "minLength": 10
+            "minLength": 5
           },
           "description": {
             "type": "string",

@@ -3,6 +3,10 @@
   "description": "Hardware Variants",
   "variants": [
     {
+      "name": "unknown",
+      "description": "Element representing any error case"
+    },
+    {
       "name": "single_port",
       "description": "Simple controller setup with a single port exposed"
     }

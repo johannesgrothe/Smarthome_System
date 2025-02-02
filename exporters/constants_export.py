@@ -4,6 +4,7 @@ from exporters.def_filenames import FILE_API_SPECS, FILE_GADGET_SPECS
 from exporters.exporter import Exporter
 from utils.cpp_file import CppPragma, CppComment, CppBlankLine, CppFile
 from utils.js_file import JSComment, JSBlankLine, JSFile
+from utils.py_file import PythonFile
 
 
 class ConstantsExporter(Exporter, ABC):
@@ -33,6 +34,16 @@ class ConstantsExporterPython(ConstantsExporter, ABC):
         return lines
 
     def _generate_header(self, docstring: str, filename: str) -> list[str]:
+        lines = [f"\"\"\"{docstring}\"\"\"", ""]
+
+        for line in self._generate_header_text(filename):
+            lines.append(f"# {line}")
+
+        return lines
+
+class ConstantsExporterPythonFile(ConstantsExporter, ABC):
+
+    def _add_header(self, docstring: str, filename: str, file: PythonFile) -> list[str]:
         lines = [f"\"\"\"{docstring}\"\"\"", ""]
 
         for line in self._generate_header_text(filename):

@@ -8,12 +8,12 @@
 
 // Hardware Variants
 enum class HwVariant {
-    unknown = 0,  // Element representing any error case
-    single_port = 1  // Simple controller setup with a single port exposed
+    unknown = 1,  // Element representing any error case
+    single_port = 2  // Simple controller setup with a single port exposed
 };
 
 // Software Variants
 enum class SwVariant {
-    unknown = 0,  // Element representing any error case
-    single_neopixel = 1  // Just single neopixel gadget
+    unknown = 1,  // Element representing any error case
+    single_neopixel = 2  // Just single neopixel gadget
 };
